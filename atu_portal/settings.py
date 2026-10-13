@@ -96,8 +96,9 @@ WSGI_APPLICATION = "atu_portal.wsgi.application"
 # PostgreSQL is the target database. If DATABASE_URL or DB_NAME is not configured, SQLite is
 # used so the project can still run for quick local development.
 import urllib.parse
+import shutil
 
-db_url_str = os.getenv("DATABASE_URL")
+db_url_str = os.getenv("DATABASE_URL") or os.getenv("POSTGRES_URL")
 if db_url_str:
     db_url = urllib.parse.urlparse(db_url_str)
     DATABASES = {
@@ -124,10 +125,23 @@ elif os.getenv("DB_NAME"):
         }
     }
 else:
+    # Fallback SQLite
+    sqlite_path = BASE_DIR / "db.sqlite3"
+    # On Vercel / serverless environment, /var/task is read-only.
+    # Copy existing db.sqlite3 to /tmp so SQLite is writable.
+    if os.getenv("VERCEL") or os.path.exists("/var/task"):
+        tmp_db = Path("/tmp/db.sqlite3")
+        if not tmp_db.exists() and sqlite_path.exists():
+            try:
+                shutil.copyfile(sqlite_path, tmp_db)
+            except Exception:
+                pass
+        sqlite_path = tmp_db
+
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
+            "NAME": sqlite_path,
         }
     }
 
