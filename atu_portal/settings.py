@@ -36,8 +36,17 @@ def env_bool(name, default=False):
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "dev-insecure-key-change-me-before-deployment")
 DEBUG = env_bool("DJANGO_DEBUG", True)
-ALLOWED_HOSTS = [h.strip() for h in os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",") if h.strip()]
+ALLOWED_HOSTS = [h.strip() for h in os.getenv("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,.vercel.app").split(",") if h.strip()]
+for _h in [".vercel.app", "support-portal-ruby.vercel.app"]:
+    if _h not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(_h)
+if os.getenv("VERCEL_URL") and os.getenv("VERCEL_URL") not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(os.getenv("VERCEL_URL"))
+
 CSRF_TRUSTED_ORIGINS = [o.strip() for o in os.getenv("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",") if o.strip()]
+for _origin in ["https://*.vercel.app", "https://support-portal-ruby.vercel.app"]:
+    if _origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(_origin)
 
 INSTALLED_APPS = [
     "django.contrib.auth",
@@ -84,9 +93,25 @@ TEMPLATES = [
 WSGI_APPLICATION = "atu_portal.wsgi.application"
 
 # --- Database ---------------------------------------------------------------
-# PostgreSQL is the target database. If DB_NAME is not configured, SQLite is
+# PostgreSQL is the target database. If DATABASE_URL or DB_NAME is not configured, SQLite is
 # used so the project can still run for quick local development.
-if os.getenv("DB_NAME"):
+import urllib.parse
+
+db_url_str = os.getenv("DATABASE_URL")
+if db_url_str:
+    db_url = urllib.parse.urlparse(db_url_str)
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": db_url.path.lstrip("/"),
+            "USER": db_url.username,
+            "PASSWORD": db_url.password,
+            "HOST": db_url.hostname,
+            "PORT": db_url.port or 5432,
+            "CONN_MAX_AGE": 60,
+        }
+    }
+elif os.getenv("DB_NAME"):
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
@@ -157,6 +182,8 @@ X_FRAME_OPTIONS = "DENY"
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_REFERRER_POLICY = "same-origin"
 
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
@@ -164,7 +191,6 @@ if not DEBUG:
     SECURE_HSTS_SECONDS = int(os.getenv("DJANGO_HSTS_SECONDS", "31536000"))
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
-    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 from django.contrib.messages import constants as message_constants  # noqa: E402
 
