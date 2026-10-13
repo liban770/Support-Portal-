@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}System Audit Logs{% endblock %}
+{% block crumb %}Audit Logs{% endblock %}
+
+{% block content %}
+<div class="space-y-6 animate-in">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Security Governance · Compliance Audit Trail</span>
+      </div>
+      <h1 class="page-title mt-1">System Audit Logs</h1>
+      <p class="page-sub mt-1">Traceable, append-only chronological record of administrative actions, status updates, validations, and logins.</p>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="card p-4">
+    <form method="get" class="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+      <div class="sm:col-span-6 relative">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-[18px]">search</span>
+        <input type="text" name="q" value="{{ request.GET.q|default:'' }}" placeholder="Search by actor, action name, or target reference..." class="input pl-9 h-10">
+      </div>
+      <div class="sm:col-span-4">
+        <select name="area" class="input select h-10">
+          <option value="">All Functional Areas</option>
+          {% for ak, av in areas %}
+          <option value="{{ ak }}" {% if area == ak %}selected{% endif %}>{{ av }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="sm:col-span-2 flex items-center justify-end">
+        <button type="submit" class="btn-primary h-10 w-full px-4">Filter Log</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card overflow-hidden shadow-card">
+    <div class="overflow-x-auto scroll-thin">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>Actor</th>
+            <th>Action</th>
+            <th>Target</th>
+            <th>Details</th>
+            <th>IP Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for log in page_obj %}
+          <tr class="hover:bg-canvas transition-colors font-body-sm text-body-sm">
+            <td class="whitespace-nowrap font-mono text-[12px] text-secondary">
+              {{ log.created_at|date:"Y-m-d H:i:s" }}
+            </td>
+            <td class="whitespace-nowrap">
+              <span class="font-medium text-on-surface">{{ log.actor.display_name|default:"System" }}</span>
+              <span class="text-caption text-secondary block font-mono text-[11px]">{{ log.actor.email|default:"" }}</span>
+            </td>
+            <td class="whitespace-nowrap">
+              <span class="chip-maroon text-[11px]">{{ log.action_label }}</span>
+            </td>
+            <td class="whitespace-nowrap font-medium text-on-surface">
+              {{ log.target_repr|default:"—" }}
+            </td>
+            <td class="font-mono text-[11px] text-secondary max-w-xs truncate" title="{{ log.details }}">
+              {{ log.details }}
+            </td>
+            <td class="whitespace-nowrap font-mono text-[11px] text-secondary">
+              {{ log.ip_address|default:"127.0.0.1" }}
+            </td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="6" class="py-12 text-center text-secondary">No audit log records match the search filter.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    {% include "partials/pagination.html" %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}University Departments{% endblock %}
+{% block crumb %}Departments{% endblock %}
+
+{% block content %}
+<div class="space-y-6 animate-in">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Academic Structure · University Departments</span>
+      </div>
+      <h1 class="page-title mt-1">Department Directory</h1>
+      <p class="page-sub mt-1">Configure academic faculties, service departments, assigned deans/heads, and routing scopes.</p>
+    </div>
+    <a href="{% url 'accounts:department_create' %}" class="btn-primary btn-sm">
+      <span class="material-symbols-outlined text-[18px]">add</span>
+      <span>Add Department</span>
+    </a>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    {% for dept in departments %}
+    <div class="card p-5 flex flex-col justify-between hover:shadow-float transition-all">
+      <div class="space-y-3">
+        <div class="flex items-start justify-between">
+          <div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-primary-container">
+            <span class="material-symbols-outlined text-[22px]">domain</span>
+          </div>
+          <span class="chip-maroon text-[11px]">{{ dept.get_kind_display }}</span>
+        </div>
+        <div>
+          <h2 class="font-title-sm text-title-sm text-on-surface">
+            <a href="{% url 'accounts:department_detail' dept.pk %}" class="hover:text-primary-container hover:underline">{{ dept.name }}</a>
+          </h2>
+          <span class="font-caption text-caption text-secondary">Code: {{ dept.code }} · {{ dept.location|default:"Main Campus" }}</span>
+        </div>
+        {% if dept.description %}
+        <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">{{ dept.description }}</p>
+        {% endif %}
+      </div>
+
+      <div class="pt-4 mt-4 border-t border-line space-y-2 font-caption text-caption text-secondary">
+        <div class="flex items-center justify-between">
+          <span>Department Head:</span>
+          <span class="font-medium text-on-surface">{{ dept.head.display_name|default:"Unassigned" }}</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span>Staff & Faculty:</span>
+          <span class="font-medium text-on-surface">{{ dept.member_count }} member{{ dept.member_count|pluralize }}</span>
+        </div>
+        <div class="flex items-center justify-between pt-1">
+          <a href="{% url 'accounts:department_detail' dept.pk %}" class="font-label-sm text-label-sm text-primary-container hover:underline">
+            View Analytics &rarr;
+          </a>
+          <div class="flex items-center gap-1">
+            <a href="{% url 'accounts:department_edit' dept.pk %}" class="btn-ghost btn-sm px-2 text-secondary hover:text-on-surface" title="Edit Department">
+              <span class="material-symbols-outlined text-[17px]">edit</span>
+            </a>
+            <button type="button"
+                    class="btn-ghost btn-sm px-2 text-error hover:bg-red-50 hover:text-error transition-colors"
+                    title="Delete Department"
+                    data-delete-modal-trigger
+                    data-action-url="{% url 'accounts:department_delete' dept.pk %}"
+                    data-target-name="{{ dept.name }}"
+                    data-target-title="{{ dept.name }} ({{ dept.code }})"
+                    data-entity-type="Department">
+              <span class="material-symbols-outlined text-[17px]">delete_forever</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-span-3 card p-8 text-center text-secondary">
+      No university departments found. Click "Add Department" to create one.
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

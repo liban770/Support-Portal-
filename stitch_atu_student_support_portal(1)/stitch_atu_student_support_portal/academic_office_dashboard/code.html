@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {"darkMode":"class","theme":{"extend":{"colors":{"surface-container":"#eaedfb","error-container":"#ffdad6","tertiary-fixed":"#b3f2ba","secondary":"#605d65","surface-container-low":"#f1f3ff","on-primary-fixed-variant":"#7e2644","on-tertiary-fixed":"#00210a","primary-container":"#6b1736","on-primary":"#ffffff","inverse-surface":"#2c303b","tertiary-fixed-dim":"#97d59f","primary-fixed-dim":"#ffb1c4","primary":"#4d0021","primary-fixed":"#ffd9e0","on-surface-variant":"#544246","on-tertiary-fixed-variant":"#165128","on-surface":"#171c25","on-secondary-container":"#66636b","outline":"#877276","on-tertiary":"#ffffff","on-error":"#ffffff","on-secondary-fixed-variant":"#48454d","on-background":"#171c25","surface-variant":"#dfe2f0","inverse-on-surface":"#edf0fe","on-tertiary-container":"#74af7d","background":"#f9f9ff","on-primary-container":"#ee809f","surface-container-lowest":"#ffffff","tertiary-container":"#00421b","on-error-container":"#93000a","secondary-container":"#e6e0ea","surface-tint":"#9c3e5c","surface-container-high":"#e4e8f5","on-secondary-fixed":"#1c1b21","on-secondary":"#ffffff","tertiary":"#002a0e","error":"#ba1a1a","secondary-fixed-dim":"#cac5ce","inverse-primary":"#ffb1c4","surface-container-highest":"#dfe2f0","surface":"#f9f9ff","surface-dim":"#d6dae7","on-primary-fixed":"#3f001a","surface-bright":"#f9f9ff","secondary-fixed":"#e6e0ea","outline-variant":"#dac0c5"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-lg":"1.5rem","space-xs":"0.25rem","margin-mobile":"1rem","space-sm":"0.5rem","gutter-mobile":"1rem","gutter":"1.5rem","space-md":"1rem","margin":"2rem","space-xl":"2rem"},"fontFamily":{"body-sm":["Inter"],"body-lg":["Inter"],"body-md":["Inter"],"headline-xl-mobile":["Inter"],"headline-md":["Inter"],"headline-lg":["Inter"],"label-md":["Inter"],"headline-xl":["Inter"],"title-sm":["Inter"],"label-sm":["Inter"],"caption":["Inter"]},"fontSize":{"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-xl-mobile":["26px",{"lineHeight":"34px","letterSpacing":"-0.015em","fontWeight":"700"}],"headline-md":["20px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"label-md":["13px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"600"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"title-sm":["16px",{"lineHeight":"24px","letterSpacing":"-0.005em","fontWeight":"600"}],"label-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"500"}],"caption":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}]}}}}</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest z-50 flex flex-col justify-between border-r border-surface-variant"><div class="flex flex-col h-full overflow-y-auto"><div class="px-space-lg pt-space-lg pb-space-md flex items-center gap-space-sm border-b border-surface-variant"><img alt="ATU Seal Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1X67xJQZBtWgy9w482KbNYuU9U-TCmK7u5T0aYeV0mW1Z8aVC3Bnppw4Dru-tuCDvw4r8ztpTH7M9JxjZd_rO2sYBPlnGhm2Z9SwqYMWL5-bkGmD9gpGPi5BLuP1YS2WaavoXUpT74sOPd6ZkBSQzgkqJC4rfq7lXhkPUokW88JWfaOMWJrn7PvC6HOVaWmaHcHS4iDVLvF_nNRWU8e8xzW5SwWknGhnB-zYgOpkvhoZQyl_2WgO-io_2g"/><div class="flex flex-col min-w-0"><span class="font-title-sm text-title-sm text-primary tracking-tight truncate leading-tight">ATU Support Portal</span><span class="font-caption text-caption text-secondary truncate">Abaarso Tech University</span></div></div><div class="px-space-md py-space-sm"><div class="px-space-sm py-space-xs font-caption text-caption uppercase text-secondary font-semibold">Student Services</div><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-semibold rounded-lg"><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">space_dashboard</span><span class="font-body-sm text-body-sm">Dashboard</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="my-requests" href="#"><span class="material-symbols-outlined text-[20px]">assignment</span><span class="font-body-sm text-body-sm">My Requests</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="absence-and-leave" href="#"><span class="material-symbols-outlined text-[20px]">event_busy</span><span class="font-body-sm text-body-sm">Absence &amp; Leave</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="student-problems" href="#"><span class="material-symbols-outlined text-[20px]">report_problem</span><span class="font-body-sm text-body-sm">Student Problems</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="late-class-reports" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span class="font-body-sm text-body-sm">Late Class Reports</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="notifications" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="font-body-sm text-body-sm">Notifications</span></div><span class="bg-error text-on-error font-caption text-caption px-1.5 py-0.5 rounded-full">3</span></a></nav></div><div class="px-space-md py-space-sm"><div class="px-space-sm py-space-xs font-caption text-caption uppercase text-secondary font-semibold">Administration</div><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-semibold rounded-lg"><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="department-operations" href="#"><span class="material-symbols-outlined text-[20px]">lan</span><span class="font-body-sm text-body-sm">Department Operations</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="academic-office" href="#"><span class="material-symbols-outlined text-[20px]">school</span><span class="font-body-sm text-body-sm">Academic Office</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="student-affairs" href="#"><span class="material-symbols-outlined text-[20px]">diversity_3</span><span class="font-body-sm text-body-sm">Student Affairs</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dean-overview" href="#"><span class="material-symbols-outlined text-[20px]">analytics</span><span class="font-body-sm text-body-sm">Dean Overview</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="user-management" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span class="font-body-sm text-body-sm">User Management</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="department-management" href="#"><span class="material-symbols-outlined text-[20px]">domain</span><span class="font-body-sm text-body-sm">Department Management</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="system-settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-body-sm text-body-sm">System Settings</span></a></nav></div></div><div class="p-space-md border-t border-surface-variant bg-surface-container-low"><div class="flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><div class="w-9 h-9 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-label-md text-label-md shrink-0">FD</div><div class="flex flex-col min-w-0"><span class="font-label-md text-label-md text-on-surface truncate">Fatima Dahir</span><span class="font-caption text-caption text-secondary truncate">Staff / Academic Lead</span></div></div><a class="text-secondary hover:text-error transition-colors p-1.5 rounded hover:bg-error-container" data-path="login" href="#" title="Sign Out"><span class="material-symbols-outlined text-[20px]">logout</span></a></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest border-b border-surface-variant z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><img alt="ATU Seal Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1X67xJQZBtWgy9w482KbNYuU9U-TCmK7u5T0aYeV0mW1Z8aVC3Bnppw4Dru-tuCDvw4r8ztpTH7M9JxjZd_rO2sYBPlnGhm2Z9SwqYMWL5-bkGmD9gpGPi5BLuP1YS2WaavoXUpT74sOPd6ZkBSQzgkqJC4rfq7lXhkPUokW88JWfaOMWJrn7PvC6HOVaWmaHcHS4iDVLvF_nNRWU8e8xzW5SwWknGhnB-zYgOpkvhoZQyl_2WgO-io_2g"/><div class="flex items-center gap-space-xs font-body-sm text-body-sm text-secondary"><span class="hover:text-on-surface cursor-pointer">Portal</span><span>/</span><span class="text-on-surface font-label-md text-label-md">Overview</span></div></div><div class="flex-1 max-w-md mx-space-lg"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-secondary text-[18px]">search</span><input class="w-full pl-9 pr-4 py-2 bg-background border border-surface-variant rounded-lg font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary-container placeholder:text-secondary" placeholder="Search requests, course codes, or reference ID..." type="text"/></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-caption text-caption text-primary font-semibold"><span class="material-symbols-outlined text-[15px]">calendar_today</span><span>Spring 2026</span></div><div class="relative cursor-pointer p-1.5 rounded-full hover:bg-surface-container transition-colors text-on-surface"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1 right-1 w-4 h-4 bg-error text-on-error font-caption text-caption flex items-center justify-center rounded-full text-[10px]">3</span></div><div class="flex items-center gap-space-xs bg-surface-container px-2 py-1 rounded-lg cursor-pointer"><span class="font-caption text-caption text-secondary uppercase font-semibold">Role:</span><span class="font-label-sm text-label-sm text-primary font-bold">Staff</span><span class="material-symbols-outlined text-[16px] text-secondary">arrow_drop_down</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<div class="px-space-lg py-space-md bg-surface-container-low/60 flex flex-col gap-space-md">
+<!-- Breadcrumb & Top Bar -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs font-caption text-caption text-secondary">
+<span class="hover:text-primary cursor-pointer transition-colors">Portal</span>
+<span class="text-outline-variant">/</span>
+<span class="hover:text-primary cursor-pointer transition-colors">Academic Operations</span>
+<span class="text-outline-variant">/</span>
+<span class="text-primary font-label-sm text-label-sm font-semibold">Academic Office Workspace</span>
+</div>
+<div class="flex items-center gap-2 text-secondary font-caption text-caption">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container text-on-surface">
+<span class="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span>
+          Central Timetable Gateway: Active Sync
+        </span>
+<span class="text-outline-variant">•</span>
+<span>Spring 2026 Term (W8)</span>
+</div>
+</div>
+<!-- Page Title & Operational Control Cluster -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-primary/10 text-primary font-caption text-caption uppercase tracking-wider font-semibold">Division of Academic Affairs</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-caption text-caption">Audit Trail ID: ATU-ACAD-2026-Q1</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-1">
+          Academic Office Operations — Curriculum, Scheduling &amp; Lecture Verification
+        </h1>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">
+          Academic Registrar &amp; Central Timetable Office <span class="text-outline-variant mx-1">|</span> Officer in Charge: <strong class="text-on-surface font-semibold">Dr. Hersi Duale</strong>, Senior Academic Registrar
+        </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-wrap items-center gap-2 shrink-0">
+<button class="flex items-center gap-1.5 px-3 py-2 bg-surface-container-lowest text-on-surface rounded-lg font-label-md text-label-md shadow-sm hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px] text-secondary">campaign</span>
+          Publish Schedule Notice
+        </button>
+<button class="flex items-center gap-1.5 px-3 py-2 bg-surface-container-lowest text-on-surface rounded-lg font-label-md text-label-md shadow-sm hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[18px] text-secondary">picture_as_pdf</span>
+          Generate Audit (PDF)
+        </button>
+<button class="flex items-center gap-1.5 px-3 py-2 bg-primary-container text-on-primary rounded-lg font-label-md text-label-md shadow-sm hover:bg-primary transition-all shadow-primary-container/20">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+          Log Class Schedule Anomaly
+        </button>
+</div>
+</div>
+<!-- Summary KPIs Matrix (5 Cards) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-space-sm pt-2">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-secondary uppercase tracking-wider font-semibold">Total Inquiries</span>
+<span class="p-1 rounded-md bg-surface-container text-secondary">
+<span class="material-symbols-outlined text-[16px]">help_center</span>
+</span>
+</div>
+<div class="mt-2">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold">84</span>
+<span class="font-caption text-caption text-on-tertiary-fixed-variant bg-tertiary-fixed/30 px-1.5 py-0.5 rounded font-semibold">+8% wk/wk</span>
+</div>
+<span class="font-caption text-caption text-secondary mt-0.5 block">Week 8 total registration &amp; ticket log</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-secondary uppercase tracking-wider font-semibold">Late-Class Reports</span>
+<span class="p-1 rounded-md bg-surface-container text-primary">
+<span class="material-symbols-outlined text-[16px]">hourglass_top</span>
+</span>
+</div>
+<div class="mt-2">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-primary font-bold">19</span>
+<span class="font-caption text-caption text-secondary">7 under review</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-1.5 mt-2 overflow-hidden flex">
+<div class="bg-primary h-full" style="width: 63%"></div>
+<div class="bg-surface-variant h-full" style="width: 37%"></div>
+</div>
+<span class="font-caption text-caption text-secondary mt-1 block">12 verified &amp; addressed</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-secondary uppercase tracking-wider font-semibold">Timetable Conflicts</span>
+<span class="p-1 rounded-md bg-error-container text-error">
+<span class="material-symbols-outlined text-[16px]">meeting_room</span>
+</span>
+</div>
+<div class="mt-2">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold">8</span>
+<span class="font-caption text-caption text-error font-semibold bg-error-container/40 px-1.5 py-0.5 rounded">3 critical</span>
+</div>
+<span class="font-caption text-caption text-secondary mt-0.5 block">Room overlap: Hall B &amp; Lab 4</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-secondary uppercase tracking-wider font-semibold">Pending Triage</span>
+<span class="p-1 rounded-md bg-surface-container text-secondary">
+<span class="material-symbols-outlined text-[16px]">timer</span>
+</span>
+</div>
+<div class="mt-2">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold">11</span>
+<span class="font-caption text-caption text-secondary">Avg 4.2h</span>
+</div>
+<span class="font-caption text-caption text-secondary mt-0.5 block">Within target SLA (8.0h threshold)</span>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-secondary uppercase tracking-wider font-semibold">Attendance Compliance</span>
+<span class="p-1 rounded-md bg-tertiary-fixed/30 text-on-tertiary-fixed-variant">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+</span>
+</div>
+<div class="mt-2">
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold">96.1%</span>
+<span class="font-caption text-caption text-on-tertiary-fixed-variant font-semibold">Target &gt;95%</span>
+</div>
+<span class="font-caption text-caption text-secondary mt-0.5 block">Institutional delivery benchmark</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Primary Operations Section -->
+<div class="px-space-lg py-space-lg grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+<!-- Main Left Column: Tabbed Worklist & Audit Matrix (8 of 12 cols = 67%) -->
+<div class="xl:col-span-8 flex flex-col gap-space-lg min-w-0">
+<!-- Worklist Container Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm flex flex-col overflow-hidden">
+<!-- Tab Headers -->
+<div class="flex items-center justify-between px-space-md pt-space-sm bg-surface-container-low/40">
+<div class="flex items-center gap-1 overflow-x-auto">
+<button class="px-3.5 py-2.5 rounded-t-lg font-label-md text-label-md text-primary bg-surface-container-lowest flex items-center gap-2 shrink-0 shadow-sm">
+<span>Late-Class Reports</span>
+<span class="px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-caption text-caption font-bold">19</span>
+</button>
+<button class="px-3.5 py-2.5 rounded-t-lg font-label-md text-label-md text-secondary hover:text-on-surface hover:bg-surface-container transition-colors flex items-center gap-2 shrink-0">
+<span>Timetable &amp; Room Overlaps</span>
+<span class="px-1.5 py-0.5 rounded-full bg-error-container text-error font-caption text-caption font-semibold">8</span>
+</button>
+<button class="px-3.5 py-2.5 rounded-t-lg font-label-md text-label-md text-secondary hover:text-on-surface hover:bg-surface-container transition-colors flex items-center gap-2 shrink-0">
+<span>Curricular &amp; Exam Inquiries</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-container text-secondary font-caption text-caption">34</span>
+</button>
+<button class="px-3.5 py-2.5 rounded-t-lg font-label-md text-label-md text-secondary hover:text-on-surface hover:bg-surface-container transition-colors flex items-center gap-2 shrink-0">
+<span>All Tickets</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-container text-secondary font-caption text-caption">84</span>
+</button>
+</div>
+<div class="hidden sm:flex items-center gap-1 text-secondary font-caption text-caption pr-2">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span>Neutral Verification Standard</span>
+</div>
+</div>
+<!-- Filter & Search Controls Bar -->
+<div class="p-space-md bg-surface-container-lowest flex flex-col md:flex-row items-stretch md:items-center justify-between gap-space-sm">
+<div class="relative flex-1 max-w-sm">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-secondary text-[18px]">search</span>
+<input class="w-full pl-9 pr-3 py-1.5 bg-background text-on-surface rounded-lg font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary-container/30 transition-all placeholder:text-secondary" placeholder="Search by Course ID, Instructor, or Hall..." type="text" value="CS-301"/>
+</div>
+<div class="flex flex-wrap items-center gap-2">
+<!-- Dept Filter -->
+<div class="relative">
+<select class="appearance-none bg-background text-on-surface font-body-sm text-body-sm px-3 py-1.5 pr-8 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-container/30">
+<option selected="">All Departments</option>
+<option>Computing &amp; Software Eng</option>
+<option>Electrical &amp; Telecom</option>
+<option>Natural &amp; Applied Sciences</option>
+<option>Business Administration</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-2 text-secondary text-[18px] pointer-events-none">expand_more</span>
+</div>
+<!-- Status Filter -->
+<div class="relative">
+<select class="appearance-none bg-background text-on-surface font-body-sm text-body-sm px-3 py-1.5 pr-8 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary-container/30">
+<option selected="">All Statuses</option>
+<option>Under Review (7)</option>
+<option>Verified &amp; Extended (5)</option>
+<option>Make-up Scheduled (4)</option>
+<option>Resolved / Excused (3)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-2 text-secondary text-[18px] pointer-events-none">expand_more</span>
+</div>
+<button class="px-3 py-1.5 bg-surface-container text-on-surface rounded-lg font-body-sm text-body-sm flex items-center gap-1 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[16px] text-secondary">filter_list</span>
+              Reset
+            </button>
+</div>
+</div>
+<!-- Verification Guidance Callout -->
+<div class="px-space-md py-2 bg-surface-container-low text-on-surface-variant flex items-center justify-between text-caption font-caption">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">verified_user</span>
+<span><strong>Procedural Notice:</strong> Reports are handled as non-punitive verification logs to preserve student contact hours, allocate make-up sessions, and manage facility schedules.</span>
+</div>
+<span class="text-secondary shrink-0 hidden lg:inline">Handbook Art. 9 §2</span>
+</div>
+<!-- Responsive Worklist Data Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-container-high/40 text-secondary font-caption text-caption uppercase tracking-wider select-none">
+<tr>
+<th class="py-2.5 px-4 font-semibold">Report Reference</th>
+<th class="py-2.5 px-4 font-semibold">Course &amp; Cohort</th>
+<th class="py-2.5 px-4 font-semibold">Scheduled Slot &amp; Venue</th>
+<th class="py-2.5 px-4 font-semibold">Operational Variance</th>
+<th class="py-2.5 px-4 font-semibold">Verification State</th>
+<th class="py-2.5 px-4 font-semibold">Lead Officer</th>
+<th class="py-2.5 px-4 font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-on-surface">
+<!-- Row 1: Selected Case LCR-2026-0105 -->
+<tr class="bg-primary/5 hover:bg-primary/10 transition-colors cursor-pointer group">
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-6 rounded-full bg-primary shrink-0"></span>
+<div>
+<span class="font-label-md text-label-md text-primary font-bold">LCR-2026-0105</span>
+<span class="block font-caption text-caption text-secondary">Today, 09:18 AM</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="font-label-md text-label-md text-on-surface block font-semibold">CS-301: Algorithms</span>
+<span class="font-caption text-caption text-secondary">Computing &amp; Software Eng • Sec B</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">Mon 08:30 - 10:00</span>
+<span class="font-caption text-caption text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">location_on</span>
+                      Hall B - 201 (90 Cap)
+                    </span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div>
+<span class="font-label-sm text-label-sm text-error font-semibold block">42m start variance</span>
+<span class="font-caption text-caption text-secondary">Transit shuttle mechanical delay</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full font-caption text-caption font-semibold bg-surface-container text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                    Under Verification
+                  </span>
+</td>
+<td class="py-3 px-4">
+<span class="font-label-sm text-label-sm text-on-surface">Dr. Hersi Duale</span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="px-2 py-1 rounded bg-primary text-on-primary font-caption text-caption font-semibold shadow-sm hover:bg-primary-container transition-colors">
+                      Inspect
+                    </button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-6 rounded-full bg-transparent shrink-0"></span>
+<div>
+<span class="font-label-md text-label-md text-on-surface font-semibold">LCR-2026-0098</span>
+<span class="block font-caption text-caption text-secondary">Today, 08:15 AM</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="font-label-md text-label-md text-on-surface block font-semibold">MTH-202: Linear Algebra</span>
+<span class="font-caption text-caption text-secondary">Natural &amp; Applied Sciences • Sec A</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">Mon 08:00 - 09:30</span>
+<span class="font-caption text-caption text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">location_on</span>
+                      Science Amphitheater
+                    </span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium block">20m variance</span>
+<span class="font-caption text-caption text-secondary">AV projector bulb replacement</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full font-caption text-caption font-semibold bg-surface-container-high text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                    Extended +20m
+                  </span>
+</td>
+<td class="py-3 px-4">
+<span class="font-label-sm text-label-sm text-on-surface">Sarah Kaahin</span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="px-2 py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface font-caption text-caption font-medium transition-colors">
+                    Review
+                  </button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-6 rounded-full bg-transparent shrink-0"></span>
+<div>
+<span class="font-label-md text-label-md text-on-surface font-semibold">LCR-2026-0082</span>
+<span class="block font-caption text-caption text-secondary">Yesterday, 14:10</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="font-label-md text-label-md text-on-surface block font-semibold">ENG-104: Technical Writing</span>
+<span class="font-caption text-caption text-secondary">Humanities &amp; Lang. • Sec D</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">Sun 14:00 - 15:30</span>
+<span class="font-caption text-caption text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">location_on</span>
+                      Language Lab 1
+                    </span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium block">45m session shifted</span>
+<span class="font-caption text-caption text-secondary">Approved substitute dispatched</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full font-caption text-caption font-semibold bg-tertiary-fixed/30 text-on-tertiary-fixed-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-on-tertiary-fixed-variant"></span>
+                    Make-up Slot Confirmed
+                  </span>
+</td>
+<td class="py-3 px-4">
+<span class="font-label-sm text-label-sm text-on-surface">Dr. Hersi Duale</span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="px-2 py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface font-caption text-caption font-medium transition-colors">
+                    Dossier
+                  </button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-6 rounded-full bg-transparent shrink-0"></span>
+<div>
+<span class="font-label-md text-label-md text-on-surface font-semibold">LCR-2026-0079</span>
+<span class="block font-caption text-caption text-secondary">Yesterday, 11:45</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="font-label-md text-label-md text-on-surface block font-semibold">PHY-210: Mechanics</span>
+<span class="font-caption text-caption text-secondary">Electrical &amp; Telecom • Sec C</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">Sun 11:30 - 13:00</span>
+<span class="font-caption text-caption text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">location_on</span>
+                      Engineering Lab 4
+                    </span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium block">25m start variance</span>
+<span class="font-caption text-caption text-secondary">Lab equipment calibration hold</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full font-caption text-caption font-semibold bg-surface-container text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                    Resolved / Verified
+                  </span>
+</td>
+<td class="py-3 px-4">
+<span class="font-label-sm text-label-sm text-on-surface">Sarah Kaahin</span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="px-2 py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface font-caption text-caption font-medium transition-colors">
+                    Review
+                  </button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-3 px-4">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-6 rounded-full bg-transparent shrink-0"></span>
+<div>
+<span class="font-label-md text-label-md text-on-surface font-semibold">LCR-2026-0064</span>
+<span class="block font-caption text-caption text-secondary">16 Feb 2026</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="font-label-md text-label-md text-on-surface block font-semibold">BA-310: Financial Accounting</span>
+<span class="font-caption text-caption text-secondary">Business Administration • Sec 1</span>
+</td>
+<td class="py-3 px-4">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-medium">Thu 10:15 - 11:45</span>
+<span class="font-caption text-caption text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">location_on</span>
+                      Hall A - Main Quad
+                    </span>
+</div>
+</td>
+<td class="py-3 px-4">
+<div>
+<span class="font-label-sm text-label-sm text-secondary font-medium block">15m unconfirmed</span>
+<span class="font-caption text-caption text-secondary">Attendance sync confirmed normal</span>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full font-caption text-caption font-semibold bg-surface-container-high text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                    Informational Close
+                  </span>
+</td>
+<td class="py-3 px-4">
+<span class="font-label-sm text-label-sm text-on-surface">Dr. Hersi Duale</span>
+</td>
+<td class="py-3 px-4 text-right">
+<button class="px-2 py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface font-caption text-caption font-medium transition-colors">
+                    Archive
+                  </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Controls -->
+<div class="p-space-md bg-surface-container-low/40 flex items-center justify-between font-body-sm text-body-sm text-secondary">
+<div class="flex items-center gap-2 font-caption text-caption">
+<span>Showing <strong class="text-on-surface font-semibold">1-5</strong> of <strong class="text-on-surface font-semibold">19</strong> active variance reports</span>
+<span class="text-outline-variant">•</span>
+<span>Batch ID: SPR26-W08-A</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="px-2.5 py-1 rounded bg-surface-container text-on-surface font-caption text-caption font-medium opacity-50 cursor-not-allowed">Previous</button>
+<span class="px-2.5 py-1 rounded bg-primary text-on-primary font-caption text-caption font-semibold">1</span>
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface font-caption text-caption font-medium transition-colors">2</button>
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface font-caption text-caption font-medium transition-colors">3</button>
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface font-caption text-caption font-medium transition-colors">Next</button>
+</div>
+</div>
+</div>
+<!-- Part B: Facility Schedule & Active Conflict Matrix -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+<div class="flex items-center gap-2">
+<span class="p-1.5 rounded-lg bg-surface-container text-primary">
+<span class="material-symbols-outlined text-[20px]">domain_verification</span>
+</span>
+<div>
+<h2 class="font-title-sm text-title-sm text-on-surface">Lecture Timetable &amp; Facility Conflict Monitor</h2>
+<p class="font-caption text-caption text-secondary">Real-time room occupancy, hardware telematics, and automated RFID scanner status</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-caption text-caption text-on-tertiary-fixed-variant bg-tertiary-fixed/30 px-2 py-0.5 rounded-full font-semibold">
+              Syncing Campus RFID Gates
+            </span>
+</div>
+</div>
+<!-- Facilities Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm">
+<!-- Facility Card 1 -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface font-bold">Hall B - Room 201</span>
+<span class="px-1.5 py-0.5 rounded text-primary bg-primary/10 font-caption text-caption font-semibold">High Variance</span>
+</div>
+<span class="font-caption text-caption text-secondary mt-0.5 block">Tech Wing • Capacity: 90 seats</span>
+<div class="mt-3 p-2 bg-surface-container-lowest rounded-lg">
+<span class="font-caption text-caption text-secondary block">Current Session:</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold block truncate">CS-301 Algorithms (Extended)</span>
+<span class="font-caption text-caption text-primary">RFID Scanners: 82 / 90 Logged</span>
+</div>
+</div>
+<div class="mt-3 pt-2 flex items-center justify-between font-caption text-caption text-secondary">
+<span>Next: EE-201 (10:15)</span>
+<span class="text-error font-medium">15m Overlap Risk</span>
+</div>
+</div>
+<!-- Facility Card 2 -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface font-bold">Hall A - Main Quad</span>
+<span class="px-1.5 py-0.5 rounded text-on-tertiary-fixed-variant bg-tertiary-fixed/30 font-caption text-caption font-semibold">Optimal</span>
+</div>
+<span class="font-caption text-caption text-secondary mt-0.5 block">Central Campus • Capacity: 180 seats</span>
+<div class="mt-3 p-2 bg-surface-container-lowest rounded-lg">
+<span class="font-caption text-caption text-secondary block">Current Session:</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold block truncate">BA-201 Microeconomics</span>
+<span class="font-caption text-caption text-on-tertiary-fixed-variant">On-schedule (09:00 - 10:30)</span>
+</div>
+</div>
+<div class="mt-3 pt-2 flex items-center justify-between font-caption text-caption text-secondary">
+<span>Next: MTH-101 (10:45)</span>
+<span class="text-on-tertiary-fixed-variant font-medium">Buffer OK (15m)</span>
+</div>
+</div>
+<!-- Facility Card 3 -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface font-bold">Engineering Lab 4</span>
+<span class="px-1.5 py-0.5 rounded text-error bg-error-container font-caption text-caption font-semibold">Conflict Alert</span>
+</div>
+<span class="font-caption text-caption text-secondary mt-0.5 block">East Wing • Capacity: 40 Workstations</span>
+<div class="mt-3 p-2 bg-surface-container-lowest rounded-lg">
+<span class="font-caption text-caption text-secondary block">Current Session:</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold block truncate">PHY-210 Lab / EE-312 Overlap</span>
+<span class="font-caption text-caption text-error font-medium">Double-booked slot 11:30</span>
+</div>
+</div>
+<div class="mt-3 pt-2 flex items-center justify-between font-caption text-caption text-secondary">
+<span>Resolution: Reassigning Lab 2</span>
+<button class="text-primary font-semibold hover:underline">Resolve</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Inspection Dossier & Academic Directives (4 of 12 cols = 33%) -->
+<div class="xl:col-span-4 flex flex-col gap-space-lg">
+<!-- Primary Case Verification Dossier (Target Case: LCR-2026-0105) -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm flex flex-col overflow-hidden">
+<!-- Header Banner -->
+<div class="p-space-md bg-surface-container-high/60 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary animate-ping"></span>
+<div>
+<span class="font-caption text-caption uppercase tracking-wider text-secondary font-bold">Verification Dossier</span>
+<h3 class="font-label-md text-label-md text-primary font-bold">LCR-2026-0105</h3>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-caption text-caption font-semibold">
+            Spring 2026
+          </span>
+</div>
+<!-- Dossier Body -->
+<div class="p-space-md flex flex-col gap-space-md">
+<!-- Incident Summary Block -->
+<div>
+<span class="font-caption text-caption uppercase text-secondary tracking-wide font-semibold">Course &amp; Unit Context</span>
+<h4 class="font-title-sm text-title-sm text-on-surface font-semibold mt-0.5">
+              CS-301: Design &amp; Analysis of Algorithms
+            </h4>
+<div class="flex items-center gap-2 text-secondary font-body-sm text-body-sm mt-1">
+<span>Lecture 14 (Core Unit)</span>
+<span class="text-outline-variant">•</span>
+<span>Cohort: Year 3 Sec B</span>
+</div>
+</div>
+<!-- Chronology & Verification Parameters -->
+<div class="p-3 bg-surface-container-low rounded-xl flex flex-col gap-2">
+<div class="flex items-center justify-between font-caption text-caption">
+<span class="text-secondary">Official Start:</span>
+<strong class="text-on-surface font-semibold">08:30 AM</strong>
+</div>
+<div class="flex items-center justify-between font-caption text-caption">
+<span class="text-secondary">Logged Gate Entry:</span>
+<strong class="text-on-surface font-semibold">09:12 AM (42m variance)</strong>
+</div>
+<div class="flex items-center justify-between font-caption text-caption">
+<span class="text-secondary">Venue:</span>
+<span class="text-on-surface font-medium">Lecture Hall B-201 (90 Seats)</span>
+</div>
+<div class="flex items-center justify-between font-caption text-caption">
+<span class="text-secondary">Report Origin:</span>
+<span class="text-on-surface font-medium">Cohort Academic Rep (Ahmed A.)</span>
+</div>
+</div>
+<!-- Neutral Departmental Statement / Fact Check -->
+<div class="p-3 bg-surface-container rounded-xl flex flex-col gap-1.5">
+<div class="flex items-center gap-1.5 text-primary font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[16px]">notes</span>
+              Departmental Fact Verification
+            </div>
+<p class="font-body-sm text-body-sm text-on-surface leading-relaxed italic">
+              “Prof. Duale reported sudden university shuttle mechanical breakdown en route from Hargeisa East terminus. Academic Office radio confirmed transport delay.”
+            </p>
+<div class="flex items-center gap-2 mt-1 font-caption text-caption text-secondary">
+<span class="material-symbols-outlined text-[14px] text-tertiary-container">check_circle</span>
+<span>Infrastructure delay corroborated by Campus Logistics</span>
+</div>
+</div>
+<!-- Academic Office Determination Actions -->
+<div class="flex flex-col gap-2 pt-1">
+<span class="font-caption text-caption uppercase text-secondary font-semibold">Registrar Determinations:</span>
+<button class="w-full py-2.5 px-3 bg-primary-container text-on-primary rounded-lg font-label-md text-label-md font-semibold hover:bg-primary transition-all shadow-sm flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">event_repeat</span>
+              Approve 45m Make-up Session Schedule
+            </button>
+<button class="w-full py-2 px-3 bg-surface-container text-on-surface rounded-lg font-label-md text-label-md hover:bg-surface-variant transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">done_all</span>
+              Log Excused Infrastructure Delay
+            </button>
+<button class="w-full py-1.5 px-3 bg-transparent text-primary hover:bg-primary/5 rounded-lg font-label-sm text-label-sm transition-colors flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">notifications_active</span>
+              Notify Course Rep &amp; Students
+            </button>
+</div>
+</div>
+<div class="px-space-md py-2.5 bg-surface-container-low text-secondary font-caption text-caption flex items-center justify-between">
+<span>Triage assigned: <strong>Dr. Hersi Duale</strong></span>
+<span class="text-primary font-semibold hover:underline cursor-pointer">Reassign Dossier</span>
+</div>
+</div>
+<!-- Today's Academic Timetable Health -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="p-1.5 rounded-lg bg-surface-container text-secondary">
+<span class="material-symbols-outlined text-[18px]">query_stats</span>
+</span>
+<h3 class="font-title-sm text-title-sm text-on-surface">Today's Timetable Health</h3>
+</div>
+<span class="font-caption text-caption text-secondary">Mon, 17 Feb</span>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<div class="p-3 bg-surface-container-low rounded-lg">
+<span class="font-caption text-caption text-secondary block">Lectures Scheduled</span>
+<span class="font-headline-md text-headline-md text-on-surface font-bold mt-1 block">142</span>
+<span class="font-caption text-caption text-secondary">Across 4 faculties</span>
+</div>
+<div class="p-3 bg-surface-container-low rounded-lg">
+<span class="font-caption text-caption text-secondary block">On-Time Commencement</span>
+<span class="font-headline-md text-headline-md text-on-tertiary-fixed-variant font-bold mt-1 block">97.2%</span>
+<span class="font-caption text-caption text-secondary">138 verified start</span>
+</div>
+</div>
+<div class="p-3 bg-surface-container rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">pending_actions</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">4 Reschedule Petitions</span>
+<span class="font-caption text-caption text-secondary">Awaiting room availability lock</span>
+</div>
+</div>
+<button class="px-2 py-1 rounded bg-surface-container-lowest text-primary font-caption text-caption font-semibold shadow-sm hover:bg-surface-container transition-colors">
+            Process
+          </button>
+</div>
+</div>
+<!-- Academic Policies & Timetable Regulations Directive Card -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center gap-2">
+<span class="p-1 rounded bg-surface-container text-primary">
+<span class="material-symbols-outlined text-[18px]">menu_book</span>
+</span>
+<h3 class="font-title-sm text-title-sm text-on-surface">Academic Policies &amp; Regulations</h3>
+</div>
+<div class="p-3 bg-surface-container-low rounded-lg border-l-2 border-primary">
+<span class="font-caption text-caption uppercase text-primary font-bold block">Policy Reference: Handbook §9.2</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 leading-normal">
+            “<strong>Instructor Absences and Rescheduling Protocols:</strong> Make-up classes must be scheduled within 10 instructional days without introducing student timetable room conflicts. All variances exceeding 30 minutes require formal departmental notification.”
+          </p>
+</div>
+<div class="flex items-center justify-between pt-1 font-caption text-caption">
+<a class="text-primary font-semibold hover:underline flex items-center gap-1" href="#">
+<span>Read Complete Faculty By-laws</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+<span class="text-secondary">Rev. 2025/2026</span>
+</div>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

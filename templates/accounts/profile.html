@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}My Profile{% endblock %}
+{% block crumb %}Profile{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto space-y-6 animate-in">
+  <div class="flex items-center justify-between pb-3 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Account Settings · User Profile</span>
+      </div>
+      <h1 class="page-title mt-1">Institutional Profile</h1>
+    </div>
+    <a href="{% url 'accounts:password_change' %}" class="btn-secondary btn-sm">
+      <span class="material-symbols-outlined text-[17px]">key</span>
+      <span>Change Password</span>
+    </a>
+  </div>
+
+  <div class="card card-pad shadow-card space-y-5">
+    <div class="flex items-center gap-4 pb-4 border-b border-line">
+      <div class="avatar w-16 h-16 text-[20px]">{{ user.initials }}</div>
+      <div>
+        <h2 class="font-title-sm text-title-sm text-on-surface">{{ user.display_name }}</h2>
+        <p class="font-caption text-caption text-secondary">{{ user.email }} · {{ user.get_role_display }}</p>
+        <div class="mt-1 flex items-center gap-2">
+          {% account_badge user %}
+          <span class="chip text-[11px]">{{ user.department.name|default:"General Unit" }}</span>
+        </div>
+      </div>
+    </div>
+
+    <form method="post" class="space-y-4" novalidate>
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+      <div class="notice bg-error-container text-on-error-container">{{ form.non_field_errors|join:" " }}</div>
+      {% endif %}
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {% include "partials/field.html" with field=form.first_name %}
+        {% include "partials/field.html" with field=form.last_name %}
+      </div>
+
+      <div class="pt-4 border-t border-line flex items-center justify-end gap-3">
+        <button type="submit" class="btn-primary">Update Profile</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

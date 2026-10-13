@@ -1,0 +1,482 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}{{ req.reference }} · {{ req.title }}{% endblock %}
+{% block crumb %}{{ req.reference }}{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+  <!-- Back button & Case Header Controls -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 no-print">
+    <div class="flex items-center gap-2 text-body-sm text-secondary">
+      <a href="{% if user.is_student %}{% url 'cases:my_requests' %}{% else %}{% url 'cases:queue' %}{% endif %}" class="inline-flex items-center gap-1 hover:text-on-surface">
+        <span class="material-symbols-outlined text-[18px]">arrow_back</span> Back to Requests
+      </a>
+      <span>/</span>
+      <span class="text-on-surface font-semibold">{{ req.reference }}</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="window.print()" class="btn-secondary btn-sm" id="btn-print-case">
+        <span class="material-symbols-outlined text-[17px]">print</span>
+        <span>Print Case File</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Primary Case Header Banner -->
+  <div class="card card-pad shadow-card">
+    <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+      <div class="space-y-2 max-w-3xl">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="chip-maroon">{{ req.get_request_type_display }}</span>
+          <span class="font-label-md text-label-md text-secondary">#{{ req.reference }}</span>
+          <span class="text-secondary text-caption">·</span>
+          <span class="font-caption text-caption text-secondary flex items-center gap-1">
+            <span class="material-symbols-outlined text-[15px]">schedule</span> Submitted {{ req.created_at|date:"F d, Y · h:i A" }}
+          </span>
+          {% if req.is_confidential %}
+          <span class="badge bg-[#FEE2E2] text-[#991B1B] font-semibold">
+            <span class="material-symbols-outlined text-[14px]">lock</span> Confidential Case
+          </span>
+          {% endif %}
+        </div>
+        <h1 class="font-headline-lg text-headline-lg text-on-surface leading-snug">{{ req.title }}</h1>
+        <div class="flex flex-wrap items-center gap-3 font-body-sm text-body-sm text-secondary pt-1">
+          <span class="flex items-center gap-1.5 font-medium text-on-surface">
+            <span class="material-symbols-outlined text-[18px] text-primary-container">domain</span>
+            {{ req.department.name|default:"Unassigned Department" }}
+          </span>
+          <span>·</span>
+          <span>Priority: <strong class="text-on-surface capitalize">{{ req.get_priority_display }}</strong></span>
+          {% if req.due_at %}
+          <span>·</span>
+          <span class="flex items-center gap-1 {% if req.is_overdue %}text-error font-semibold{% endif %}">
+            <span class="material-symbols-outlined text-[16px]">hourglass_bottom</span>
+            SLA Target: {{ req.due_at|date:"M d, Y" }}
+            {% if req.is_overdue %}(Breached){% endif %}
+          </span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="flex flex-col items-end gap-2 shrink-0">
+        <div>{% status_badge req.status %}</div>
+        {% if req.decision %}
+        <span class="badge {% if req.decision == 'approved' %}bg-[#DCFCE7] text-[#166534]{% else %}bg-[#FEE2E2] text-[#991B1B]{% endif %} font-semibold">
+          Decision: {{ req.get_decision_display }}
+        </span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Layout: 8 cols (Details + Timeline) & 4 cols (Actions + Metadata) -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <div class="lg:col-span-8 space-y-6">
+      
+      <!-- Student Submission Case File Card (Stitch Design) -->
+      <div class="card card-pad shadow-card space-y-5">
+        <div class="flex items-center justify-between pb-3 border-b border-line">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary-container text-[22px]">assignment</span>
+            <h2 class="font-title-sm text-title-sm text-on-surface">Case Submission Dossier</h2>
+          </div>
+          <span class="font-caption text-caption text-[#166534] bg-[#DCFCE7] px-2.5 py-0.5 rounded-full font-semibold">
+            Verified University Registration
+          </span>
+        </div>
+
+        <!-- Student Identity Summary Bar (for staff/deans) -->
+        {% if not user.is_student %}
+        <div class="p-3.5 rounded-xl bg-surface-container-low/70 border border-line flex flex-wrap items-center justify-between gap-3 font-body-sm text-body-sm">
+          <div class="flex items-center gap-3">
+            <div class="avatar w-10 h-10">{{ req.student.initials }}</div>
+            <div>
+              <div class="font-semibold text-on-surface">{{ req.student.display_name }}</div>
+              <div class="text-secondary font-caption text-caption">Student ID: {{ req.student.student_profile.student_id|default:"N/A" }} · {{ req.student.email }}</div>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="text-secondary font-caption text-caption">Program of Study</div>
+            <div class="font-medium text-on-surface">{{ req.student.student_profile.program|default:"General Academic" }} (Year {{ req.student.student_profile.year_of_study|default:"1" }})</div>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Type Specific Dossier Data -->
+        {% if req.request_type == "absence" %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="p-4 rounded-xl bg-surface-container-low/50 border border-line">
+            <span class="font-caption text-caption text-secondary uppercase font-semibold">Leave Category</span>
+            <div class="font-title-sm text-title-sm text-on-surface mt-1">{{ req.get_leave_type_display }} ({{ req.category.name|default:"General" }})</div>
+          </div>
+          <div class="p-4 rounded-xl bg-surface-container-low/50 border border-line">
+            <span class="font-caption text-caption text-secondary uppercase font-semibold">Requested Period</span>
+            <div class="font-title-sm text-title-sm text-on-surface mt-1 flex items-center justify-between">
+              <span>{{ req.start_date|date:"M d, Y" }} – {{ req.end_date|date:"M d, Y" }}</span>
+              <span class="font-label-sm text-label-sm text-primary-container font-semibold">({{ req.duration_days }} days)</span>
+            </div>
+          </div>
+        </div>
+        {% if req.reason %}
+        <div>
+          <span class="font-caption text-caption text-secondary uppercase font-semibold block">Primary Justification</span>
+          <div class="p-3 rounded-xl bg-white border border-line mt-1 font-body-sm text-body-sm text-on-surface font-medium">{{ req.reason }}</div>
+        </div>
+        {% endif %}
+
+        {% elif req.request_type == "problem" %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="p-4 rounded-xl bg-surface-container-low/50 border border-line">
+            <span class="font-caption text-caption text-secondary uppercase font-semibold">Issue Category</span>
+            <div class="font-title-sm text-title-sm text-on-surface mt-1">{{ req.category.name|default:"General Problem" }}</div>
+          </div>
+          <div class="p-4 rounded-xl bg-surface-container-low/50 border border-line">
+            <span class="font-caption text-caption text-secondary uppercase font-semibold">Location / Venue</span>
+            <div class="font-title-sm text-title-sm text-on-surface mt-1">{{ req.location|default:"Not specified" }}</div>
+          </div>
+        </div>
+
+        {% elif req.request_type == "late_class" %}
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="p-4 rounded-xl bg-surface-container-low/50 border border-line">
+            <span class="font-caption text-caption text-secondary uppercase font-semibold">Course Code</span>
+            <div class="font-title-sm text-title-sm text-on-surface mt-1">{{ req.course }}</div>
+          </div>
+          <div class="p-4 rounded-xl bg-surface-container-low/50 border border-line">
+            <span class="font-caption text-caption text-secondary uppercase font-semibold">Instructor</span>
+            <div class="font-title-sm text-title-sm text-on-surface mt-1">{{ req.instructor_name|default:"Unspecified" }}</div>
+          </div>
+          <div class="p-4 rounded-xl bg-surface-container-low/50 border border-line">
+            <span class="font-caption text-caption text-secondary uppercase font-semibold">Variance / Timing</span>
+            <div class="font-title-sm text-title-sm text-on-surface mt-1">
+              {% if req.class_did_not_start %}
+              <span class="text-error font-bold">Did not start</span>
+              {% else %}
+              {{ req.scheduled_start|time:"h:i A" }} &rarr; {{ req.actual_start|time:"h:i A" }}
+              {% if req.delay_minutes %}<span class="text-error">({{ req.delay_minutes }}m delay)</span>{% endif %}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Narrative Description -->
+        <div>
+          <span class="font-caption text-caption text-secondary uppercase font-semibold block mb-1">Student Case Narrative</span>
+          <div class="p-4 rounded-xl bg-canvas border border-line text-body-md text-body-md text-on-surface whitespace-pre-line leading-relaxed">
+            {{ req.description }}
+          </div>
+        </div>
+
+        <!-- Submitted Documentation Attachments -->
+        <div>
+          <span class="font-caption text-caption text-secondary uppercase font-semibold block mb-2">Submitted Documentation</span>
+          {% if attachments %}
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {% for att in attachments %}
+            <div class="p-3.5 rounded-xl bg-white border border-line flex items-center justify-between gap-3 shadow-sm hover:border-primary-container transition-colors">
+              <div class="flex items-center gap-3 min-w-0">
+                <span class="w-10 h-10 rounded-lg bg-surface-container text-primary-container flex items-center justify-center shrink-0">
+                  <span class="material-symbols-outlined text-[20px]">
+                    {% if att.extension == 'pdf' %}picture_as_pdf{% elif att.extension in 'jpg,jpeg,png' %}image{% else %}description{% endif %}
+                  </span>
+                </span>
+                <div class="min-w-0">
+                  <span class="block font-label-md text-label-md text-on-surface truncate">{{ att.original_name }}</span>
+                  <span class="block font-caption text-caption text-secondary">{{ att.size_display }} · Uploaded by {{ att.uploaded_by.display_name }}</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-1 shrink-0">
+                <a href="{% url 'cases:attachment' att.pk %}?inline=1" target="_blank" class="btn-ghost btn-sm px-2" title="Preview in browser">
+                  <span class="material-symbols-outlined text-[18px]">visibility</span>
+                </a>
+                <a href="{% url 'cases:attachment' att.pk %}" class="btn-ghost btn-sm px-2 text-primary-container" title="Download">
+                  <span class="material-symbols-outlined text-[18px]">download</span>
+                </a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <p class="font-body-sm text-body-sm text-secondary italic">No attachments provided with this initial submission.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Official University Discussion & Responses Thread (Stitch Design) -->
+      <div class="card card-pad shadow-card space-y-6">
+        <div class="flex items-center justify-between pb-3 border-b border-line">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary-container text-[22px]">forum</span>
+            <h2 class="font-title-sm text-title-sm text-on-surface">Official University Discussion & Responses</h2>
+          </div>
+          <span class="font-caption text-caption text-secondary flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">lock</span> Encrypted Student Channel
+          </span>
+        </div>
+
+        <!-- Timeline Messages -->
+        <div class="space-y-4">
+          {% for item in timeline %}
+          <div class="p-4 rounded-xl border {% if item.is_internal %}bg-[#FEF3C7]/20 border-[#FEF3C7] text-on-surface{% elif item.author.is_student %}bg-white border-line{% else %}bg-surface-container-low/60 border-surface-container{% endif %}">
+            <div class="flex items-center justify-between gap-2 pb-2 border-b border-line/60">
+              <div class="flex items-center gap-2.5">
+                <div class="avatar w-8 h-8 text-[12px] {% if item.is_internal %}bg-[#92400E]{% elif item.author.is_student %}bg-secondary{% endif %}">
+                  {{ item.author.initials|default:"SY" }}
+                </div>
+                <div>
+                  <span class="font-label-md text-label-md text-on-surface font-semibold">{{ item.author.display_name|default:"System Event" }}</span>
+                  <span class="font-caption text-caption text-secondary ml-1.5">({{ item.author.subtitle|default:"System Audit" }})</span>
+                  {% if item.is_internal %}
+                  <span class="badge bg-[#FEF3C7] text-[#92400E] text-[10px] ml-2 font-bold uppercase">Staff Internal Note</span>
+                  {% endif %}
+                </div>
+              </div>
+              <span class="font-caption text-caption text-secondary">{{ item.created_at|date:"M d, Y · h:i A" }}</span>
+            </div>
+
+            <div class="pt-3 font-body-md text-body-md text-on-surface whitespace-pre-line leading-relaxed">
+              {% if item.kind == "status" %}
+              <div class="flex items-center gap-2 font-medium text-primary-container">
+                <span class="material-symbols-outlined text-[18px]">sync_alt</span>
+                Status updated to <strong>{{ item.get_new_status_display }}</strong>
+              </div>
+              {% if item.body %}<p class="mt-2 text-secondary">{{ item.body }}</p>{% endif %}
+              {% else %}
+              {{ item.body }}
+              {% endif %}
+            </div>
+
+            <!-- Comment Attachments -->
+            {% if item.attachments.all %}
+            <div class="mt-3 pt-3 border-t border-line/60 flex flex-wrap gap-2">
+              {% for a in item.attachments.all %}
+              <a href="{% url 'cases:attachment' a.pk %}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-line text-caption font-label-sm text-primary-container hover:bg-canvas">
+                <span class="material-symbols-outlined text-[16px]">attachment</span>
+                <span>{{ a.original_name }}</span>
+                <span class="text-secondary">({{ a.size_display }})</span>
+              </a>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+          {% empty %}
+          <p class="font-body-sm text-body-sm text-secondary italic py-2">No responses or notes recorded yet.</p>
+          {% endfor %}
+        </div>
+
+        <!-- Add Response / Internal Note Form -->
+        {% if comment_form %}
+        <div class="pt-4 border-t border-line">
+          <form method="post" action="{% url 'cases:action' req.reference 'comment' %}" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+            <div>
+              <div class="flex items-center justify-between pb-1">
+                <label for="id_c-body" class="label">
+                  {% if user.is_student %}Write a reply to the university staff{% else %}Add Response or Internal Note{% endif %}
+                </label>
+                <span class="font-caption text-caption text-secondary">Markdown supported</span>
+              </div>
+              {% include "partials/field.html" with field=comment_form.body %}
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div class="space-y-2">
+                {% if comment_form.is_internal %}
+                {% include "partials/field.html" with field=comment_form.is_internal %}
+                {% endif %}
+                <div class="max-w-xs">
+                  {{ comment_form.attachments }}
+                </div>
+              </div>
+              <button type="submit" class="btn-primary" id="btn-post-comment">
+                <span class="material-symbols-outlined text-[18px]">send</span>
+                <span>Send Response</span>
+              </button>
+            </div>
+          </form>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Right Column: Case Actions, Workflow Audit Timeline, Department Info (Stitch Design) -->
+    <div class="lg:col-span-4 space-y-6">
+      
+      <!-- ACTION REQUIRED BANNER -->
+      {% if req.status == "waiting" and user.is_student %}
+      <div class="card p-5 border-l-4 border-l-[#F59E0B] bg-[#FEF3C7]/40 space-y-3">
+        <div class="flex items-start gap-2.5">
+          <span class="material-symbols-outlined text-[#92400E] text-[24px]">priority_high</span>
+          <div>
+            <h3 class="font-title-sm text-title-sm text-[#92400E]">Action Required From You</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">The department has requested additional information or documentation to proceed with your case.</p>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Staff / Dean Processing Control Panel -->
+      {% if p.process or p.assign or p.return or p.escalate or p.take or p.delete %}
+      <div class="card card-pad shadow-card space-y-5">
+        <div class="flex items-center justify-between pb-3 border-b border-line">
+          <h3 class="font-title-sm text-title-sm text-on-surface flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary-container text-[20px]">tune</span>
+            Staff Action Console
+          </h3>
+          <span class="chip">Authorized</span>
+        </div>
+
+        <!-- Take Case Button -->
+        {% if p.take %}
+        <form method="post" action="{% url 'cases:action' req.reference 'take' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn-primary w-full" id="btn-take-case">
+            <span class="material-symbols-outlined text-[18px]">handshake</span>
+            <span>Take Ownership of Case</span>
+          </button>
+        </form>
+        {% endif %}
+
+        <!-- Update Status Form -->
+        {% if status_form %}
+        <form method="post" action="{% url 'cases:action' req.reference 'status' %}" class="space-y-3 pt-2 border-t border-line">
+          {% csrf_token %}
+          <label class="label">Update Case Status</label>
+          {% include "partials/field.html" with field=status_form.status %}
+          {% include "partials/field.html" with field=status_form.message %}
+          <button type="submit" class="btn-primary w-full btn-sm">Update Status</button>
+        </form>
+        {% endif %}
+
+        <!-- Assign to Staff (Dean / Head) -->
+        {% if assign_form %}
+        <form method="post" action="{% url 'cases:action' req.reference 'assign' %}" class="space-y-3 pt-2 border-t border-line">
+          {% csrf_token %}
+          <label class="label">Assign to Department Staff</label>
+          {% include "partials/field.html" with field=assign_form.staff %}
+          {% include "partials/field.html" with field=assign_form.note %}
+          <button type="submit" class="btn-secondary w-full btn-sm">Assign Case</button>
+        </form>
+        {% endif %}
+
+        <!-- Return for Additional Work (Dean / Head) -->
+        {% if return_form %}
+        <form method="post" action="{% url 'cases:action' req.reference 'return' %}" class="space-y-3 pt-2 border-t border-line">
+          {% csrf_token %}
+          <label class="label">Return to Assigned Staff</label>
+          {% include "partials/field.html" with field=return_form.staff %}
+          {% include "partials/field.html" with field=return_form.note %}
+          <button type="submit" class="btn-danger w-full btn-sm">Return for Rework</button>
+        </form>
+        {% endif %}
+
+        <!-- Escalate Case -->
+        {% if escalate_form %}
+        <form method="post" action="{% url 'cases:action' req.reference 'escalate' %}" class="space-y-3 pt-2 border-t border-line">
+          {% csrf_token %}
+          <label class="label">Escalate to Head / Office</label>
+          {% include "partials/field.html" with field=escalate_form.target %}
+          {% include "partials/field.html" with field=escalate_form.note %}
+          <button type="submit" class="btn-secondary w-full btn-sm text-[#9A3412]">Escalate Case</button>
+        </form>
+        {% endif %}
+
+        <!-- Secure Delete Case (Head Authority) -->
+        {% if p.delete %}
+        <div class="pt-3 border-t border-line">
+          <button type="button"
+                  data-delete-modal-trigger
+                  data-action-url="{% url 'cases:delete' req.reference %}"
+                  data-target-name="{{ req.reference }}"
+                  data-target-title="Case {{ req.reference }} — {{ req.title }}"
+                  data-entity-type="Student Case"
+                  class="btn-danger w-full btn-sm flex items-center justify-center gap-1.5 opacity-90 hover:opacity-100"
+                  id="btn-delete-case">
+            <span class="material-symbols-outlined text-[16px]">delete_forever</span>
+            <span>Delete Case (Head Authority)</span>
+          </button>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <!-- Case Audit Timeline (Stitch Design) -->
+      <div class="card card-pad shadow-card space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-line">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary-container text-[20px]">history_edu</span>
+            <h3 class="font-title-sm text-title-sm text-on-surface">Case Audit Timeline</h3>
+          </div>
+          <span class="font-caption text-caption text-secondary">Traceable Log</span>
+        </div>
+
+        <ol class="space-y-4 font-body-sm text-body-sm">
+          <li class="flex items-start gap-3">
+            <span class="w-7 h-7 rounded-full bg-surface-container text-primary-container flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[15px]">send</span>
+            </span>
+            <div>
+              <strong class="font-semibold text-on-surface block">Request Submitted</strong>
+              <span class="text-secondary text-caption block">{{ req.created_at|date:"M d, Y · h:i A" }}</span>
+              <span class="text-caption text-secondary">Logged by {{ req.student.display_name }}</span>
+            </div>
+          </li>
+
+          {% for assign in assignments %}
+          <li class="flex items-start gap-3">
+            <span class="w-7 h-7 rounded-full bg-surface-container text-primary-container flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[15px]">alt_route</span>
+            </span>
+            <div>
+              <strong class="font-semibold text-on-surface block">{{ assign.get_action_display }}</strong>
+              <span class="text-secondary text-caption block">{{ assign.created_at|date:"M d, Y · h:i A" }}</span>
+              <span class="text-caption text-secondary">
+                By {{ assign.performed_by.display_name }} &rarr; {{ assign.assigned_to.display_name|default:assign.to_department.name }}
+              </span>
+              {% if assign.note %}<p class="text-caption text-on-surface-variant mt-0.5">{{ assign.note }}</p>{% endif %}
+            </div>
+          </li>
+          {% endfor %}
+
+          {% if req.resolved_at %}
+          <li class="flex items-start gap-3">
+            <span class="w-7 h-7 rounded-full bg-[#DCFCE7] text-[#166534] flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[15px]">check_circle</span>
+            </span>
+            <div>
+              <strong class="font-semibold text-[#166534] block">Case Resolved</strong>
+              <span class="text-secondary text-caption block">{{ req.resolved_at|date:"M d, Y · h:i A" }}</span>
+            </div>
+          </li>
+          {% endif %}
+        </ol>
+      </div>
+
+      <!-- Department Contact Info Card (Stitch Design) -->
+      <div class="card card-pad shadow-card space-y-3 font-body-sm text-body-sm">
+        <div class="flex items-center gap-2 border-b border-line pb-2.5">
+          <span class="material-symbols-outlined text-primary-container text-[20px]">contact_support</span>
+          <h3 class="font-title-sm text-title-sm text-on-surface">Department Contact Info</h3>
+        </div>
+        <div class="space-y-2 text-on-surface-variant">
+          <div class="flex items-start gap-2">
+            <span class="material-symbols-outlined text-secondary text-[18px] shrink-0 mt-0.5">location_on</span>
+            <span>{{ req.department.location|default:"Abaarso Tech Campus, Academic Wing" }}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary text-[18px] shrink-0">mail</span>
+            <a href="mailto:{{ req.department.contact_email|default:site.support_email }}" class="text-primary-container hover:underline">
+              {{ req.department.contact_email|default:site.support_email }}
+            </a>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary text-[18px] shrink-0">schedule</span>
+            <span>{{ site.support_hours }}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

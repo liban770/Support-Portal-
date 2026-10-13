@@ -1,0 +1,19 @@
+{% extends "base_public.html" %}
+{% block title %}404 Not Found{% endblock %}
+{% block content %}
+<div class="card shadow-float overflow-hidden text-center">
+  <div class="h-1.5 brand-bar"></div>
+  <div class="p-8 sm:p-10 space-y-3">
+    <span class="mx-auto w-16 h-16 rounded-2xl bg-surface-container text-primary-container flex items-center justify-center">
+      <span class="material-symbols-outlined text-[32px]">search_off</span>
+    </span>
+    <h1 class="font-headline-lg text-headline-lg text-on-surface">404 — Case or Page Not Found</h1>
+    <p class="font-body-md text-body-md text-secondary">
+      The requested page, reference number, or case file does not exist or has been archived.
+    </p>
+    <div class="pt-4">
+      <a href="{% url 'core:dashboard' %}" class="btn-primary w-full">Return to Dashboard</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

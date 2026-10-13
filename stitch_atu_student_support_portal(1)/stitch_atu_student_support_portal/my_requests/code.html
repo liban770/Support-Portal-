@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {"darkMode":"class","theme":{"extend":{"colors":{"surface-container":"#eaedfb","error-container":"#ffdad6","tertiary-fixed":"#b3f2ba","secondary":"#605d65","surface-container-low":"#f1f3ff","on-primary-fixed-variant":"#7e2644","on-tertiary-fixed":"#00210a","primary-container":"#6b1736","on-primary":"#ffffff","inverse-surface":"#2c303b","tertiary-fixed-dim":"#97d59f","primary-fixed-dim":"#ffb1c4","primary":"#4d0021","primary-fixed":"#ffd9e0","on-surface-variant":"#544246","on-tertiary-fixed-variant":"#165128","on-surface":"#171c25","on-secondary-container":"#66636b","outline":"#877276","on-tertiary":"#ffffff","on-error":"#ffffff","on-secondary-fixed-variant":"#48454d","on-background":"#171c25","surface-variant":"#dfe2f0","inverse-on-surface":"#edf0fe","on-tertiary-container":"#74af7d","background":"#f9f9ff","on-primary-container":"#ee809f","surface-container-lowest":"#ffffff","tertiary-container":"#00421b","on-error-container":"#93000a","secondary-container":"#e6e0ea","surface-tint":"#9c3e5c","surface-container-high":"#e4e8f5","on-secondary-fixed":"#1c1b21","on-secondary":"#ffffff","tertiary":"#002a0e","error":"#ba1a1a","secondary-fixed-dim":"#cac5ce","inverse-primary":"#ffb1c4","surface-container-highest":"#dfe2f0","surface":"#f9f9ff","surface-dim":"#d6dae7","on-primary-fixed":"#3f001a","surface-bright":"#f9f9ff","secondary-fixed":"#e6e0ea","outline-variant":"#dac0c5"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-lg":"1.5rem","space-xs":"0.25rem","margin-mobile":"1rem","space-sm":"0.5rem","gutter-mobile":"1rem","gutter":"1.5rem","space-md":"1rem","margin":"2rem","space-xl":"2rem"},"fontFamily":{"body-sm":["Inter"],"body-lg":["Inter"],"body-md":["Inter"],"headline-xl-mobile":["Inter"],"headline-md":["Inter"],"headline-lg":["Inter"],"label-md":["Inter"],"headline-xl":["Inter"],"title-sm":["Inter"],"label-sm":["Inter"],"caption":["Inter"]},"fontSize":{"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-xl-mobile":["26px",{"lineHeight":"34px","letterSpacing":"-0.015em","fontWeight":"700"}],"headline-md":["20px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"label-md":["13px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"600"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"title-sm":["16px",{"lineHeight":"24px","letterSpacing":"-0.005em","fontWeight":"600"}],"label-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"500"}],"caption":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}]}}}}</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest z-50 flex flex-col justify-between border-r border-surface-variant"><div class="flex flex-col h-full overflow-y-auto"><div class="px-space-lg pt-space-lg pb-space-md flex items-center gap-space-sm border-b border-surface-variant"><img alt="ATU Seal Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1X67xJQZBtWgy9w482KbNYuU9U-TCmK7u5T0aYeV0mW1Z8aVC3Bnppw4Dru-tuCDvw4r8ztpTH7M9JxjZd_rO2sYBPlnGhm2Z9SwqYMWL5-bkGmD9gpGPi5BLuP1YS2WaavoXUpT74sOPd6ZkBSQzgkqJC4rfq7lXhkPUokW88JWfaOMWJrn7PvC6HOVaWmaHcHS4iDVLvF_nNRWU8e8xzW5SwWknGhnB-zYgOpkvhoZQyl_2WgO-io_2g"/><div class="flex flex-col min-w-0"><span class="font-title-sm text-title-sm text-primary tracking-tight truncate leading-tight">ATU Support Portal</span><span class="font-caption text-caption text-secondary truncate">Abaarso Tech University</span></div></div><div class="px-space-md py-space-sm"><div class="px-space-sm py-space-xs font-caption text-caption uppercase text-secondary font-semibold">Student Services</div><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-semibold rounded-lg"><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">space_dashboard</span><span class="font-body-sm text-body-sm">Dashboard</span></a><a aria-current="page" class="flex items-center gap-3 px-space-sm py-2 transition-colors bg-primary-container text-on-primary font-semibold rounded-lg" data-path="my-requests" href="#"><span class="material-symbols-outlined text-[20px]">assignment</span><span class="font-body-sm text-body-sm">My Requests</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="absence-and-leave" href="#"><span class="material-symbols-outlined text-[20px]">event_busy</span><span class="font-body-sm text-body-sm">Absence & Leave</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="student-problems" href="#"><span class="material-symbols-outlined text-[20px]">report_problem</span><span class="font-body-sm text-body-sm">Student Problems</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="late-class-reports" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span class="font-body-sm text-body-sm">Late Class Reports</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="notifications" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="font-body-sm text-body-sm">Notifications</span></div><span class="bg-error text-on-error font-caption text-caption px-1.5 py-0.5 rounded-full">3</span></a></nav></div><div class="px-space-md py-space-sm"><div class="px-space-sm py-space-xs font-caption text-caption uppercase text-secondary font-semibold">Administration</div><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-semibold rounded-lg"><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="department-operations" href="#"><span class="material-symbols-outlined text-[20px]">lan</span><span class="font-body-sm text-body-sm">Department Operations</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="academic-office" href="#"><span class="material-symbols-outlined text-[20px]">school</span><span class="font-body-sm text-body-sm">Academic Office</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="student-affairs" href="#"><span class="material-symbols-outlined text-[20px]">diversity_3</span><span class="font-body-sm text-body-sm">Student Affairs</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dean-overview" href="#"><span class="material-symbols-outlined text-[20px]">analytics</span><span class="font-body-sm text-body-sm">Dean Overview</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="user-management" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span class="font-body-sm text-body-sm">User Management</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="department-management" href="#"><span class="material-symbols-outlined text-[20px]">domain</span><span class="font-body-sm text-body-sm">Department Management</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="system-settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-body-sm text-body-sm">System Settings</span></a></nav></div></div><div class="p-space-md border-t border-surface-variant bg-surface-container-low"><div class="flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><div class="w-9 h-9 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-label-md text-label-md shrink-0">FD</div><div class="flex flex-col min-w-0"><span class="font-label-md text-label-md text-on-surface truncate">Fatima Dahir</span><span class="font-caption text-caption text-secondary truncate">Staff / Academic Lead</span></div></div><a class="text-secondary hover:text-error transition-colors p-1.5 rounded hover:bg-error-container" data-path="login" href="#" title="Sign Out"><span class="material-symbols-outlined text-[20px]">logout</span></a></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest border-b border-surface-variant z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><img alt="ATU Seal Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1X67xJQZBtWgy9w482KbNYuU9U-TCmK7u5T0aYeV0mW1Z8aVC3Bnppw4Dru-tuCDvw4r8ztpTH7M9JxjZd_rO2sYBPlnGhm2Z9SwqYMWL5-bkGmD9gpGPi5BLuP1YS2WaavoXUpT74sOPd6ZkBSQzgkqJC4rfq7lXhkPUokW88JWfaOMWJrn7PvC6HOVaWmaHcHS4iDVLvF_nNRWU8e8xzW5SwWknGhnB-zYgOpkvhoZQyl_2WgO-io_2g"/><div class="flex items-center gap-space-xs font-body-sm text-body-sm text-secondary"><span class="hover:text-on-surface cursor-pointer">Portal</span><span>/</span><span class="text-on-surface font-label-md text-label-md">Overview</span></div></div><div class="flex-1 max-w-md mx-space-lg"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-secondary text-[18px]">search</span><input class="w-full pl-9 pr-4 py-2 bg-background border border-surface-variant rounded-lg font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary-container placeholder:text-secondary" placeholder="Search requests, course codes, or reference ID..." type="text"/></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-caption text-caption text-primary font-semibold"><span class="material-symbols-outlined text-[15px]">calendar_today</span><span>Spring 2026</span></div><div class="relative cursor-pointer p-1.5 rounded-full hover:bg-surface-container transition-colors text-on-surface"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1 right-1 w-4 h-4 bg-error text-on-error font-caption text-caption flex items-center justify-center rounded-full text-[10px]">3</span></div><div class="flex items-center gap-space-xs bg-surface-container px-2 py-1 rounded-lg cursor-pointer"><span class="font-caption text-caption text-secondary uppercase font-semibold">Role:</span><span class="font-label-sm text-label-sm text-primary font-bold">Staff</span><span class="material-symbols-outlined text-[16px] text-secondary">arrow_drop_down</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<div class="px-space-lg py-space-xl max-w-7xl mx-auto w-full space-y-6">
+<!-- Top Action / Title Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="font-caption text-caption uppercase tracking-wider text-on-surface-variant font-semibold">Student Support Desk</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="font-caption text-caption text-secondary">Abaarso Tech Academic Portal</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">My Submitted Requests</h1>
+<p class="font-body-md text-body-md text-secondary max-w-2xl">
+          Track progress, respond to university inquiries, and view resolution outcomes for all your tickets across departments.
+        </p>
+</div>
+<!-- Right Action CTA -->
+<div class="flex items-center gap-3 shrink-0">
+<button class="flex items-center gap-2 px-3.5 py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label-md text-label-md transition-colors shadow-sm" id="quickStatsBtn">
+<span class="material-symbols-outlined text-[18px]">insights</span>
+<span>SLA Insights</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md transition-all shadow-md hover:shadow-lg active:scale-[0.99]">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>+ New Request</span>
+</button>
+</div>
+</div>
+<!-- Quick Metrics Strip -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm flex items-center justify-between">
+<div>
+<p class="font-caption text-caption uppercase font-semibold text-secondary">Open Requests</p>
+<p class="font-headline-lg text-headline-lg text-primary mt-0.5">3</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">pending_actions</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm flex items-center justify-between">
+<div>
+<p class="font-caption text-caption uppercase font-semibold text-secondary">Action Needed</p>
+<p class="font-headline-lg text-headline-lg text-primary-container mt-0.5">1</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-error-container flex items-center justify-center text-on-error-container">
+<span class="material-symbols-outlined text-[20px]">announcement</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm flex items-center justify-between">
+<div>
+<p class="font-caption text-caption uppercase font-semibold text-secondary">Avg Resolution</p>
+<p class="font-headline-lg text-headline-lg text-on-surface mt-0.5">36h</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">avg_time</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-sm flex items-center justify-between">
+<div>
+<p class="font-caption text-caption uppercase font-semibold text-secondary">Resolved Rate</p>
+<p class="font-headline-lg text-headline-lg text-tertiary-container mt-0.5">85%</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed">
+<span class="material-symbols-outlined text-[20px]">verified</span>
+</div>
+</div>
+</div>
+<!-- Filter & Search Card -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm space-y-4">
+<!-- Tabs Navigation -->
+<div class="flex flex-wrap items-center justify-between gap-3 pb-3">
+<div class="flex items-center gap-1.5 p-1 bg-surface-container-low rounded-lg" id="filterTabs">
+<button class="tab-btn px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-sm transition-all flex items-center gap-2" data-tab="all">
+<span>All</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-variant font-caption text-caption text-on-surface-variant font-bold">7</span>
+</button>
+<button class="tab-btn px-3 py-1.5 rounded-lg text-secondary hover:text-on-surface font-label-md text-label-md transition-all flex items-center gap-2" data-tab="active">
+<span>Active</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-container-high font-caption text-caption text-secondary font-bold">3</span>
+</button>
+<button class="tab-btn px-3 py-1.5 rounded-lg text-secondary hover:text-on-surface font-label-md text-label-md transition-all flex items-center gap-2" data-tab="action">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-container opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+<span>Action Required</span>
+<span class="px-1.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-caption text-caption font-bold">1</span>
+</button>
+<button class="tab-btn px-3 py-1.5 rounded-lg text-secondary hover:text-on-surface font-label-md text-label-md transition-all flex items-center gap-2" data-tab="resolved">
+<span>Resolved</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-container-high font-caption text-caption text-secondary font-bold">4</span>
+</button>
+</div>
+<button class="text-secondary hover:text-on-surface font-body-sm text-body-sm flex items-center gap-1" id="toggleFilterVisibility">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span>Advanced Filters</span>
+</button>
+</div>
+<!-- Search & Multifaceted Filters -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-3 pt-1">
+<!-- Main Search Bar -->
+<div class="md:col-span-5 relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-secondary text-[20px]">search</span>
+<input class="w-full pl-10 pr-9 py-2.5 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container placeholder:text-secondary transition-all" id="searchInput" placeholder="Search by Request ID, title, or keyword..." type="text"/>
+<button class="hidden absolute right-3 text-secondary hover:text-on-surface" id="clearSearch">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+<!-- Request Type Filter -->
+<div class="md:col-span-2.5">
+<div class="relative">
+<select class="w-full appearance-none px-3.5 py-2.5 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container pr-8 cursor-pointer" id="typeFilter">
+<option value="">Request Type (All Types)</option>
+<option value="Absence & Leave">Absence & Leave</option>
+<option value="Student Problem">Student Problem</option>
+<option value="Late Class Report">Late Class Report</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-secondary text-[18px]">expand_more</span>
+</div>
+</div>
+<!-- Status Filter -->
+<div class="md:col-span-2.5">
+<div class="relative">
+<select class="w-full appearance-none px-3.5 py-2.5 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container pr-8 cursor-pointer" id="statusFilter">
+<option value="">Status Filter (All)</option>
+<option value="Waiting for Student">Waiting for Student</option>
+<option value="Under Review">Under Review</option>
+<option value="In Progress">In Progress</option>
+<option value="Resolved">Resolved</option>
+<option value="Closed">Closed</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-secondary text-[18px]">expand_more</span>
+</div>
+</div>
+<!-- Semester Filter -->
+<div class="md:col-span-2">
+<div class="relative">
+<select class="w-full appearance-none px-3.5 py-2.5 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary-container pr-8 cursor-pointer" id="termFilter">
+<option value="spring-2026">Spring 2026</option>
+<option value="fall-2025">Fall 2025</option>
+<option value="all-terms">All Terms</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-secondary text-[18px]">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Active Filter Chips Bar (Shown Dynamically) -->
+<div class="flex flex-wrap items-center gap-2" id="filterPills">
+<span class="font-caption text-caption text-secondary font-semibold uppercase">Applied Filters:</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm">
+<span>Semester: Spring 2026</span>
+<button class="hover:text-error"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<button class="font-label-sm text-label-sm text-primary hover:underline ml-2" id="resetAllFilters">Clear all</button>
+</div>
+<!-- Main Data Table Container -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<div class="overflow-x-auto w-full">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3.5 px-4 font-semibold" scope="col">Request ID</th>
+<th class="py-3.5 px-4 font-semibold" scope="col">Request Type</th>
+<th class="py-3.5 px-4 font-semibold" scope="col">Subject / Summary</th>
+<th class="py-3.5 px-4 font-semibold" scope="col">Submitted Date</th>
+<th class="py-3.5 px-4 font-semibold" scope="col">Department</th>
+<th class="py-3.5 px-4 font-semibold" scope="col">Status</th>
+<th class="py-3.5 px-4 font-semibold" scope="col">Last Updated</th>
+<th class="py-3.5 px-4 font-semibold text-right" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody class="font-body-md text-body-md text-on-surface" id="tableBody">
+<!-- Row 1: Waiting for Student -->
+<tr class="table-row group hover:bg-surface-container-low/60 transition-colors" data-status="Waiting for Student" data-tab="action" data-type="Absence & Leave">
+<td class="py-3.5 px-4 font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">feed</span>
+<span>ATU-2026-0084</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+                  Absence & Leave
+                </span>
+</td>
+<td class="py-3.5 px-4 font-medium max-w-xs">
+<div class="flex flex-col">
+<span class="truncate text-on-surface font-label-md text-label-md">Medical leave - 3 days</span>
+<span class="text-secondary font-caption text-caption truncate">Doctor's certificate pending validation</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-secondary whitespace-nowrap font-body-sm text-body-sm">Mar 24, 2026</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="font-body-sm text-body-sm text-on-surface">Computer Science</span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+                  Waiting for Student
+                </span>
+</td>
+<td class="py-3.5 px-4 text-secondary whitespace-nowrap font-body-sm text-body-sm">2 hrs ago</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container text-primary-container hover:bg-primary-container hover:text-on-primary font-label-md text-label-md transition-colors shadow-sm">
+<span class="material-symbols-outlined text-[16px]">reply</span>
+<span>Respond & View</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Under Review -->
+<tr class="table-row group hover:bg-surface-container-low/60 transition-colors" data-status="Under Review" data-tab="active" data-type="Late Class Report">
+<td class="py-3.5 px-4 font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary">feed</span>
+<span>ATU-2026-0079</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Late Class
+                </span>
+</td>
+<td class="py-3.5 px-4 font-medium max-w-xs">
+<div class="flex flex-col">
+<span class="truncate text-on-surface font-label-md text-label-md">CS-301 Lab (45 min delay)</span>
+<span class="text-secondary font-caption text-caption truncate">Instructor reported emergency transit delay</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-secondary whitespace-nowrap font-body-sm text-body-sm">Mar 22, 2026</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="font-body-sm text-body-sm text-on-surface">Academic Affairs</span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                  Under Review
+                </span>
+</td>
+<td class="py-3.5 px-4 text-secondary whitespace-nowrap font-body-sm text-body-sm">Yesterday</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>View Details</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: In Progress -->
+<tr class="table-row group hover:bg-surface-container-low/60 transition-colors" data-status="In Progress" data-tab="active" data-type="Student Problem">
+<td class="py-3.5 px-4 font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary">feed</span>
+<span>ATU-2026-0062</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Student Problem
+                </span>
+</td>
+<td class="py-3.5 px-4 font-medium max-w-xs">
+<div class="flex flex-col">
+<span class="truncate text-on-surface font-label-md text-label-md">Lab 2 Workstation 14 Network Port Fault</span>
+<span class="text-secondary font-caption text-caption truncate">Assigned to Campus Network Ops team</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-secondary whitespace-nowrap font-body-sm text-body-sm">Mar 18, 2026</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="font-body-sm text-body-sm text-on-surface">IT & Facilities</span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-variant text-on-surface font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+                  In Progress
+                </span>
+</td>
+<td class="py-3.5 px-4 text-secondary whitespace-nowrap font-body-sm text-body-sm">Mar 20, 2026</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>View Details</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Resolved -->
+<tr class="table-row group hover:bg-surface-container-low/60 transition-colors" data-status="Resolved" data-tab="resolved" data-type="Absence & Leave">
+<td class="py-3.5 px-4 font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary">feed</span>
+<span>ATU-2026-0041</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                  Absence & Leave
+                </span>
+</td>
+<td class="py-3.5 px-4 font-medium max-w-xs">
+<div class="flex flex-col">
+<span class="truncate text-on-surface font-label-md text-label-md">Inter-University Debate Championship</span>
+<span class="text-secondary font-caption text-caption truncate">Dean excused attendance approved</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-secondary whitespace-nowrap font-body-sm text-body-sm">Mar 05, 2026</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="font-body-sm text-body-sm text-on-surface">Dean of Students</span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">check</span>
+                  Resolved
+                </span>
+</td>
+<td class="py-3.5 px-4 text-secondary whitespace-nowrap font-body-sm text-body-sm">Mar 08, 2026</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>View Details</span>
+</button>
+</td>
+</tr>
+<!-- Row 5: Resolved -->
+<tr class="table-row group hover:bg-surface-container-low/60 transition-colors" data-status="Resolved" data-tab="resolved" data-type="Late Class Report">
+<td class="py-3.5 px-4 font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary">feed</span>
+<span>ATU-2026-0028</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                  Late Class
+                </span>
+</td>
+<td class="py-3.5 px-4 font-medium max-w-xs">
+<div class="flex flex-col">
+<span class="truncate text-on-surface font-label-md text-label-md">MATH-202 Lecture hall delay</span>
+<span class="text-secondary font-caption text-caption truncate">Make-up session slotted for Saturday</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-secondary whitespace-nowrap font-body-sm text-body-sm">Feb 20, 2026</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="font-body-sm text-body-sm text-on-surface">Academic Office</span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">check</span>
+                  Resolved
+                </span>
+</td>
+<td class="py-3.5 px-4 text-secondary whitespace-nowrap font-body-sm text-body-sm">Feb 22, 2026</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>View Details</span>
+</button>
+</td>
+</tr>
+<!-- Row 6: Closed -->
+<tr class="table-row group hover:bg-surface-container-low/60 transition-colors" data-status="Closed" data-tab="resolved" data-type="Student Problem">
+<td class="py-3.5 px-4 font-label-md text-label-md text-primary font-semibold whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary">feed</span>
+<span>ATU-2026-0015</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Student Problem
+                </span>
+</td>
+<td class="py-3.5 px-4 font-medium max-w-xs">
+<div class="flex flex-col">
+<span class="truncate text-on-surface font-label-md text-label-md">Missing Grade in Portal Portal Sync</span>
+<span class="text-secondary font-caption text-caption truncate">Registrar confirmed official grade repost</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-secondary whitespace-nowrap font-body-sm text-body-sm">Feb 11, 2026</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="font-body-sm text-body-sm text-on-surface">Registrar</span>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-variant text-secondary font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  Closed
+                </span>
+</td>
+<td class="py-3.5 px-4 text-secondary whitespace-nowrap font-body-sm text-body-sm">Feb 15, 2026</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap">
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-md text-label-md transition-colors">
+<span class="material-symbols-outlined text-[16px]">visibility</span>
+<span>View Details</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Empty State Card (Demonstrated/Toggleable) -->
+<div class="hidden flex-col items-center justify-center p-12 text-center bg-surface-container-lowest" id="emptyState">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center text-secondary mb-4">
+<span class="material-symbols-outlined text-[32px]">manage_search</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-1">No requests found</h3>
+<p class="font-body-md text-body-md text-secondary max-w-sm mb-6">
+          We could not find any submitted tickets matching your current search and filter parameters.
+        </p>
+<button class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md hover:bg-primary transition-colors" id="emptyClearBtn">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span>
+<span>Clear All Filters</span>
+</button>
+</div>
+<!-- Bottom Pagination Container -->
+<div class="px-5 py-4 bg-surface-container-lowest flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="font-body-sm text-body-sm text-secondary">
+          Showing <span class="font-semibold text-on-surface">1</span> to <span class="font-semibold text-on-surface">6</span> of <span class="font-semibold text-on-surface">7</span> requests
+        </div>
+<div class="flex items-center gap-1.5">
+<button class="p-2 rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container disabled:opacity-40 transition-colors" disabled="" title="Previous Page">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md flex items-center justify-center shadow-sm">
+            1
+          </button>
+<button class="w-8 h-8 rounded-lg hover:bg-surface-container text-on-surface font-label-md text-label-md flex items-center justify-center transition-colors">
+            2
+          </button>
+<button class="p-2 rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container transition-colors" title="Next Page">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Student Support Guidance Strip -->
+<div class="bg-surface-container-low rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary-container shrink-0">
+<span class="material-symbols-outlined text-[26px]">contact_support</span>
+</div>
+<div class="space-y-1">
+<h4 class="font-title-sm text-title-sm text-on-surface">Need urgent academic or hostel intervention?</h4>
+<p class="font-body-sm text-body-sm text-secondary">
+            For critical medical leaves or immediate safety reports during off-hours, contact the 24/7 Dean's Emergency Line at <span class="font-semibold text-on-surface">+252 (2) 582-104</span>.
+          </p>
+</div>
+</div>
+<div class="flex items-center gap-3 shrink-0">
+<button class="px-4 py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-variant font-label-md text-label-md transition-colors">
+          Support Policies
+        </button>
+<button class="px-4 py-2 rounded-lg bg-primary-container text-on-primary hover:bg-primary font-label-md text-label-md transition-colors">
+          Submit Expedited Ticket
+        </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const searchInput = document.getElementById('searchInput');
+    const clearSearch = document.getElementById('clearSearch');
+    const typeFilter = document.getElementById('typeFilter');
+    const statusFilter = document.getElementById('statusFilter');
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const rows = document.querySelectorAll('.table-row');
+    const emptyState = document.getElementById('emptyState');
+    const emptyClearBtn = document.getElementById('emptyClearBtn');
+    const resetAllFilters = document.getElementById('resetAllFilters');
+
+    let currentTab = 'all';
+
+    function filterTable() {
+      const query = (searchInput.value || '').toLowerCase().trim();
+      const selectedType = typeFilter.value;
+      const selectedStatus = statusFilter.value;
+
+      let visibleCount = 0;
+
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        const rowType = row.getAttribute('data-type') || '';
+        const rowStatus = row.getAttribute('data-status') || '';
+        const rowTab = row.getAttribute('data-tab') || '';
+
+        const matchesQuery = !query || text.includes(query);
+        const matchesType = !selectedType || rowType.includes(selectedType);
+        const matchesStatus = !selectedStatus || rowStatus.includes(selectedStatus);
+        
+        let matchesTab = true;
+        if (currentTab === 'active') {
+          matchesTab = (rowTab === 'active' || rowTab === 'action');
+        } else if (currentTab === 'action') {
+          matchesTab = (rowTab === 'action');
+        } else if (currentTab === 'resolved') {
+          matchesTab = (rowTab === 'resolved');
+        }
+
+        if (matchesQuery && matchesType && matchesStatus && matchesTab) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      if (visibleCount === 0) {
+        emptyState.classList.remove('hidden');
+        emptyState.classList.add('flex');
+      } else {
+        emptyState.classList.add('hidden');
+        emptyState.classList.remove('flex');
+      }
+
+      if (query.length > 0) {
+        clearSearch.classList.remove('hidden');
+      } else {
+        clearSearch.classList.add('hidden');
+      }
+    }
+
+    searchInput.addEventListener('input', filterTable);
+    typeFilter.addEventListener('change', filterTable);
+    statusFilter.addEventListener('change', filterTable);
+
+    clearSearch.addEventListener('click', () => {
+      searchInput.value = '';
+      filterTable();
+    });
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabButtons.forEach(b => {
+          b.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm');
+          b.classList.add('text-secondary');
+        });
+        btn.classList.add('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm');
+        btn.classList.remove('text-secondary');
+        currentTab = btn.getAttribute('data-tab');
+        filterTable();
+      });
+    });
+
+    function resetFilters() {
+      searchInput.value = '';
+      typeFilter.value = '';
+      statusFilter.value = '';
+      currentTab = 'all';
+      tabButtons.forEach((b, idx) => {
+        if (idx === 0) {
+          b.classList.add('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm');
+          b.classList.remove('text-secondary');
+        } else {
+          b.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'shadow-sm');
+          b.classList.add('text-secondary');
+        }
+      });
+      filterTable();
+    }
+
+    if (emptyClearBtn) emptyClearBtn.addEventListener('click', resetFilters);
+    if (resetAllFilters) resetAllFilters.addEventListener('click', resetFilters);
+  })();
+</script></main></div></body></html>

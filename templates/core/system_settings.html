@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}System Settings & SLAs{% endblock %}
+{% block crumb %}System Settings{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto space-y-6 animate-in">
+  <div class="flex items-center justify-between pb-3 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Platform Configuration · Policies & SLAs</span>
+      </div>
+      <h1 class="page-title mt-1">System Configuration</h1>
+      <p class="page-sub mt-1">Configure service level agreements (SLAs), upload thresholds, term identifiers, and policy authorization toggles.</p>
+    </div>
+  </div>
+
+  <div class="card card-pad shadow-card">
+    <form method="post" class="space-y-6" novalidate>
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+      <div class="notice bg-error-container text-on-error-container">{{ form.non_field_errors|join:" " }}</div>
+      {% endif %}
+
+      <!-- General Portal Settings -->
+      <div class="space-y-4">
+        <h3 class="font-title-sm text-title-sm text-on-surface border-b border-line pb-2">Institutional Branding & Contact</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {% include "partials/field.html" with field=form.portal_name %}
+          {% include "partials/field.html" with field=form.current_term %}
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {% include "partials/field.html" with field=form.support_email %}
+          {% include "partials/field.html" with field=form.support_hours %}
+        </div>
+        {% include "partials/field.html" with field=form.support_location %}
+      </div>
+
+      <!-- SLA Configuration -->
+      <div class="space-y-4 pt-2">
+        <h3 class="font-title-sm text-title-sm text-on-surface border-b border-line pb-2">Resolution SLAs (Target Calendar Days)</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {% include "partials/field.html" with field=form.sla_days_absence %}
+          {% include "partials/field.html" with field=form.sla_days_problem %}
+          {% include "partials/field.html" with field=form.sla_days_late_class %}
+        </div>
+        <div class="max-w-xs">
+          {% include "partials/field.html" with field=form.max_upload_mb %}
+        </div>
+      </div>
+
+      <!-- Student Anti-Spam & Submission Controls -->
+      <div class="space-y-4 pt-2">
+        <h3 class="font-title-sm text-title-sm text-on-surface border-b border-line pb-2">Student Anti-Spam &amp; Evidence Controls</h3>
+        <div class="max-w-xs">
+          {% include "partials/field.html" with field=form.max_active_requests_per_student %}
+        </div>
+        <div class="p-4 rounded-xl bg-surface-container-low/60 border border-line space-y-4">
+          {% include "partials/field.html" with field=form.absence_requires_document %}
+          {% include "partials/field.html" with field=form.block_overlapping_absence %}
+        </div>
+      </div>
+
+      <!-- Policy Toggles -->
+      <div class="space-y-4 pt-2">
+        <h3 class="font-title-sm text-title-sm text-on-surface border-b border-line pb-2">Institutional Policy Authorization Toggles</h3>
+        <div class="p-4 rounded-xl bg-surface-container-low/60 border border-line space-y-4">
+          {% include "partials/field.html" with field=form.staff_can_decide_absence %}
+          {% include "partials/field.html" with field=form.director_can_view_confidential %}
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-line flex items-center justify-end gap-3">
+        <button type="submit" class="btn-primary" id="btn-save-settings">Save System Settings</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

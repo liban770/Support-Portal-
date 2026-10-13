@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}{{ scope_label }}{% endblock %}
+{% block crumb %}Reports & Analytics{% endblock %}
+
+{% block content %}
+<div class="space-y-6 animate-in">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Institutional Intelligence · Performance Metrics</span>
+      </div>
+      <h1 class="page-title mt-1">{{ scope_label }}</h1>
+      <p class="page-sub mt-1">Review case volumes, turnaround times, departmental SLA compliance, and recurring problem indicators.</p>
+    </div>
+    <div class="flex items-center gap-2.5">
+      <a href="?export=csv{% if period %}&period={{ period }}{% endif %}" class="btn-secondary btn-sm">
+        <span class="material-symbols-outlined text-[18px]">download</span>
+        <span>Export Report (CSV)</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Time Period Selector Bar -->
+  <div class="flex items-center gap-2 p-1.5 bg-surface-container rounded-xl w-fit">
+    <span class="font-caption text-caption uppercase text-secondary font-semibold px-2">Time Horizon:</span>
+    <a href="?period=all" class="tab {% if period == 'all' or not period %}tab-active{% endif %}">All Time</a>
+    <a href="?period=30" class="tab {% if period == '30' %}tab-active{% endif %}">Last 30 Days</a>
+    <a href="?period=90" class="tab {% if period == '90' %}tab-active{% endif %}">Last 90 Days</a>
+    <a href="?period=365" class="tab {% if period == '365' %}tab-active{% endif %}">Last 1 Year</a>
+  </div>
+
+  <!-- KPI Summary Bento -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+    {% include "partials/kpi.html" with label="Total Inquiries" value=stats.total icon="analytics" tone="maroon" %}
+    {% include "partials/kpi.html" with label="Pending Inquiries" value=stats.pending icon="pending_actions" tone="blue" %}
+    {% include "partials/kpi.html" with label="Resolved / Closed" value=stats.resolved icon="task_alt" tone="green" %}
+    {% include "partials/kpi.html" with label="SLA Overdue" value=stats.overdue icon="crisis_alert" tone="red" %}
+    {% include "partials/kpi.html" with label="Resolution Rate" value=stats.resolution_rate|stringformat:"d"|add:"%" icon="verified" tone="green" %}
+  </div>
+
+  <!-- Two Column Layout: Departmental Performance & Recurring Problems -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <!-- Departmental Breakdown Table (7 cols) -->
+    <div class="lg:col-span-7 card overflow-hidden shadow-card">
+      <div class="p-5 border-b border-line flex items-center justify-between">
+        <div>
+          <h2 class="font-headline-md text-headline-md text-on-surface">Departmental Workload & SLA Compliance</h2>
+          <p class="font-caption text-caption text-secondary">Inquiries distribution and turnaround across university departments</p>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto scroll-thin">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>Department / Office</th>
+              <th class="text-center">Total</th>
+              <th class="text-center">Open</th>
+              <th class="text-center">Overdue</th>
+              <th class="text-right">Resolved</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in by_department %}
+            <tr class="hover:bg-canvas transition-colors">
+              <td class="font-medium text-on-surface">{{ row.department__name|default:"Unassigned" }}</td>
+              <td class="text-center font-bold text-primary-container">{{ row.total }}</td>
+              <td class="text-center">{{ row.open }}</td>
+              <td class="text-center">
+                {% if row.overdue %}
+                <span class="badge bg-error-container text-error font-bold">{{ row.overdue }}</span>
+                {% else %}
+                <span class="text-secondary">0</span>
+                {% endif %}
+              </td>
+              <td class="text-right text-[#166534] font-semibold">{{ row.resolved }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" class="py-8 text-center text-secondary italic">No departmental metrics available.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Right Column: Recurring Diagnostics (5 cols) -->
+    <div class="lg:col-span-5 space-y-6">
+      <!-- Recurring Student Problem Categories -->
+      <div class="card card-pad shadow-card space-y-4">
+        <div class="flex items-center justify-between border-b border-line pb-3">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary-container text-[20px]">troubleshoot</span>
+            <h3 class="font-title-sm text-title-sm text-on-surface">Recurring Problem Categories</h3>
+          </div>
+        </div>
+
+        <div class="space-y-2.5">
+          {% for item in recurring %}
+          <div class="p-3 rounded-xl bg-surface-container-low/60 border border-line flex items-center justify-between font-body-sm text-body-sm">
+            <span class="font-medium text-on-surface">{{ item.category__name|default:"General Problem" }}</span>
+            <span class="badge bg-primary-fixed text-primary-container font-bold">{{ item.n }} report{{ item.n|pluralize }}</span>
+          </div>
+          {% empty %}
+          <p class="text-secondary italic text-body-sm font-body-sm">No recurring problem categories flagged.</p>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Late Courses Variance -->
+      {% if late_courses %}
+      <div class="card card-pad shadow-card space-y-4">
+        <div class="flex items-center justify-between border-b border-line pb-3">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary-container text-[20px]">alarm</span>
+            <h3 class="font-title-sm text-title-sm text-on-surface">Reported Late-Class Courses</h3>
+          </div>
+        </div>
+
+        <div class="space-y-2.5">
+          {% for c in late_courses %}
+          <div class="p-3 rounded-xl bg-surface-container-low/60 border border-line flex items-center justify-between font-body-sm text-body-sm">
+            <span class="font-medium text-on-surface">{{ c.course }}</span>
+            <span class="badge bg-error-container text-error font-bold">{{ c.n }} late incident{{ c.n|pluralize }}</span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

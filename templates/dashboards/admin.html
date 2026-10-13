@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}System Administration Dashboard{% endblock %}
+{% block crumb %}System Governance{% endblock %}
+
+{% block content %}
+<div class="space-y-6 animate-in">
+  <!-- Top Greeting & Header Bar -->
+  <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 pb-2 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Platform Administration · System Governance</span>
+      </div>
+      <h1 class="page-title mt-1">System Administration Dashboard</h1>
+      <p class="page-sub mt-1">
+        Manage university departments, validate and activate user accounts, audit security logs, and monitor system-wide operational health.
+      </p>
+    </div>
+    <div class="flex flex-wrap items-center gap-2.5">
+      <a href="{% url 'accounts:user_create' %}" class="btn-primary btn-sm" id="btn-add-user-header">
+        <span class="material-symbols-outlined text-[18px]">person_add</span>
+        <span>Add New User</span>
+      </a>
+      <a href="{% url 'accounts:pending_accounts' %}" class="btn-secondary btn-sm" id="btn-pending-users-header">
+        <span class="material-symbols-outlined text-[18px]">how_to_reg</span>
+        <span>Pending Validation ({{ stats.pending }})</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- KPI Summary Bento (Stitch Design) -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+    {% include "partials/kpi.html" with label="Total System Users" value=stats.users icon="group" note="Provisioned accounts" tone="maroon" href="/admin/users/" %}
+    {% include "partials/kpi.html" with label="Active Accounts" value=stats.active icon="verified" note="Authorized logins" tone="green" href="/admin/users/?status=active" %}
+    {% include "partials/kpi.html" with label="Pending Validation" value=stats.pending icon="hourglass_top" note="Action required" tone="amber" href="/admin/pending/" %}
+    {% include "partials/kpi.html" with label="Suspended / Inactive" value=stats.suspended icon="person_off" note="Policy holds" tone="red" href="/admin/users/?status=suspended" %}
+    {% include "partials/kpi.html" with label="Departments" value=stats.departments icon="domain" note="Operational units" tone="blue" href="/admin/departments/" %}
+  </div>
+
+  <!-- Main Grid: Pending Accounts Needing Superuser Validation + Security Audit Stream -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <!-- Left Column (8 cols): Pending Accounts Queue & Role Breakdown -->
+    <div class="lg:col-span-8 space-y-6">
+      <!-- Pending Accounts Queue -->
+      <div class="card overflow-hidden shadow-card">
+        <div class="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-line">
+          <div>
+            <h2 class="font-headline-md text-headline-md text-on-surface">Accounts Pending Validation</h2>
+            <p class="font-caption text-caption text-secondary">Accounts requested by department heads requiring superuser verification</p>
+          </div>
+          <a href="{% url 'accounts:pending_accounts' %}" class="btn-ghost btn-sm">Full Validation Queue &rarr;</a>
+        </div>
+
+        <div class="overflow-x-auto scroll-thin">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>User / Name</th>
+                <th>Role & Scope</th>
+                <th>Department</th>
+                <th>Requested By</th>
+                <th class="text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for u in pending_users %}
+              <tr class="hover:bg-canvas transition-colors">
+                <td>
+                  <div class="font-label-md text-label-md text-on-surface font-semibold">{{ u.display_name }}</div>
+                  <div class="text-caption text-secondary font-caption">{{ u.email }}</div>
+                </td>
+                <td><span class="chip-maroon text-[11px]">{{ u.get_role_display }}</span></td>
+                <td class="font-body-sm text-body-sm text-on-surface">{{ u.department.name|default:"Unspecified" }}</td>
+                <td class="font-caption text-caption text-secondary">{{ u.created_by.display_name|default:"System / Registrar" }}</td>
+                <td class="text-right whitespace-nowrap">
+                  <form method="post" action="{% url 'accounts:user_action' u.pk 'validate' %}" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-success btn-sm">Validate & Activate</button>
+                  </form>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="5" class="py-8 text-center text-secondary font-body-sm text-body-sm italic">
+                  No accounts currently pending validation. All requests are cleared.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- System Roles & Provisioning Snapshot -->
+      <div class="card card-pad shadow-card space-y-4">
+        <div class="flex items-center justify-between border-b border-line pb-3">
+          <div>
+            <h3 class="font-title-sm text-title-sm text-on-surface">System Role Distribution</h3>
+            <p class="font-caption text-caption text-secondary">Breakdown of accounts active across institutional roles</p>
+          </div>
+          <a href="{% url 'accounts:roles' %}" class="btn-ghost btn-sm">RBAC Matrix &rarr;</a>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          {% for role_name, count in role_counts %}
+          <div class="p-3.5 rounded-xl bg-surface-container-low/60 border border-line flex items-center justify-between">
+            <span class="font-body-sm text-body-sm text-on-surface font-medium">{{ role_name }}</span>
+            <span class="font-headline-md text-headline-md text-primary-container font-bold">{{ count }}</span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column (4 cols): Audit Activity & Governance Shortcuts -->
+    <div class="lg:col-span-4 space-y-6">
+      <!-- Recent Audit Log Feed -->
+      <div class="card card-pad shadow-card space-y-4">
+        <div class="flex items-center justify-between border-b border-line pb-3">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary-container text-[20px]">receipt_long</span>
+            <h3 class="font-title-sm text-title-sm text-on-surface">Recent Audit Trail</h3>
+          </div>
+          <a href="{% url 'core:audit_logs' %}" class="font-caption text-caption text-primary-container hover:underline">Full Log</a>
+        </div>
+
+        <ol class="space-y-3.5 font-body-sm text-body-sm">
+          {% for a in recent_activity %}
+          <li class="flex items-start gap-2.5 pb-2 border-b border-line/60 last:border-0 last:pb-0">
+            <span class="w-2 h-2 rounded-full bg-primary-container shrink-0 mt-1.5"></span>
+            <div class="min-w-0">
+              <span class="font-semibold text-on-surface block truncate">{{ a.action_label }}</span>
+              <span class="font-caption text-caption text-secondary block truncate">By {{ a.actor.display_name|default:"System" }} · {{ a.target_repr|default:"" }}</span>
+              <span class="font-caption text-caption text-slate block text-[11px]">{{ a.created_at|timesince }} ago</span>
+            </div>
+          </li>
+          {% empty %}
+          <li class="text-secondary italic font-body-sm text-body-sm py-2">No recent audit log entries recorded.</li>
+          {% endfor %}
+        </ol>
+      </div>
+
+      <!-- Quick Administration Shortcuts -->
+      <div class="card card-pad shadow-card space-y-3 font-body-sm text-body-sm">
+        <div class="flex items-center gap-2 border-b border-line pb-2.5">
+          <span class="material-symbols-outlined text-primary-container text-[20px]">settings_suggest</span>
+          <h3 class="font-title-sm text-title-sm text-on-surface">Administrative Utilities</h3>
+        </div>
+        <div class="flex flex-col gap-2">
+          <a href="{% url 'accounts:department_list' %}" class="p-2.5 rounded-lg hover:bg-canvas flex items-center justify-between group transition-colors">
+            <span class="font-medium text-on-surface flex items-center gap-2">
+              <span class="material-symbols-outlined text-[18px] text-secondary">domain</span> Manage Departments
+            </span>
+            <span class="material-symbols-outlined text-[16px] text-secondary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </a>
+          <a href="{% url 'accounts:student_import' %}" class="p-2.5 rounded-lg hover:bg-canvas flex items-center justify-between group transition-colors">
+            <span class="font-medium text-on-surface flex items-center gap-2">
+              <span class="material-symbols-outlined text-[18px] text-secondary">upload_file</span> Import Student Register (CSV)
+            </span>
+            <span class="material-symbols-outlined text-[16px] text-secondary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </a>
+          <a href="{% url 'core:system_settings' %}" class="p-2.5 rounded-lg hover:bg-canvas flex items-center justify-between group transition-colors">
+            <span class="font-medium text-on-surface flex items-center gap-2">
+              <span class="material-symbols-outlined text-[18px] text-secondary">settings</span> System Settings & SLAs
+            </span>
+            <span class="material-symbols-outlined text-[16px] text-secondary group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

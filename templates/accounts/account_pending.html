@@ -1,0 +1,26 @@
+{% extends "base_public.html" %}
+{% block title %}Account pending{% endblock %}
+{% block content %}
+<div class="card shadow-float overflow-hidden text-center">
+  <div class="h-1.5 bg-[#F59E0B]"></div>
+  <div class="p-8 sm:p-10">
+    <span class="mx-auto w-16 h-16 rounded-2xl bg-[#FEF3C7] text-[#92400E] flex items-center justify-center">
+      <span class="material-symbols-outlined text-[32px]">hourglass_top</span>
+    </span>
+    <h1 class="mt-5 font-headline-lg text-headline-lg">Account pending validation</h1>
+    <p class="mt-2 font-body-md text-body-md text-secondary">
+      Hello {{ blocked_user.first_name|default:blocked_user.username }}, your account has been created but must be verified by the
+      system administrator before you can sign in.
+    </p>
+    <div class="mt-6 text-left notice">
+      <span class="material-symbols-outlined text-primary-container">checklist</span>
+      <ol class="font-body-sm text-body-sm text-on-surface-variant space-y-1 list-decimal pl-4">
+        <li>Your department head requested the account.</li>
+        <li>The Superuser verifies your role and department.</li>
+        <li>You receive a notification and temporary password once approved.</li>
+      </ol>
+    </div>
+    <a href="{% url 'accounts:login' %}" class="btn-secondary mt-6 w-full" id="back-to-login"><span class="material-symbols-outlined text-[18px]">arrow_back</span>Back to sign in</a>
+  </div>
+</div>
+{% endblock %}

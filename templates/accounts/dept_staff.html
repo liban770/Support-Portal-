@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}Department Staff Management{% endblock %}
+{% block crumb %}Staff Management{% endblock %}
+
+{% block content %}
+<div class="space-y-6 animate-in">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Department Leadership · Staff Oversight</span>
+      </div>
+      <h1 class="page-title mt-1">Staff Management <span class="text-secondary font-normal">— {{ dept.name }}</span></h1>
+      <p class="page-sub mt-1">
+        Request new staff accounts for your department and monitor coordinator caseloads. Newly created accounts require Superuser validation before activation.
+      </p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <!-- Current Staff Workload & Directory (7 cols) -->
+    <div class="lg:col-span-7 card overflow-hidden shadow-card">
+      <div class="p-5 border-b border-line flex items-center justify-between">
+        <div>
+          <h2 class="font-headline-md text-headline-md text-on-surface">Department Staff ({{ members|length }})</h2>
+          <p class="font-caption text-caption text-secondary">Personnel currently handling cases in {{ dept.code }}</p>
+        </div>
+      </div>
+
+      <div class="overflow-x-auto scroll-thin">
+        <table class="tbl">
+          <thead>
+            <tr>
+              <th>Staff Coordinator</th>
+              <th>Position</th>
+              <th>Active Cases</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for m in members %}
+            <tr class="hover:bg-canvas transition-colors">
+              <td>
+                <div class="font-label-md text-label-md text-on-surface font-semibold">{{ m.display_name }}</div>
+                <div class="text-caption text-secondary font-caption">{{ m.email }}</div>
+              </td>
+              <td class="font-body-sm text-body-sm text-secondary">{{ m.staff_profile.position|default:"Coordinator" }}</td>
+              <td class="font-body-sm text-body-sm">
+                <span class="font-semibold text-primary-container">{{ m.open_cases }} open</span>
+                {% if m.overdue_cases %}<span class="text-error font-medium text-[11px]">({{ m.overdue_cases }} overdue)</span>{% endif %}
+              </td>
+              <td>{% account_badge m %}</td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="4" class="py-8 text-center text-secondary font-body-sm text-body-sm">
+                No staff members currently assigned to this department.
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Request New Staff Account Form (5 cols) -->
+    <div class="lg:col-span-5 card card-pad shadow-card space-y-4">
+      <div class="border-b border-line pb-3">
+        <h3 class="font-title-sm text-title-sm text-on-surface flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary-container text-[20px]">person_add</span>
+          Request New Staff Account
+        </h3>
+        <p class="font-caption text-caption text-secondary mt-0.5">Account will be submitted to the Superuser for validation</p>
+      </div>
+
+      <div class="notice bg-surface-container-low border-surface-variant">
+        <span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">shield</span>
+        <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          As Department Head, you may only create <strong>Staff accounts</strong> for <strong>{{ dept.name }}</strong>. Account remains pending until Superuser validation.
+        </p>
+      </div>
+
+      <form method="post" class="space-y-4" novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="dept" value="{{ dept.pk }}">
+
+        {% if form.non_field_errors %}
+        <div class="notice bg-error-container text-on-error-container">{{ form.non_field_errors|join:" " }}</div>
+        {% endif %}
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {% include "partials/field.html" with field=form.first_name %}
+          {% include "partials/field.html" with field=form.last_name %}
+        </div>
+
+        {% include "partials/field.html" with field=form.email %}
+        {% include "partials/field.html" with field=form.username %}
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {% include "partials/field.html" with field=form.staff_id %}
+          {% include "partials/field.html" with field=form.position %}
+        </div>
+
+        <div class="pt-2">
+          <button type="submit" class="btn-primary w-full" id="btn-request-staff">
+            <span class="material-symbols-outlined text-[18px]">send</span>
+            <span>Submit for Superuser Validation</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

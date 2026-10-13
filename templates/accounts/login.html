@@ -1,0 +1,108 @@
+{% extends "base_public.html" %}
+{% load static %}
+{% block title %}Sign in{% endblock %}
+{% block meta_description %}Sign in to the Abaarso Tech University Student Support Portal to submit and track absence
+requests, student problems and late-class reports.{% endblock %}
+{% block width %}max-w-[540px]{% endblock %}
+{% block content %}
+<div class="flex justify-center mb-5">
+  <span
+    class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface-variant">
+    <span class="material-symbols-outlined text-[16px] text-primary-container icon-fill">shield</span> ATU Central
+    Identity · Student Support
+  </span>
+</div>
+<div class="card shadow-float overflow-hidden">
+  <div class="h-1.5 brand-bar"></div>
+  <div class="px-6 sm:px-10 pt-8 pb-8">
+    <div class="flex flex-col items-center text-center">
+      <div class="relative">
+        <img src="{% static 'img/favicon.svg' %}" alt="ATU" class="w-20 h-20 rounded-2xl shadow-md">
+        <span
+          class="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-tertiary-container border-2 border-white flex items-center justify-center">
+          <span class="material-symbols-outlined text-[16px] text-white">verified</span>
+        </span>
+      </div>
+      <p class="mt-5 font-caption text-caption uppercase tracking-[0.18em] text-primary-container font-semibold">Abaarso
+        Tech University</p>
+      <h1 class="mt-1 font-headline-lg text-headline-lg sm:text-[28px] text-on-surface">Student Support Portal</h1>
+      <p class="mt-2 font-body-md text-body-md text-secondary max-w-sm">Sign in with your university credentials to
+        manage absence requests, student issues, and academic reports.</p>
+    </div>
+
+    <form method="post" class="mt-8 space-y-5" novalidate>
+      {% csrf_token %}
+      {% if form.non_field_errors %}<div
+        class="notice bg-error-container border-error/20 text-on-error-container font-body-sm text-body-sm">{{
+        form.non_field_errors|join:" " }}</div>{% endif %}
+      <div>
+        <div class="flex items-baseline justify-between">
+          <label for="id_username" class="label">University email </label>
+          <span class="font-caption text-caption text-secondary">Email@gmail.com</span>
+        </div>
+        <div class="relative">
+          <span
+            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-[20px]">badge</span>
+          <input type="text" name="username" id="id_username" value="{{ form.username.value|default:'' }}"
+            class="input h-12 pl-10" placeholder=" Enter Your Email " autocomplete="username" autofocus required>
+        </div>
+        {% for e in form.username.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
+      </div>
+      <div>
+        <label for="id_password" class="label"> Enter Your Password</label>
+        <div class="relative">
+          <span
+            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-[20px]">lock</span>
+          <input type="password" name="password" id="id_password" class="input h-12 pl-10 pr-11"
+            placeholder="Enter your password" autocomplete="current-password" required>
+          <button type="button" data-toggle-password="id_password"
+            class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-secondary hover:bg-surface-container"
+            aria-label="Show password">
+            <span class="material-symbols-outlined text-[20px]">visibility</span>
+          </button>
+        </div>
+        {% for e in form.password.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
+      </div>
+      <div class="flex items-center justify-between gap-3">
+        <label class="flex items-center gap-2 cursor-pointer font-body-sm text-body-sm text-on-surface-variant">
+          <input type="checkbox" name="remember" class="checkbox" id="id_remember"> Remember this device for 30 days
+        </label>
+        <a href="{% url 'accounts:password_reset' %}"
+          class="font-label-md text-label-md text-primary-container underline underline-offset-2 hover:text-primary"
+          id="forgot-password">Forgot password?</a>
+      </div>
+      <button type="submit" class="btn-primary w-full h-12 text-[15px]" id="login-submit">
+        Sign In to Portal <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+      </button>
+    </form>
+
+    <div class="notice mt-7">
+      <span class="material-symbols-outlined text-primary-container">info</span>
+      <div>
+        <p class="font-label-md text-label-md text-on-surface">Accounts are issued by the university</p>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Student accounts come from the official
+          student register. Staff accounts are requested by department heads and validated by the system administrator.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-5">
+  <div class="card p-4">
+    <p class="flex items-center gap-2 font-label-md text-label-md"><span
+        class="material-symbols-outlined text-[18px] text-primary-container">event_busy</span>Absence & Leave</p>
+    <p class="font-caption text-caption text-secondary mt-1">Request excuses and leave with supporting documents.</p>
+  </div>
+  <div class="card p-4">
+    <p class="flex items-center gap-2 font-label-md text-label-md"><span
+        class="material-symbols-outlined text-[18px] text-primary-container">report_problem</span>Student Problems</p>
+    <p class="font-caption text-caption text-secondary mt-1">Report facility, service or academic issues.</p>
+  </div>
+  <div class="card p-4">
+    <p class="flex items-center gap-2 font-label-md text-label-md"><span
+        class="material-symbols-outlined text-[18px] text-primary-container">schedule</span>Late Classes</p>
+    <p class="font-caption text-caption text-secondary mt-1">Notify the Academic Office of late starts.</p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}{{ meta.title }}{% endblock %}
+{% block crumb %}{{ meta.title }}{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+  <!-- Page Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">{{ meta.eyebrow }}</span>
+      </div>
+      <h1 class="page-title mt-1">{{ meta.title }}</h1>
+      <p class="page-sub mt-1">{{ meta.subtitle }}</p>
+    </div>
+    <div class="flex flex-wrap items-center gap-2.5">
+      {% if is_student_view %}
+      <a href="{% url 'cases:submit' %}" class="btn-primary" id="btn-submit-new-request">
+        <span class="material-symbols-outlined text-[19px]">add</span>
+        <span>Submit a Request</span>
+      </a>
+      {% elif not user.is_student %}
+      <a href="{% qs_replace export='csv' %}" class="btn-secondary" title="Export current list to CSV">
+        <span class="material-symbols-outlined text-[18px]">download</span>
+        <span>Export (CSV)</span>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Scope Tabs (if any) -->
+  {% if tabs %}
+  <div class="flex items-center gap-1.5 p-1 bg-surface-container rounded-xl overflow-x-auto scroll-thin">
+    {% for val, label, count in tabs %}
+    <a href="{% qs_replace tab=val %}" class="tab {% if active_tab == val %}tab-active{% endif %}">
+      <span>{{ label }}</span>
+      <span class="tab-count">{{ count }}</span>
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Search & Filter Bar -->
+  <div class="card p-4">
+    <form method="get" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-center">
+      {% if active_tab %}<input type="hidden" name="tab" value="{{ active_tab }}">{% endif %}
+      <div class="lg:col-span-4 relative">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-[18px]">search</span>
+        <input type="text" name="q" value="{{ request.GET.q|default:'' }}" placeholder="Search by ID, keyword, course..." class="input pl-9 h-10">
+      </div>
+      <div class="lg:col-span-2">
+        <select name="type" class="input select h-10">
+          <option value="">All Types</option>
+          {% for k, v in types %}
+          <option value="{{ k }}" {% if request.GET.type == k %}selected{% endif %}>{{ v }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="lg:col-span-2">
+        <select name="status" class="input select h-10">
+          <option value="">All Statuses</option>
+          {% for k, v in statuses %}
+          <option value="{{ k }}" {% if request.GET.status == k %}selected{% endif %}>{{ v }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      {% if not is_student_view %}
+      <div class="lg:col-span-2">
+        <select name="department" class="input select h-10">
+          <option value="">All Departments</option>
+          {% for d in departments %}
+          <option value="{{ d.pk }}" {% if request.GET.department == d.pk|stringformat:"s" %}selected{% endif %}>{{ d.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      {% endif %}
+      <div class="lg:col-span-2 flex items-center gap-2 justify-end">
+        <button type="submit" class="btn-primary h-10 px-4">Filter</button>
+        {% if request.GET.q or request.GET.type or request.GET.status or request.GET.department %}
+        <a href="?{% if active_tab %}tab={{ active_tab }}{% endif %}" class="btn-secondary h-10 px-3" title="Clear filters">
+          <span class="material-symbols-outlined text-[18px]">clear_all</span>
+        </a>
+        {% endif %}
+      </div>
+    </form>
+  </div>
+
+  <!-- Request Table Container -->
+  <div class="card overflow-hidden shadow-card">
+    <div class="overflow-x-auto scroll-thin">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Request ID</th>
+            <th>Type</th>
+            <th>Summary / Subject</th>
+            {% if not is_student_view %}
+            <th>Student</th>
+            <th>Department</th>
+            {% endif %}
+            <th>Submitted</th>
+            <th>Status</th>
+            <th class="text-right">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in page_obj %}
+          <tr class="hover:bg-canvas transition-colors">
+            <td class="font-label-md text-label-md text-primary-container font-semibold whitespace-nowrap">
+              <a href="{{ r.get_absolute_url }}" class="hover:underline">{{ r.reference }}</a>
+              {% if r.is_confidential %}
+              <span class="material-symbols-outlined text-[15px] text-error align-middle ml-1" title="Confidential Case">lock</span>
+              {% endif %}
+            </td>
+            <td class="whitespace-nowrap">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-[18px] text-secondary">{{ r.type_icon }}</span>
+                <span class="font-body-md text-body-md text-on-surface">{{ r.get_request_type_display }}</span>
+              </div>
+            </td>
+            <td>
+              <div class="font-body-md text-body-md text-on-surface font-medium">{{ r.title }}</div>
+              <div class="font-caption text-caption text-secondary truncate max-w-xs">{{ r.summary_line }}</div>
+            </td>
+            {% if not is_student_view %}
+            <td class="whitespace-nowrap font-body-sm text-body-sm">
+              <div class="font-medium text-on-surface">{{ r.student.display_name }}</div>
+              <div class="text-secondary text-caption">{{ r.student.student_profile.student_id|default:r.student.email }}</div>
+            </td>
+            <td class="whitespace-nowrap font-body-sm text-body-sm text-secondary">
+              {{ r.department.name|default:"Unassigned" }}
+            </td>
+            {% endif %}
+            <td class="whitespace-nowrap font-body-sm text-body-sm text-secondary">
+              {{ r.created_at|date:"M d, Y" }}
+            </td>
+            <td class="whitespace-nowrap">
+              {% status_badge r.status %}
+              {% if r.is_overdue %}
+              <span class="badge bg-error-container text-error text-[11px] ml-1">Overdue</span>
+              {% endif %}
+            </td>
+            <td class="text-right whitespace-nowrap">
+              <a href="{{ r.get_absolute_url }}" class="btn-ghost btn-sm">View Details</a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="8" class="py-12 text-center">
+              <span class="material-symbols-outlined text-[44px] text-outline-variant">folder_open</span>
+              <p class="font-title-sm text-title-sm text-on-surface mt-2">No requests found</p>
+              <p class="font-body-sm text-body-sm text-secondary mt-1">There are no records matching your current filter criteria.</p>
+              {% if is_student_view %}
+              <div class="mt-4">
+                <a href="{% url 'cases:submit' %}" class="btn-primary btn-sm">Submit your first request</a>
+              </div>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    {% include "partials/pagination.html" %}
+  </div>
+</div>
+{% endblock %}

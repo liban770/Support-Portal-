@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}Pending Account Validations{% endblock %}
+{% block crumb %}Pending Accounts{% endblock %}
+
+{% block content %}
+<div class="space-y-6 animate-in">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Identity Governance · Account Validation</span>
+      </div>
+      <h1 class="page-title mt-1">Pending Account Validations</h1>
+      <p class="page-sub mt-1">Verify applicant identity, role eligibility, and department assignments before activating user access.</p>
+    </div>
+    <a href="{% url 'accounts:user_list' %}" class="btn-secondary btn-sm">
+      <span class="material-symbols-outlined text-[18px]">group</span>
+      <span>All Users Directory</span>
+    </a>
+  </div>
+
+  <div class="card overflow-hidden shadow-card">
+    <div class="p-5 border-b border-line flex items-center justify-between">
+      <div>
+        <h2 class="font-headline-md text-headline-md text-on-surface">Queue of Pending Accounts ({{ pending|length }})</h2>
+        <p class="font-caption text-caption text-secondary">Accounts requested by department heads waiting for Superuser validation</p>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto scroll-thin">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Applicant Name</th>
+            <th>Email / Username</th>
+            <th>Proposed Role</th>
+            <th>Department / Unit</th>
+            <th>Requested By</th>
+            <th>Submitted</th>
+            <th class="text-right">Validation Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for u in pending %}
+          <tr class="hover:bg-canvas transition-colors">
+            <td>
+              <div class="font-label-md text-label-md text-on-surface font-semibold">{{ u.display_name }}</div>
+              <div class="text-caption text-secondary font-caption">Position: {{ u.staff_profile.position|default:"Staff" }}</div>
+            </td>
+            <td class="font-body-sm text-body-sm text-secondary">{{ u.email }}</td>
+            <td><span class="chip-maroon text-[11px]">{{ u.get_role_display }}</span></td>
+            <td class="font-body-sm text-body-sm text-on-surface font-medium">{{ u.department.name|default:"Unassigned" }}</td>
+            <td class="font-body-sm text-body-sm text-secondary">{{ u.created_by.display_name|default:"Department Head" }}</td>
+            <td class="font-body-sm text-body-sm text-secondary">{{ u.date_joined|date:"M d, Y" }}</td>
+            <td class="text-right whitespace-nowrap">
+              <div class="inline-flex items-center gap-2">
+                <form method="post" action="{% url 'accounts:user_action' u.pk 'validate' %}" class="inline">
+                  {% csrf_token %}
+                  <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                  <button type="submit" class="btn-success btn-sm">
+                    <span class="material-symbols-outlined text-[16px]">check</span> Validate & Activate
+                  </button>
+                </form>
+                <form method="post" action="{% url 'accounts:user_action' u.pk 'reject' %}" class="inline" data-confirm="Reject this account request?">
+                  {% csrf_token %}
+                  <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                  <button type="submit" class="btn-danger btn-sm">
+                    <span class="material-symbols-outlined text-[16px]">close</span> Reject
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="7" class="py-12 text-center text-secondary font-body-sm text-body-sm">
+              <span class="material-symbols-outlined text-[44px] text-outline-variant">task_alt</span>
+              <p class="font-title-sm text-title-sm text-on-surface mt-2">All Accounts Verified</p>
+              <p class="text-secondary mt-0.5">There are no pending accounts waiting for Superuser validation.</p>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

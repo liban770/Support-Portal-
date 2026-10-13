@@ -1,0 +1,44 @@
+{% if messages %}
+<div class="fixed top-20 right-4 left-4 sm:left-auto sm:w-[28rem] z-[100] space-y-3 pointer-events-none" aria-live="polite">
+  {% for message in messages %}
+  <div data-toast {% if "password" in message.message|lower or "temporary" in message.message|lower %}data-sticky="1"{% endif %}
+       class="toast card shadow-float p-4 flex items-start gap-3.5 border-l-4 pointer-events-auto transition-all duration-300 animate-in
+       {% if message.tags == 'success' %}border-l-[#166534] bg-white ring-1 ring-[#166534]/10
+       {% elif message.tags == 'error' %}border-l-error bg-white ring-1 ring-error/15
+       {% elif message.tags == 'warning' %}border-l-[#D97706] bg-white ring-1 ring-[#D97706]/15
+       {% else %}border-l-primary-container bg-white ring-1 ring-primary-container/10{% endif %}">
+    
+    <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5
+      {% if message.tags == 'success' %}bg-[#DCFCE7] text-[#166534]
+      {% elif message.tags == 'error' %}bg-[#FEE2E2] text-error
+      {% elif message.tags == 'warning' %}bg-[#FEF3C7] text-[#92400E]
+      {% else %}bg-surface-container text-primary-container{% endif %}">
+      <span class="material-symbols-outlined text-[20px]">
+        {% if message.tags == 'success' %}check_circle
+        {% elif message.tags == 'error' %}cancel
+        {% elif message.tags == 'warning' %}warning
+        {% else %}info{% endif %}
+      </span>
+    </div>
+
+    <div class="flex-1 min-w-0 space-y-0.5">
+      <div class="font-label-md text-label-md font-bold
+        {% if message.tags == 'success' %}text-[#166534]
+        {% elif message.tags == 'error' %}text-error
+        {% elif message.tags == 'warning' %}text-[#92400E]
+        {% else %}text-primary-container{% endif %}">
+        {% if message.tags == 'success' %}Success
+        {% elif message.tags == 'error' %}Action Unsuccessful
+        {% elif message.tags == 'warning' %}Attention
+        {% else %}Notice{% endif %}
+      </div>
+      <p class="font-body-sm text-body-sm text-on-surface break-words leading-relaxed">{{ message }}</p>
+    </div>
+
+    <button type="button" data-toast-close class="text-secondary hover:text-on-surface p-1 rounded-lg hover:bg-surface-container transition-colors shrink-0" aria-label="Dismiss notification">
+      <span class="material-symbols-outlined text-[18px]">close</span>
+    </button>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}

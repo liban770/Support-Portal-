@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}Notifications{% endblock %}
+{% block crumb %}Notifications{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto space-y-6 animate-in">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">User Alerts · In-App Notifications</span>
+      </div>
+      <h1 class="page-title mt-1">Notifications & System Updates</h1>
+      <p class="page-sub mt-1">Status changes, assignments, feedback requests, and account updates.</p>
+    </div>
+    {% if unread_count %}
+    <form method="post" action="{% url 'core:notifications_mark_all' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn-secondary btn-sm">
+        <span class="material-symbols-outlined text-[18px]">done_all</span>
+        <span>Mark All as Read</span>
+      </button>
+    </form>
+    {% endif %}
+  </div>
+
+  <div class="flex items-center gap-2 p-1.5 bg-surface-container rounded-xl w-fit">
+    <a href="{% url 'core:notifications' %}" class="tab {% if not filter %}tab-active{% endif %}">All Notifications</a>
+    <a href="{% url 'core:notifications' %}?filter=unread" class="tab {% if filter == 'unread' %}tab-active{% endif %}">
+      <span>Unread</span>
+      {% if unread_count %}<span class="tab-count bg-error text-on-error">{{ unread_count }}</span>{% endif %}
+    </a>
+  </div>
+
+  <div class="card overflow-hidden shadow-card divide-y divide-line">
+    {% for note in page_obj %}
+    <div class="p-4 sm:p-5 flex items-start gap-4 hover:bg-canvas transition-colors {% if not note.is_read %}bg-surface-container-low/40{% endif %}">
+      <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 {% if not note.is_read %}bg-primary-container text-on-primary{% else %}bg-surface-container text-secondary{% endif %}">
+        <span class="material-symbols-outlined text-[20px]">{{ note.icon }}</span>
+      </div>
+      <div class="flex-1 min-w-0 space-y-1">
+        <div class="flex items-baseline justify-between gap-2">
+          <h2 class="font-label-md text-label-md text-on-surface font-semibold truncate">{{ note.title }}</h2>
+          <span class="font-caption text-caption text-secondary shrink-0">{{ note.created_at|timesince }} ago</span>
+        </div>
+        {% if note.message %}
+        <p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">{{ note.message }}</p>
+        {% endif %}
+        {% if note.link %}
+        <div class="pt-1">
+          <a href="{% url 'core:notification_open' note.pk %}" class="font-label-sm text-label-sm text-primary-container hover:underline inline-flex items-center gap-1">
+            <span>View Related Case</span>
+            <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% empty %}
+    <div class="p-12 text-center text-secondary">
+      <span class="material-symbols-outlined text-[44px] text-outline-variant">notifications_paused</span>
+      <p class="font-title-sm text-title-sm text-on-surface mt-2">No notifications</p>
+      <p class="font-body-sm text-body-sm text-secondary mt-0.5">You're all caught up!</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Pagination -->
+  {% include "partials/pagination.html" %}
+</div>
+{% endblock %}

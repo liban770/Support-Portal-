@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {"darkMode":"class","theme":{"extend":{"colors":{"surface-container":"#eaedfb","error-container":"#ffdad6","tertiary-fixed":"#b3f2ba","secondary":"#605d65","surface-container-low":"#f1f3ff","on-primary-fixed-variant":"#7e2644","on-tertiary-fixed":"#00210a","primary-container":"#6b1736","on-primary":"#ffffff","inverse-surface":"#2c303b","tertiary-fixed-dim":"#97d59f","primary-fixed-dim":"#ffb1c4","primary":"#4d0021","primary-fixed":"#ffd9e0","on-surface-variant":"#544246","on-tertiary-fixed-variant":"#165128","on-surface":"#171c25","on-secondary-container":"#66636b","outline":"#877276","on-tertiary":"#ffffff","on-error":"#ffffff","on-secondary-fixed-variant":"#48454d","on-background":"#171c25","surface-variant":"#dfe2f0","inverse-on-surface":"#edf0fe","on-tertiary-container":"#74af7d","background":"#f9f9ff","on-primary-container":"#ee809f","surface-container-lowest":"#ffffff","tertiary-container":"#00421b","on-error-container":"#93000a","secondary-container":"#e6e0ea","surface-tint":"#9c3e5c","surface-container-high":"#e4e8f5","on-secondary-fixed":"#1c1b21","on-secondary":"#ffffff","tertiary":"#002a0e","error":"#ba1a1a","secondary-fixed-dim":"#cac5ce","inverse-primary":"#ffb1c4","surface-container-highest":"#dfe2f0","surface":"#f9f9ff","surface-dim":"#d6dae7","on-primary-fixed":"#3f001a","surface-bright":"#f9f9ff","secondary-fixed":"#e6e0ea","outline-variant":"#dac0c5"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-lg":"1.5rem","space-xs":"0.25rem","margin-mobile":"1rem","space-sm":"0.5rem","gutter-mobile":"1rem","gutter":"1.5rem","space-md":"1rem","margin":"2rem","space-xl":"2rem"},"fontFamily":{"body-sm":["Inter"],"body-lg":["Inter"],"body-md":["Inter"],"headline-xl-mobile":["Inter"],"headline-md":["Inter"],"headline-lg":["Inter"],"label-md":["Inter"],"headline-xl":["Inter"],"title-sm":["Inter"],"label-sm":["Inter"],"caption":["Inter"]},"fontSize":{"body-sm":["13px",{"lineHeight":"18px","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-xl-mobile":["26px",{"lineHeight":"34px","letterSpacing":"-0.015em","fontWeight":"700"}],"headline-md":["20px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"label-md":["13px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"600"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"title-sm":["16px",{"lineHeight":"24px","letterSpacing":"-0.005em","fontWeight":"600"}],"label-sm":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"500"}],"caption":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"500"}]}}}}</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest z-50 flex flex-col justify-between border-r border-surface-variant"><div class="flex flex-col h-full overflow-y-auto"><div class="px-space-lg pt-space-lg pb-space-md flex items-center gap-space-sm border-b border-surface-variant"><img alt="ATU Seal Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1X67xJQZBtWgy9w482KbNYuU9U-TCmK7u5T0aYeV0mW1Z8aVC3Bnppw4Dru-tuCDvw4r8ztpTH7M9JxjZd_rO2sYBPlnGhm2Z9SwqYMWL5-bkGmD9gpGPi5BLuP1YS2WaavoXUpT74sOPd6ZkBSQzgkqJC4rfq7lXhkPUokW88JWfaOMWJrn7PvC6HOVaWmaHcHS4iDVLvF_nNRWU8e8xzW5SwWknGhnB-zYgOpkvhoZQyl_2WgO-io_2g"/><div class="flex flex-col min-w-0"><span class="font-title-sm text-title-sm text-primary tracking-tight truncate leading-tight">ATU Support Portal</span><span class="font-caption text-caption text-secondary truncate">Abaarso Tech University</span></div></div><div class="px-space-md py-space-sm"><div class="px-space-sm py-space-xs font-caption text-caption uppercase text-secondary font-semibold">Student Services</div><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-semibold rounded-lg"><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">space_dashboard</span><span class="font-body-sm text-body-sm">Dashboard</span></a><a aria-current="page" class="flex items-center gap-3 px-space-sm py-2 transition-colors bg-primary-container text-on-primary font-semibold rounded-lg" data-path="my-requests" href="#"><span class="material-symbols-outlined text-[20px]">assignment</span><span class="font-body-sm text-body-sm">My Requests</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="absence-and-leave" href="#"><span class="material-symbols-outlined text-[20px]">event_busy</span><span class="font-body-sm text-body-sm">Absence &amp; Leave</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="student-problems" href="#"><span class="material-symbols-outlined text-[20px]">report_problem</span><span class="font-body-sm text-body-sm">Student Problems</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="late-class-reports" href="#"><span class="material-symbols-outlined text-[20px]">schedule</span><span class="font-body-sm text-body-sm">Late Class Reports</span></a><a class="flex items-center justify-between px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="notifications" href="#"><div class="flex items-center gap-3"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="font-body-sm text-body-sm">Notifications</span></div><span class="bg-error text-on-error font-caption text-caption px-1.5 py-0.5 rounded-full">3</span></a></nav></div><div class="px-space-md py-space-sm"><div class="px-space-sm py-space-xs font-caption text-caption uppercase text-secondary font-semibold">Administration</div><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-semibold rounded-lg"><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="department-operations" href="#"><span class="material-symbols-outlined text-[20px]">lan</span><span class="font-body-sm text-body-sm">Department Operations</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="academic-office" href="#"><span class="material-symbols-outlined text-[20px]">school</span><span class="font-body-sm text-body-sm">Academic Office</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="student-affairs" href="#"><span class="material-symbols-outlined text-[20px]">diversity_3</span><span class="font-body-sm text-body-sm">Student Affairs</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dean-overview" href="#"><span class="material-symbols-outlined text-[20px]">analytics</span><span class="font-body-sm text-body-sm">Dean Overview</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="user-management" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span class="font-body-sm text-body-sm">User Management</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="department-management" href="#"><span class="material-symbols-outlined text-[20px]">domain</span><span class="font-body-sm text-body-sm">Department Management</span></a><a class="flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="system-settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-body-sm text-body-sm">System Settings</span></a></nav></div></div><div class="p-space-md border-t border-surface-variant bg-surface-container-low"><div class="flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><div class="w-9 h-9 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-label-md text-label-md shrink-0">FD</div><div class="flex flex-col min-w-0"><span class="font-label-md text-label-md text-on-surface truncate">Fatima Dahir</span><span class="font-caption text-caption text-secondary truncate">Staff / Academic Lead</span></div></div><a class="text-secondary hover:text-error transition-colors p-1.5 rounded hover:bg-error-container" data-path="login" href="#" title="Sign Out"><span class="material-symbols-outlined text-[20px]">logout</span></a></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest border-b border-surface-variant z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><img alt="ATU Seal Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1X67xJQZBtWgy9w482KbNYuU9U-TCmK7u5T0aYeV0mW1Z8aVC3Bnppw4Dru-tuCDvw4r8ztpTH7M9JxjZd_rO2sYBPlnGhm2Z9SwqYMWL5-bkGmD9gpGPi5BLuP1YS2WaavoXUpT74sOPd6ZkBSQzgkqJC4rfq7lXhkPUokW88JWfaOMWJrn7PvC6HOVaWmaHcHS4iDVLvF_nNRWU8e8xzW5SwWknGhnB-zYgOpkvhoZQyl_2WgO-io_2g"/><div class="flex items-center gap-space-xs font-body-sm text-body-sm text-secondary"><span class="hover:text-on-surface cursor-pointer">Portal</span><span>/</span><span class="text-on-surface font-label-md text-label-md">Overview</span></div></div><div class="flex-1 max-w-md mx-space-lg"><div class="relative flex items-center"><span class="material-symbols-outlined absolute left-3 text-secondary text-[18px]">search</span><input class="w-full pl-9 pr-4 py-2 bg-background border border-surface-variant rounded-lg font-body-sm text-body-sm text-on-surface focus:outline-none focus:border-primary-container placeholder:text-secondary" placeholder="Search requests, course codes, or reference ID..." type="text"/></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-caption text-caption text-primary font-semibold"><span class="material-symbols-outlined text-[15px]">calendar_today</span><span>Spring 2026</span></div><div class="relative cursor-pointer p-1.5 rounded-full hover:bg-surface-container transition-colors text-on-surface"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1 right-1 w-4 h-4 bg-error text-on-error font-caption text-caption flex items-center justify-center rounded-full text-[10px]">3</span></div><div class="flex items-center gap-space-xs bg-surface-container px-2 py-1 rounded-lg cursor-pointer"><span class="font-caption text-caption text-secondary uppercase font-semibold">Role:</span><span class="font-label-sm text-label-sm text-primary font-bold">Staff</span><span class="material-symbols-outlined text-[16px] text-secondary">arrow_drop_down</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Command Header / Institutional Banner -->
+<section class="px-space-xl pt-space-lg pb-space-md">
+<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-space-md">
+<div class="space-y-1">
+<div class="flex items-center gap-space-xs font-body-sm text-body-sm text-secondary">
+<span class="hover:text-on-surface cursor-pointer">Portal</span>
+<span class="text-outline-variant">/</span>
+<span class="hover:text-on-surface cursor-pointer">Department Operations</span>
+<span class="text-outline-variant">/</span>
+<span class="text-primary font-label-md text-label-md">Staff Workspace</span>
+</div>
+<div class="flex items-center gap-3 pt-1">
+<div class="w-2.5 h-7 bg-primary-container rounded-full"></div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
+            Department Staff Workspace <span class="font-title-sm text-title-sm text-secondary font-normal">— Computer Science &amp; Software Engineering</span>
+</h1>
+</div>
+<p class="font-body-md text-body-md text-secondary max-w-4xl pt-0.5">
+          Manage assigned student tickets, triage incoming absence leaves, post internal audit notes, and coordinate department resolutions.
+        </p>
+</div>
+<!-- Quick Action CTAs -->
+<div class="flex items-center flex-wrap gap-2.5 shrink-0">
+<button class="inline-flex items-center gap-2 px-3.5 py-2 bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-md text-label-md rounded-lg shadow-sm transition-all duration-150 active:scale-95" id="btn-export-queue">
+<span class="material-symbols-outlined text-[18px] text-secondary">file_download</span>
+<span>Export Queue (CSV)</span>
+</button>
+<button class="inline-flex items-center gap-2 px-3.5 py-2 bg-surface-container-lowest text-on-surface hover:bg-surface-container font-label-md text-label-md rounded-lg shadow-sm transition-all duration-150 active:scale-95" id="btn-batch-update">
+<span class="material-symbols-outlined text-[18px] text-secondary">checklist</span>
+<span>Batch Status Update</span>
+</button>
+<button class="inline-flex items-center gap-2 px-4 py-2 bg-primary-container text-on-primary hover:bg-primary font-label-md text-label-md rounded-lg shadow-md transition-all duration-150 active:scale-95" id="btn-log-ticket">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Log Walk-in Ticket</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Metric KPI Cards Bar -->
+<section class="px-space-xl py-space-sm">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-space-md">
+<!-- Total Assigned -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm relative overflow-hidden group hover:shadow-md transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Total Assigned</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">assignment_ind</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-xl text-headline-xl text-on-surface font-bold">28</span>
+<span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-surface-container font-caption text-caption text-primary font-semibold">
+<span class="material-symbols-outlined text-[12px]">trending_up</span> +3 today
+          </span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-primary-container h-full rounded-full" style="width: 78%"></div>
+</div>
+</div>
+<!-- New Requests -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm relative overflow-hidden group hover:shadow-md transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">New Requests</span>
+<span class="w-2.5 h-2.5 rounded-full bg-error animate-ping"></span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-xl text-headline-xl text-on-surface font-bold">6</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-caption text-caption font-semibold">
+            Needs Triage
+          </span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-error h-full rounded-full" style="width: 60%"></div>
+</div>
+</div>
+<!-- In Progress -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm relative overflow-hidden group hover:shadow-md transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">In Progress</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">sync</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-xl text-headline-xl text-on-surface font-bold">14</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-caption text-caption font-semibold">
+            Active Review
+          </span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-surface-tint h-full rounded-full" style="width: 50%"></div>
+</div>
+</div>
+<!-- Waiting for Student -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm relative overflow-hidden group hover:shadow-md transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Waiting Student</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">hourglass_top</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-xl text-headline-xl text-on-surface font-bold">5</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-caption text-caption font-semibold">
+            Awaiting Docs
+          </span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 35%"></div>
+</div>
+</div>
+<!-- Overdue / SLA Warning -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm relative overflow-hidden group hover:shadow-md transition-all">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">SLA Breached / Warn</span>
+<span class="material-symbols-outlined text-error text-[20px]">notification_important</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-headline-xl text-headline-xl text-error font-bold">3</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-caption text-caption font-semibold">
+            Breach &lt;24h
+          </span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-error h-full rounded-full" style="width: 85%"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Workspace: Main Grid with 8/12 Worklist and 4/12 Fast Ops Panel -->
+<section class="px-space-xl py-space-md">
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- Left Column: Worklist, Navigation Tabs & Filters (8 Columns) -->
+<div class="xl:col-span-8 flex flex-col gap-space-md min-w-0">
+<!-- Tabbed Navigation Queue Header -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm p-space-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center overflow-x-auto gap-1 p-0.5">
+<button class="queue-tab px-3 py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md whitespace-nowrap shadow-sm">
+              All My Assigned <span class="ml-1 opacity-90 px-1.5 py-0.2 rounded-full bg-surface-container-lowest text-primary text-[11px] font-bold">28</span>
+</button>
+<button class="queue-tab px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-label-md text-label-md whitespace-nowrap transition-colors">
+              Unassigned Queue <span class="ml-1 px-1.5 py-0.2 rounded-full bg-surface-container text-secondary text-[11px]">8</span>
+</button>
+<button class="queue-tab px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-label-md text-label-md whitespace-nowrap transition-colors">
+              Urgent &amp; Escalated <span class="ml-1 px-1.5 py-0.2 rounded-full bg-error-container text-on-error-container text-[11px] font-semibold">4</span>
+</button>
+<button class="queue-tab px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-label-md text-label-md whitespace-nowrap transition-colors">
+              Waiting on Student <span class="ml-1 px-1.5 py-0.2 rounded-full bg-surface-container text-secondary text-[11px]">5</span>
+</button>
+<button class="queue-tab px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-label-md text-label-md whitespace-nowrap transition-colors">
+              Resolved this Week <span class="ml-1 px-1.5 py-0.2 rounded-full bg-tertiary-fixed text-on-tertiary-fixed text-[11px] font-semibold">19</span>
+</button>
+</div>
+<div class="flex items-center gap-2 self-end sm:self-center shrink-0 pr-1">
+<span class="font-caption text-caption text-secondary">Queue Sync: <strong class="text-on-surface">Live</strong></span>
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+</div>
+</div>
+<!-- Filter & Search Controls Bar -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm p-space-md flex flex-col gap-3">
+<div class="flex flex-col md:flex-row items-stretch md:items-center gap-3">
+<!-- Search field -->
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-secondary text-[18px]">search</span>
+<input class="w-full pl-9 pr-4 py-2 bg-surface rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-secondary focus:outline-none focus:bg-surface-container-lowest shadow-inner transition-colors" id="ticket-search-input" placeholder="Search by Student ID, student name, or Ticket ID (e.g. ATU-2026-0084)..." type="text"/>
+</div>
+<!-- Dropdown Filters -->
+<div class="flex items-center flex-wrap gap-2">
+<div class="relative">
+<select class="appearance-none bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm rounded-lg px-3 py-2 pr-7 cursor-pointer focus:outline-none transition-colors">
+<option value="">Category: All Types</option>
+<option value="absence">Absence &amp; Leave</option>
+<option value="problem">Student Problem</option>
+<option value="late_class">Late Class Report</option>
+</select>
+<span class="material-symbols-outlined absolute right-1.5 top-2.5 text-[16px] text-secondary pointer-events-none">expand_more</span>
+</div>
+<div class="relative">
+<select class="appearance-none bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm rounded-lg px-3 py-2 pr-7 cursor-pointer focus:outline-none transition-colors">
+<option value="">Priority: All</option>
+<option value="urgent">Urgent</option>
+<option value="standard">Standard</option>
+<option value="low">Low</option>
+</select>
+<span class="material-symbols-outlined absolute right-1.5 top-2.5 text-[16px] text-secondary pointer-events-none">expand_more</span>
+</div>
+<div class="relative">
+<select class="appearance-none bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm rounded-lg px-3 py-2 pr-7 cursor-pointer focus:outline-none transition-colors">
+<option value="">SLA: All Times</option>
+<option value="overdue">Overdue (&lt; 0h)</option>
+<option value="today">Due Today (&lt; 24h)</option>
+<option value="week">Due This Week</option>
+</select>
+<span class="material-symbols-outlined absolute right-1.5 top-2.5 text-[16px] text-secondary pointer-events-none">expand_more</span>
+</div>
+<div class="relative">
+<select class="appearance-none bg-surface-container-low hover:bg-surface-container text-on-surface font-label-sm text-label-sm rounded-lg px-3 py-2 pr-7 cursor-pointer focus:outline-none transition-colors">
+<option value="">Cohort: Year 1 - 4</option>
+<option value="y1">Year 1 (Freshman)</option>
+<option value="y2">Year 2 (Sophomore)</option>
+<option value="y3">Year 3 (Junior)</option>
+<option value="y4">Year 4 (Senior)</option>
+</select>
+<span class="material-symbols-outlined absolute right-1.5 top-2.5 text-[16px] text-secondary pointer-events-none">expand_more</span>
+</div>
+<button class="p-2 text-secondary hover:text-primary rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors" title="Clear all filters">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span>
+</button>
+</div>
+</div>
+<!-- Active tags summary -->
+<div class="flex items-center gap-2 pt-1 flex-wrap">
+<span class="font-caption text-caption text-secondary">Active View:</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container text-primary font-caption text-caption font-semibold">
+              Department: CSE
+              <span class="material-symbols-outlined text-[13px] cursor-pointer hover:text-error">close</span>
+</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container text-primary font-caption text-caption font-semibold">
+              Assigned Staff: Dr. Amina Warsame
+              <span class="material-symbols-outlined text-[13px] cursor-pointer hover:text-error">close</span>
+</span>
+<span class="text-caption font-caption text-secondary hover:underline cursor-pointer ml-auto">Save filter preset</span>
+</div>
+</div>
+<!-- Operational Worklist Table Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<div class="px-space-md py-3 bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-2">
+<input class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer" id="select-all-tickets" type="checkbox"/>
+<span class="font-label-md text-label-md text-on-surface">Department Assigned Worklist</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container font-caption text-caption text-secondary">6 Showing of 28</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="font-caption text-caption text-secondary">Sort by: <strong class="text-on-surface">SLA Urgency (Earliest First)</strong></span>
+</div>
+</div>
+<!-- Table Container -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-4 w-10 text-center">
+<span class="sr-only">Select</span>
+</th>
+<th class="py-3 px-4 font-semibold">Request ID &amp; Category</th>
+<th class="py-3 px-4 font-semibold">Student Details</th>
+<th class="py-3 px-4 font-semibold">Subject &amp; Academic Scope</th>
+<th class="py-3 px-4 font-semibold">SLA / Due</th>
+<th class="py-3 px-4 font-semibold">Status</th>
+<th class="py-3 px-4 font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container text-body-sm font-body-sm">
+<!-- Ticket Row 1 (Selected by default) -->
+<tr class="ticket-row bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer group" data-ticket="ATU-2026-0084">
+<td class="py-3.5 px-4 text-center" onclick="event.stopPropagation()">
+<input checked="" class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-primary font-bold">ATU-2026-0084</span>
+<span class="material-symbols-outlined text-primary text-[15px]" title="Currently inspected in Quick Action">arrow_right_alt</span>
+</div>
+<span class="inline-flex items-center gap-1 text-[11px] font-caption text-secondary mt-0.5">
+<span class="material-symbols-outlined text-[13px] text-primary">event_busy</span> Absence &amp; Leave
+                      </span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-primary text-on-primary font-label-sm text-label-sm flex items-center justify-center shrink-0">
+                        FD
+                      </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">Fatima Dahir</span>
+<span class="font-caption text-caption text-secondary">ATU-2023-CS-112 • Yr 3</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 max-w-xs">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface truncate" title="Medical leave - 3 days (Hargeisa General Hospital)">Medical leave - 3 days (Hargeisa General Hospital)</span>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-caption text-caption text-secondary truncate">CS-302, CS-306</span>
+<span class="inline-flex items-center gap-0.5 text-caption font-caption text-on-surface-variant bg-surface px-1.5 py-0.2 rounded">
+<span class="material-symbols-outlined text-[12px]">sticky_note_2</span> 2 staff notes
+                        </span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-error font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">schedule</span> 4h left
+                      </span>
+<span class="font-caption text-caption text-secondary">Mar 24, 14:00</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-primary font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Waiting for Student
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap" onclick="event.stopPropagation()">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 hover:bg-surface-container rounded text-secondary hover:text-primary transition-colors" title="Quick Note">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</button>
+<button class="p-1.5 hover:bg-surface-container rounded text-secondary hover:text-primary transition-colors" title="Escalate to Dean">
+<span class="material-symbols-outlined text-[18px]">upload</span>
+</button>
+<button class="px-2 py-1 bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-sm text-label-sm rounded transition-all">
+                        Inspect
+                      </button>
+</div>
+</td>
+</tr>
+<!-- Ticket Row 2 (SLA Breached) -->
+<tr class="ticket-row hover:bg-surface-container-low transition-colors cursor-pointer group" data-ticket="ATU-2026-0092">
+<td class="py-3.5 px-4 text-center" onclick="event.stopPropagation()">
+<input class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-bold group-hover:text-primary transition-colors">ATU-2026-0092</span>
+<span class="inline-flex items-center gap-1 text-[11px] font-caption text-secondary mt-0.5">
+<span class="material-symbols-outlined text-[13px] text-error">report_problem</span> Student Problem
+                      </span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm flex items-center justify-center shrink-0">
+                        JF
+                      </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">Jamaal Farah</span>
+<span class="font-caption text-caption text-secondary">ATU-2024-CS-045 • Yr 2</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 max-w-xs">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface truncate">Lab 2 Workstation 14 hardware failure &amp; exam software crash</span>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-caption text-caption text-secondary truncate">CS-204 Data Structures</span>
+<span class="inline-flex items-center gap-0.5 text-caption font-caption text-error font-semibold bg-error-container text-on-error-container px-1.5 py-0.2 rounded">
+                          Urgent Priority
+                        </span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-error font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">alarm_off</span> Overdue (-2h)
+                      </span>
+<span class="font-caption text-caption text-secondary">Mar 25, 10:00</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Escalated
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap" onclick="event.stopPropagation()">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 hover:bg-surface-container rounded text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</button>
+<button class="p-1.5 hover:bg-surface-container rounded text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">upload</span>
+</button>
+<button class="px-2 py-1 bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-sm text-label-sm rounded transition-all">
+                        Inspect
+                      </button>
+</div>
+</td>
+</tr>
+<!-- Ticket Row 3 (Late Class Report) -->
+<tr class="ticket-row hover:bg-surface-container-low transition-colors cursor-pointer group" data-ticket="ATU-2026-0105">
+<td class="py-3.5 px-4 text-center" onclick="event.stopPropagation()">
+<input class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-bold group-hover:text-primary transition-colors">ATU-2026-0105</span>
+<span class="inline-flex items-center gap-1 text-[11px] font-caption text-secondary mt-0.5">
+<span class="material-symbols-outlined text-[13px] text-secondary">schedule</span> Late Class Report
+                      </span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm flex items-center justify-center shrink-0">
+                        HO
+                      </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">Hamza Osman</span>
+<span class="font-caption text-caption text-secondary">ATU-2023-CS-088 • Yr 3</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 max-w-xs">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface truncate">CS-301 Algorithms delayed 40m - Instructor transit</span>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-caption text-caption text-secondary truncate">Hall B • Room 201</span>
+<span class="inline-flex items-center gap-0.5 text-caption font-caption text-secondary bg-surface px-1.5 py-0.2 rounded">
+                          Class Rep Batch
+                        </span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-tertiary">check_circle</span> 28h left
+                      </span>
+<span class="font-caption text-caption text-secondary">Mar 26, 17:00</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container-high font-label-sm text-label-sm text-on-surface font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Under Review
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap" onclick="event.stopPropagation()">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 hover:bg-surface-container rounded text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</button>
+<button class="p-1.5 hover:bg-surface-container rounded text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">upload</span>
+</button>
+<button class="px-2 py-1 bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-sm text-label-sm rounded transition-all">
+                        Inspect
+                      </button>
+</div>
+</td>
+</tr>
+<!-- Ticket Row 4 (Absence Symposium) -->
+<tr class="ticket-row hover:bg-surface-container-low transition-colors cursor-pointer group" data-ticket="ATU-2026-0077">
+<td class="py-3.5 px-4 text-center" onclick="event.stopPropagation()">
+<input class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-bold group-hover:text-primary transition-colors">ATU-2026-0077</span>
+<span class="inline-flex items-center gap-1 text-[11px] font-caption text-secondary mt-0.5">
+<span class="material-symbols-outlined text-[13px] text-primary">event_busy</span> Absence &amp; Leave
+                      </span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm flex items-center justify-center shrink-0">
+                        MA
+                      </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">Maryam Abdi</span>
+<span class="font-caption text-caption text-secondary">ATU-2022-SE-019 • Yr 4</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 max-w-xs">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface truncate">Inter-university tech symposium delegation attendance (Mogadishu)</span>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-caption text-caption text-secondary truncate">SE-404, SE-412 Capstone</span>
+<span class="inline-flex items-center gap-0.5 text-caption font-caption text-primary bg-surface-container px-1.5 py-0.2 rounded">
+                          Official Invitation Attached
+                        </span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-tertiary">check_circle</span> 36h left
+                      </span>
+<span class="font-caption text-caption text-secondary">Mar 27, 09:00</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span> In Progress
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap" onclick="event.stopPropagation()">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 hover:bg-surface-container rounded text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</button>
+<button class="p-1.5 hover:bg-surface-container rounded text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">upload</span>
+</button>
+<button class="px-2 py-1 bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-sm text-label-sm rounded transition-all">
+                        Inspect
+                      </button>
+</div>
+</td>
+</tr>
+<!-- Ticket Row 5 (Grade repost query) -->
+<tr class="ticket-row hover:bg-surface-container-low transition-colors cursor-pointer group" data-ticket="ATU-2026-0063">
+<td class="py-3.5 px-4 text-center" onclick="event.stopPropagation()">
+<input class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-bold group-hover:text-primary transition-colors">ATU-2026-0063</span>
+<span class="inline-flex items-center gap-1 text-[11px] font-caption text-secondary mt-0.5">
+<span class="material-symbols-outlined text-[13px] text-error">report_problem</span> Student Problem
+                      </span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm flex items-center justify-center shrink-0">
+                        AY
+                      </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">Ahmed Yasin</span>
+<span class="font-caption text-caption text-secondary">ATU-2024-CS-091 • Yr 2</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 max-w-xs">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface truncate">Grade repost verification query for MATH-202 Linear Algebra</span>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-caption text-caption text-secondary truncate">Midterm 2 Scantron discrepancy</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-tertiary">check_circle</span> 48h left
+                      </span>
+<span class="font-caption text-caption text-secondary">Mar 27, 18:00</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-secondary font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Submitted
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap" onclick="event.stopPropagation()">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 hover:bg-surface-container rounded text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</button>
+<button class="p-1.5 hover:bg-surface-container rounded text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">upload</span>
+</button>
+<button class="px-2 py-1 bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-sm text-label-sm rounded transition-all">
+                        Inspect
+                      </button>
+</div>
+</td>
+</tr>
+<!-- Ticket Row 6 (Medical / Extension) -->
+<tr class="ticket-row hover:bg-surface-container-low transition-colors cursor-pointer group" data-ticket="ATU-2026-0058">
+<td class="py-3.5 px-4 text-center" onclick="event.stopPropagation()">
+<input class="w-4 h-4 rounded text-primary focus:ring-0 cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-bold group-hover:text-primary transition-colors">ATU-2026-0058</span>
+<span class="inline-flex items-center gap-1 text-[11px] font-caption text-secondary mt-0.5">
+<span class="material-symbols-outlined text-[13px] text-primary">event_busy</span> Absence &amp; Leave
+                      </span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm flex items-center justify-center shrink-0">
+                        SB
+                      </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">Safia Barkhad</span>
+<span class="font-caption text-caption text-secondary">ATU-2025-CS-004 • Yr 1</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 max-w-xs">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface truncate">Family bereavement leave application with travel manifest</span>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-caption text-caption text-secondary truncate">CS-101 Introduction to Computing</span>
+<span class="inline-flex items-center gap-0.5 text-caption font-caption text-on-surface-variant bg-surface px-1.5 py-0.2 rounded">
+                          1 staff note
+                        </span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-tertiary">check_circle</span> 60h left
+                      </span>
+<span class="font-caption text-caption text-secondary">Mar 28, 12:00</span>
+</div>
+</td>
+<td class="py-3.5 px-4 whitespace-nowrap">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-label-sm text-label-sm text-on-surface font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span> In Progress
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right whitespace-nowrap" onclick="event.stopPropagation()">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1.5 hover:bg-surface-container rounded text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</button>
+<button class="p-1.5 hover:bg-surface-container rounded text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">upload</span>
+</button>
+<button class="px-2 py-1 bg-surface-container text-primary hover:bg-primary hover:text-on-primary font-label-sm text-label-sm rounded transition-all">
+                        Inspect
+                      </button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination & Worklist Footer -->
+<div class="px-space-md py-3 bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-3 text-body-sm font-body-sm">
+<div class="text-secondary font-caption text-caption">
+              Showing 1 to 6 of 28 assigned records (CSE Department Queue)
+            </div>
+<div class="flex items-center gap-1">
+<button class="p-1.5 rounded bg-surface hover:bg-surface-container text-secondary disabled:opacity-50 transition-colors" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-7 h-7 rounded bg-primary-container text-on-primary font-label-sm text-label-sm font-bold flex items-center justify-center">
+                1
+              </button>
+<button class="w-7 h-7 rounded hover:bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center justify-center transition-colors">
+                2
+              </button>
+<button class="w-7 h-7 rounded hover:bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center justify-center transition-colors">
+                3
+              </button>
+<button class="w-7 h-7 rounded hover:bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center justify-center transition-colors">
+                4
+              </button>
+<button class="p-1.5 rounded bg-surface hover:bg-surface-container text-secondary transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Inline Visual: Department Resolution Performance & Workload Distribution -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Workload Distribution Mini-Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-3">
+<h3 class="font-title-sm text-title-sm text-on-surface">Queue Composition by Type</h3>
+<span class="font-caption text-caption text-secondary">Active Sprint</span>
+</div>
+<div class="flex items-center gap-4">
+<!-- Inline SVG Donut Chart (under 2KB) -->
+<div class="relative w-24 h-24 shrink-0">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 36 36">
+<!-- Background Circle -->
+<circle class="text-surface-container stroke-current" cx="18" cy="18" fill="none" r="15.915" stroke-width="3.8"></circle>
+<!-- Absence & Leave (52%) -->
+<circle class="text-primary-container stroke-current" cx="18" cy="18" fill="none" r="15.915" stroke-dasharray="52 48" stroke-dashoffset="0" stroke-width="3.8"></circle>
+<!-- Student Problem (33%) -->
+<circle class="text-error stroke-current" cx="18" cy="18" fill="none" r="15.915" stroke-dasharray="33 67" stroke-dashoffset="-52" stroke-width="3.8"></circle>
+<!-- Late Class (15%) -->
+<circle class="text-surface-tint stroke-current" cx="18" cy="18" fill="none" r="15.915" stroke-dasharray="15 85" stroke-dashoffset="-85" stroke-width="3.8"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-label-md text-label-md font-bold text-on-surface">28</span>
+<span class="text-[9px] font-caption text-secondary uppercase">Cases</span>
+</div>
+</div>
+<!-- Legend -->
+<div class="flex flex-col gap-1.5 flex-1 min-w-0">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-1.5 truncate">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container shrink-0"></span>
+<span class="text-secondary truncate">Absence &amp; Leave</span>
+</div>
+<span class="font-label-sm text-label-sm font-bold text-on-surface">52%</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-1.5 truncate">
+<span class="w-2.5 h-2.5 rounded-full bg-error shrink-0"></span>
+<span class="text-secondary truncate">Student Problem</span>
+</div>
+<span class="font-label-sm text-label-sm font-bold text-on-surface">33%</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-1.5 truncate">
+<span class="w-2.5 h-2.5 rounded-full bg-surface-tint shrink-0"></span>
+<span class="text-secondary truncate">Late Class Report</span>
+</div>
+<span class="font-label-sm text-label-sm font-bold text-on-surface">15%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Academic Policy Quick Guidance Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<h3 class="font-title-sm text-title-sm text-on-surface">Staff Leave Guidance</h3>
+<span class="px-2 py-0.5 rounded bg-surface-container font-caption text-caption text-primary font-semibold">Policy v4.2</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">
+                Medical absences exceeding <strong>3 consecutive class days</strong> mandate official stamped paperwork from an accredited hospital before department coordinator sign-off.
+              </p>
+</div>
+<div class="pt-3 flex items-center justify-between border-t border-surface-container mt-2">
+<span class="font-caption text-caption text-secondary">Handbook Clause 7.1.b</span>
+<a class="font-label-sm text-label-sm text-primary hover:underline flex items-center gap-1" href="#">
+                View Full Faculty SOP <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Case Quick-Action Flyout / Drawer Panel + Operational Support (4 Columns) -->
+<div class="xl:col-span-4 flex flex-col gap-space-md min-w-0">
+<!-- Live Selected Case Quick-Action Panel -->
+<div class="bg-surface-container-lowest rounded-xl shadow-md p-space-md relative overflow-hidden">
+<!-- Sticky Header for Selected Case -->
+<div class="flex items-start justify-between pb-3 border-b border-surface-container">
+<div>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-caption text-caption font-bold">INSPECTION FOCUS</span>
+<span class="font-label-sm text-label-sm text-secondary">CSE Dept</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold mt-1" id="active-panel-id">ATU-2026-0084</h2>
+<p class="font-body-sm text-body-sm text-secondary" id="active-panel-student">Fatima Dahir (ATU-2023-CS-112)</p>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container font-caption text-caption text-primary font-bold">
+<span class="material-symbols-outlined text-[13px]">alarm</span> 4h SLA
+            </span>
+</div>
+<!-- Case Synopsis Brief -->
+<div class="py-3 bg-surface-container-low rounded-lg p-3 my-3">
+<span class="font-caption text-caption text-secondary uppercase font-semibold block">Case Summary:</span>
+<p class="font-body-sm text-body-sm text-on-surface mt-0.5">
+              Medical leave - 3 days. Patient admitted with acute enteric fever at Hargeisa General Hospital. Stamped doctor certificate uploaded.
+            </p>
+<div class="flex items-center gap-2 mt-2">
+<a class="inline-flex items-center gap-1 text-[12px] font-label-sm text-primary hover:underline" href="#">
+<span class="material-symbols-outlined text-[14px]">attachment</span> HGH-Stamp-Scan.pdf
+              </a>
+<span class="text-secondary text-[10px]">• 1.4 MB</span>
+</div>
+</div>
+<!-- Quick Action 1: Status Transition -->
+<div class="space-y-3">
+<div>
+<label class="block font-label-sm text-label-sm text-on-surface font-semibold mb-1">
+                Update Status
+              </label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-low border-0 text-on-surface font-body-sm text-body-sm rounded-lg px-3 py-2.5 pr-8 focus:ring-1 focus:ring-primary focus:bg-surface-container-lowest transition-all" id="case-status-select">
+<option selected="" value="waiting_student">Waiting for Student (Request Info)</option>
+<option value="in_progress">In Progress (Active Department Review)</option>
+<option value="approve_leave">Approve Leave Application</option>
+<option value="escalate_dean">Escalate to Dean Duale</option>
+<option value="reject">Reject Request (Non-compliant)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-3 text-[18px] text-secondary pointer-events-none">unfold_more</span>
+</div>
+</div>
+<!-- Quick Action 2: Internal Staff Note (Staff Eyes Only) -->
+<div>
+<div class="flex items-center justify-between mb-1">
+<label class="font-label-sm text-label-sm text-on-surface font-semibold flex items-center gap-1.5">
+<span>Post Internal Audit Note</span>
+</label>
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-secondary-fixed text-on-secondary-fixed rounded text-[10px] font-caption font-bold">
+<span class="material-symbols-outlined text-[10px]">lock</span> Staff Eyes Only
+                </span>
+</div>
+<textarea class="w-full bg-surface-container-low rounded-lg p-2.5 font-body-sm text-body-sm text-on-surface placeholder:text-secondary focus:outline-none focus:bg-surface-container-lowest transition-all resize-none" id="internal-note-text" placeholder="Write internal verification note for CSE faculty or Dean's office (hidden from student)..." rows="3"></textarea>
+<div class="flex items-center justify-between mt-1.5">
+<span class="font-caption text-caption text-secondary">Logged under: Dr. Amina Warsame</span>
+<button class="px-3 py-1.5 bg-primary-container text-on-primary rounded-lg font-label-sm text-label-sm font-semibold hover:bg-primary shadow-sm transition-all duration-150 active:scale-95" id="btn-save-note">
+                  Save Note
+                </button>
+</div>
+</div>
+<!-- Fast Action Row: Shortcuts -->
+<div class="pt-2 flex flex-col gap-2">
+<button class="w-full py-2 px-3 bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md rounded-lg flex items-center justify-center gap-2 transition-colors" id="btn-request-info">
+<span class="material-symbols-outlined text-[18px]">quickreply</span>
+<span>Request Additional Docs from Student</span>
+</button>
+<button class="w-full py-2 px-3 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md rounded-lg flex items-center justify-center gap-2 transition-colors" id="btn-escalate-dean">
+<span class="material-symbols-outlined text-[18px] text-error">supervisor_account</span>
+<span>Escalate to Dean Duale with Reason</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Recent Department Audit Stream / Timeline -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm p-space-md">
+<div class="flex items-center justify-between pb-3 border-b border-surface-container">
+<h3 class="font-title-sm text-title-sm text-on-surface font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">history_edu</span>
+<span>CSE Department Activity Stream</span>
+</h3>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+</div>
+<div class="mt-4 relative pl-5 space-y-4">
+<!-- Continuous vertical line -->
+<div class="absolute left-2 top-2 bottom-2 w-0.5 bg-surface-container"></div>
+<!-- Activity item 1 -->
+<div class="relative group">
+<div class="absolute -left-5 top-1 w-3.5 h-3.5 rounded-full bg-primary-container border-2 border-surface-container-lowest"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Dr. Amina Warsame added internal note</span>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-1 mt-0.5">
+                  "Verified clinic admission record with Hospital Desk..."
+                </p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-caption text-caption text-primary font-bold">ATU-2026-0084</span>
+<span class="font-caption text-caption text-secondary">18 mins ago</span>
+</div>
+</div>
+</div>
+<!-- Activity item 2 -->
+<div class="relative group">
+<div class="absolute -left-5 top-1 w-3.5 h-3.5 rounded-full bg-error border-2 border-surface-container-lowest"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Eng. Liban Hassan escalated ticket</span>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-1 mt-0.5">
+                  Hardware fault escalated to Academic Office &amp; Facilities
+                </p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-caption text-caption text-primary font-bold">ATU-2026-0092</span>
+<span class="font-caption text-caption text-secondary">1 hour ago</span>
+</div>
+</div>
+</div>
+<!-- Activity item 3 -->
+<div class="relative group">
+<div class="absolute -left-5 top-1 w-3.5 h-3.5 rounded-full bg-tertiary border-2 border-surface-container-lowest"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Dean's Office approved leave waiver</span>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-1 mt-0.5">
+                  Dean Duale signed official athletic symposium waiver
+                </p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-caption text-caption text-primary font-bold">ATU-2026-0041</span>
+<span class="font-caption text-caption text-secondary">3 hours ago</span>
+</div>
+</div>
+</div>
+<!-- Activity item 4 -->
+<div class="relative group">
+<div class="absolute -left-5 top-1 w-3.5 h-3.5 rounded-full bg-surface-tint border-2 border-surface-container-lowest"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Walk-in inquiry recorded</span>
+<p class="font-body-sm text-body-sm text-secondary line-clamp-1 mt-0.5">
+                  Student counseling consultation booked for midterm makeup
+                </p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-caption text-caption text-primary font-bold">ATU-2026-0102</span>
+<span class="font-caption text-caption text-secondary">Yesterday</span>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-3 border-t border-surface-container mt-4">
+<button class="w-full text-center font-label-sm text-label-sm text-primary hover:underline">
+              View Department Audit Log (142 events)
+            </button>
+</div>
+</div>
+<!-- Department Shift & Availability Widget -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm p-space-md">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">access_time</span>
+<h3 class="font-title-sm text-title-sm text-on-surface font-semibold">Department Shift &amp; SLA Health</h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-caption text-caption font-bold">ONLINE</span>
+</div>
+<div class="space-y-2.5 text-body-sm font-body-sm">
+<div class="flex items-center justify-between">
+<span class="text-secondary">Official Operating Hours:</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Sun – Thu, 08:00 – 16:30</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-secondary">Desk Duty Staff:</span>
+<span class="font-label-sm text-label-sm text-on-surface">Dr. Amina Warsame, CSE</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-secondary">On-Time SLA Resolution:</span>
+<span class="font-label-sm text-label-sm text-primary font-bold">91.4% (Goal: &gt;90%)</span>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-surface-container flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+<span class="font-caption text-caption text-secondary">Next Queue Sweep in 14 mins</span>
+</div>
+<button class="p-1 hover:bg-surface-container rounded text-secondary hover:text-primary transition-colors" id="btn-force-sync" title="Force Queue Refresh">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Feedback Toast Container (Fixed bottom right) -->
+<div class="fixed bottom-6 right-6 transform translate-y-24 opacity-0 transition-all duration-300 z-50 flex items-center gap-3 px-4 py-3 rounded-xl bg-inverse-surface text-inverse-on-surface shadow-xl" id="toast-notification">
+<span class="material-symbols-outlined text-tertiary-fixed text-[20px]">check_circle</span>
+<span class="font-label-md text-label-md" id="toast-message">Internal note successfully saved to case.</span>
+</div>
+</div>
+<script>
+  (function() {
+    // Ticket Selection Interaction
+    const ticketRows = document.querySelectorAll('.ticket-row');
+    const activePanelId = document.getElementById('active-panel-id');
+    const activePanelStudent = document.getElementById('active-panel-student');
+    const toast = document.getElementById('toast-notification');
+    const toastMessage = document.getElementById('toast-message');
+
+    function showToast(msg) {
+      if (!toast) return;
+      toastMessage.textContent = msg;
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 3200);
+    }
+
+    ticketRows.forEach(row => {
+      row.addEventListener('click', () => {
+        ticketRows.forEach(r => r.classList.remove('bg-surface-container-low'));
+        row.classList.add('bg-surface-container-low');
+        const ticketId = row.getAttribute('data-ticket');
+        if (ticketId && activePanelId) {
+          activePanelId.textContent = ticketId;
+          const studentName = row.querySelector('td:nth-child(3) .font-label-md')?.textContent || 'Student';
+          const studentId = row.querySelector('td:nth-child(3) .font-caption')?.textContent || '';
+          activePanelStudent.textContent = studentName + ' (' + studentId + ')';
+          showToast('Loaded ticket ' + ticketId + ' into Quick Inspection panel');
+        }
+      });
+    });
+
+    // Save Internal Note
+    const btnSaveNote = document.getElementById('btn-save-note');
+    const noteText = document.getElementById('internal-note-text');
+    if (btnSaveNote && noteText) {
+      btnSaveNote.addEventListener('click', () => {
+        const text = noteText.value.trim();
+        if (!text) {
+          showToast('Please type a note before saving.');
+          return;
+        }
+        noteText.value = '';
+        showToast('Private staff audit note logged successfully.');
+      });
+    }
+
+    // Status Change
+    const statusSelect = document.getElementById('case-status-select');
+    if (statusSelect) {
+      statusSelect.addEventListener('change', (e) => {
+        showToast('Status updated to: ' + e.target.options[e.target.selectedIndex].text);
+      });
+    }
+
+    // Quick Action Buttons
+    const btnRequestInfo = document.getElementById('btn-request-info');
+    if (btnRequestInfo) {
+      btnRequestInfo.addEventListener('click', () => {
+        showToast('Automated document request email dispatched to student.');
+      });
+    }
+
+    const btnEscalateDean = document.getElementById('btn-escalate-dean');
+    if (btnEscalateDean) {
+      btnEscalateDean.addEventListener('click', () => {
+        showToast('Case escalated to Dean Duale with CSE priority flag.');
+      });
+    }
+
+    const btnForceSync = document.getElementById('btn-force-sync');
+    if (btnForceSync) {
+      btnForceSync.addEventListener('click', () => {
+        showToast('Department operational queue synchronized.');
+      });
+    }
+
+    // Top buttons
+    const btnExport = document.getElementById('btn-export-queue');
+    if (btnExport) {
+      btnExport.addEventListener('click', () => {
+        showToast('Exporting 28 assigned CSE cases to CSV file...');
+      });
+    }
+
+    const btnBatch = document.getElementById('btn-batch-update');
+    if (btnBatch) {
+      btnBatch.addEventListener('click', () => {
+        showToast('Batch selection drawer initialized for 6 items.');
+      });
+    }
+
+    const btnLogTicket = document.getElementById('btn-log-ticket');
+    if (btnLogTicket) {
+      btnLogTicket.addEventListener('click', () => {
+        showToast('Opening walk-in student intake form...');
+      });
+    }
+
+    // Queue Filter Tabs styling toggle
+    const queueTabs = document.querySelectorAll('.queue-tab');
+    queueTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        queueTabs.forEach(t => {
+          t.className = 'queue-tab px-3 py-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface font-label-md text-label-md whitespace-nowrap transition-colors';
+        });
+        tab.className = 'queue-tab px-3 py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md whitespace-nowrap shadow-sm';
+        showToast('Filtered worklist view updated');
+      });
+    });
+
+  })();
+</script></main></div></body></html>

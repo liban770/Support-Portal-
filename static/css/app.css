@@ -1,0 +1,40 @@
+/* Small non-Tailwind additions: icons, animations, scrollbars, print. */
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  line-height: 1;
+  user-select: none;
+}
+.icon-fill { font-variation-settings: "FILL" 1, "wght" 500, "GRAD" 0, "opsz" 24; }
+
+.scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: #dfe2f0; border-radius: 9999px; }
+.scroll-thin::-webkit-scrollbar-track { background: transparent; }
+
+@keyframes fade-up { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.animate-in { animation: fade-up .35s ease-out both; }
+.animate-in-1 { animation-delay: .05s; } .animate-in-2 { animation-delay: .1s; }
+.animate-in-3 { animation-delay: .15s; } .animate-in-4 { animation-delay: .2s; }
+
+@keyframes toast-in { from { opacity: 0; transform: translateY(-8px) scale(.98); } to { opacity: 1; transform: none; } }
+.toast { animation: toast-in .25s ease-out both; }
+
+.timeline-line::before {
+  content: ""; position: absolute; left: 15px; top: 36px; bottom: -8px; width: 2px; background: #E5E7EB;
+}
+.timeline-item:last-child .timeline-line::before { display: none; }
+
+.login-glow {
+  background:
+    radial-gradient(600px 400px at 50% 30%, rgba(107, 23, 54, 0.07), transparent 70%),
+    radial-gradient(500px 300px at 85% 90%, rgba(0, 66, 27, 0.04), transparent 70%);
+}
+.brand-bar { background: linear-gradient(90deg, #4d0021, #6b1736 50%, #9c3e5c); }
+
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+
+@media print {
+  aside, header, .no-print { display: none !important; }
+  .lg\:pl-72 { padding-left: 0 !important; }
+  main { padding-top: 0 !important; }
+}

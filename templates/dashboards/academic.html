@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}Academic Office Operations{% endblock %}
+{% block crumb %}Academic Office{% endblock %}
+
+{% block content %}
+<div class="space-y-6 animate-in">
+  <!-- Top Greeting & Header Bar (Stitch Design) -->
+  <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 pb-2 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Academic Registrar · Central Timetable Operations</span>
+      </div>
+      <h1 class="page-title mt-1">Academic Office Operations <span class="text-secondary font-normal">— Curriculum & Timetable Verification</span></h1>
+      <p class="page-sub mt-1">
+        Review late-class notifications, resolve lecture hall and timetable variances, coordinate makeup slots, and enforce university academic policies.
+      </p>
+    </div>
+    <div class="flex flex-wrap items-center gap-2.5">
+      <a href="{% url 'cases:reports' %}" class="btn-secondary btn-sm">
+        <span class="material-symbols-outlined text-[18px]">analytics</span>
+        <span>Academic Reports</span>
+      </a>
+      <a href="{% url 'cases:late_class_reports' %}" class="btn-primary btn-sm">
+        <span class="material-symbols-outlined text-[18px]">schedule</span>
+        <span>Late-Class Queue</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- KPI Summary Bento (Stitch Design) -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+    {% include "partials/kpi.html" with label="Academic Inquiries" value=stats.academic icon="school" note="Course & curriculum" tone="maroon" href="/requests/academic/" %}
+    {% include "partials/kpi.html" with label="Late-Class Reports" value=stats.late icon="schedule" note="Lecture alerts" tone="red" href="/requests/late-class/" %}
+    {% include "partials/kpi.html" with label="Timetable Conflicts" value=stats.timetable icon="event_busy" note="Scheduling issues" tone="amber" href="/requests/academic/?tab=waiting" %}
+    {% include "partials/kpi.html" with label="Pending Triage" value=stats.pending icon="pending_actions" note="Active review" tone="blue" href="/requests/academic/" %}
+    {% include "partials/kpi.html" with label="Resolved (30d)" value=stats.resolved_30 icon="task_alt" note="Closed cases" tone="green" href="/requests/reports/" %}
+  </div>
+
+  <!-- Main Grid: Late Class Verification Queue & Timetable Health -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <!-- Late Class Reports Queue (8 cols) -->
+    <div class="lg:col-span-8 space-y-6">
+      <div class="card overflow-hidden shadow-card">
+        <div class="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-line">
+          <div>
+            <h2 class="font-headline-md text-headline-md text-on-surface">Late-Class Verification Queue</h2>
+            <p class="font-caption text-caption text-secondary">Student tardiness alerts handled non-punitively to arrange makeup sessions</p>
+          </div>
+          <a href="{% url 'cases:late_class_reports' %}" class="btn-ghost btn-sm">View All ({% if stats.late %}{{ stats.late }}{% else %}0{% endif %}) &rarr;</a>
+        </div>
+
+        {% include "partials/request_table.html" with requests=late_reports empty="No active late-class reports requiring verification." show_student=True show_due=False %}
+      </div>
+
+      <!-- Pending Academic Inquiries -->
+      <div class="card overflow-hidden shadow-card">
+        <div class="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-line">
+          <div>
+            <h3 class="font-title-sm text-title-sm text-on-surface">Curriculum & Scheduling Cases</h3>
+            <p class="font-caption text-caption text-secondary">General academic inquiries assigned to the Registrar</p>
+          </div>
+          <a href="{% url 'cases:academic_requests' %}" class="btn-secondary btn-sm">All Academic Cases</a>
+        </div>
+
+        {% include "partials/request_table.html" with requests=pending_cases empty="No pending academic inquiries." show_student=True show_due=True %}
+      </div>
+    </div>
+
+    <!-- Right Column (4 cols): Timetable Health & Academic Regulations -->
+    <div class="lg:col-span-4 space-y-6">
+      <!-- Timetable Health Monitor Card (Stitch Design) -->
+      <div class="card card-pad shadow-card space-y-4 font-body-sm text-body-sm">
+        <div class="flex items-center justify-between border-b border-line pb-3">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary-container text-[20px]">fact_check</span>
+            <h3 class="font-title-sm text-title-sm text-on-surface">Lecture Schedule Health</h3>
+          </div>
+          <span class="badge bg-[#DCFCE7] text-[#166534] text-[11px] font-semibold">Active Term</span>
+        </div>
+
+        <div class="space-y-3 text-on-surface-variant">
+          <div class="p-3 rounded-xl bg-surface-container-low/60 border border-line">
+            <span class="text-caption text-secondary block uppercase font-semibold">Main Campus On-Time Rate</span>
+            <span class="font-headline-lg text-headline-lg text-[#166534] font-bold block mt-0.5">97.2%</span>
+            <span class="text-caption text-secondary">Target: &gt;95.0% across all 4 faculties</span>
+          </div>
+
+          <div class="p-3 rounded-xl bg-surface-container-low/60 border border-line">
+            <span class="text-caption text-secondary block uppercase font-semibold">Top Reported Course Variances</span>
+            <ul class="mt-1.5 space-y-1">
+              {% for c in top_courses %}
+              <li class="flex items-center justify-between text-body-sm">
+                <span class="font-medium text-on-surface">{{ c.course }}</span>
+                <span class="text-error font-semibold">{{ c.n }} report{{ c.n|pluralize }}</span>
+              </li>
+              {% empty %}
+              <li class="text-secondary italic">No course delays reported this week.</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Policy Reference Card (Stitch Design) -->
+      <div class="card card-pad shadow-card space-y-3 bg-surface-container-low/50 border border-line">
+        <div class="flex items-center gap-2 border-b border-line pb-2.5">
+          <span class="material-symbols-outlined text-primary-container text-[20px]">menu_book</span>
+          <h4 class="font-title-sm text-title-sm text-on-surface">Academic Policies §9.2</h4>
+        </div>
+        <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          <strong>Instructor Absences & Rescheduling Protocols:</strong> Make-up classes must be scheduled within 10 instructional days without student timetable room conflicts. All variances exceeding 30 minutes require formal Academic Office logging.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

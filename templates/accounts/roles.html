@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}Roles & Permissions Matrix{% endblock %}
+{% block crumb %}Roles & Permissions{% endblock %}
+
+{% block content %}
+<div class="space-y-6 animate-in">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Access Control · Role-Based Permissions (RBAC)</span>
+      </div>
+      <h1 class="page-title mt-1">Roles & Access Control Matrix</h1>
+      <p class="page-sub mt-1">Institutional privileges strictly enforced on the server across all 6 portal roles.</p>
+    </div>
+  </div>
+
+  <!-- Role Overview Cards -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for rk, rv in roles %}
+    <div class="card p-4 flex items-center justify-between">
+      <div>
+        <span class="font-label-md text-label-md text-on-surface block font-semibold">{{ rv }}</span>
+        <span class="text-caption text-secondary font-caption capitalize">Role ID: {{ rk }}</span>
+      </div>
+      <span class="font-headline-md text-headline-md text-primary-container font-bold">
+        {{ role_counts|get_item:rk|default:0 }}
+      </span>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Detailed Permission Matrix Table -->
+  <div class="card overflow-hidden shadow-card">
+    <div class="p-5 border-b border-line">
+      <h2 class="font-headline-md text-headline-md text-on-surface">Capability Matrix</h2>
+      <p class="font-caption text-caption text-secondary">Verified access boundaries enforced by middleware, decorators, and querysets</p>
+    </div>
+
+    <div class="overflow-x-auto scroll-thin">
+      <table class="tbl text-center">
+        <thead>
+          <tr>
+            <th class="text-left">Platform Capability</th>
+            <th>Student</th>
+            <th>Dept Staff</th>
+            <th>Dean / Head</th>
+            <th>Academic Office</th>
+            <th>Student Affairs</th>
+            <th>Superuser</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cap, allowed_roles in matrix %}
+          <tr class="hover:bg-canvas transition-colors">
+            <td class="text-left font-body-sm text-body-sm text-on-surface font-medium py-3.5">{{ cap }}</td>
+            <td>
+              {% if "student" in allowed_roles %}
+              <span class="material-symbols-outlined text-[18px] text-[#166534]">check_circle</span>
+              {% else %}
+              <span class="material-symbols-outlined text-[18px] text-outline-variant">remove</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if "staff" in allowed_roles %}
+              <span class="material-symbols-outlined text-[18px] text-[#166534]">check_circle</span>
+              {% else %}
+              <span class="material-symbols-outlined text-[18px] text-outline-variant">remove</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if "dean" in allowed_roles %}
+              <span class="material-symbols-outlined text-[18px] text-[#166534]">check_circle</span>
+              {% else %}
+              <span class="material-symbols-outlined text-[18px] text-outline-variant">remove</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if "academic" in allowed_roles %}
+              <span class="material-symbols-outlined text-[18px] text-[#166534]">check_circle</span>
+              {% else %}
+              <span class="material-symbols-outlined text-[18px] text-outline-variant">remove</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if "director" in allowed_roles %}
+              <span class="material-symbols-outlined text-[18px] text-[#166534]">check_circle</span>
+              {% else %}
+              <span class="material-symbols-outlined text-[18px] text-outline-variant">remove</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if "superuser" in allowed_roles %}
+              <span class="material-symbols-outlined text-[18px] text-[#166534]">check_circle</span>
+              {% else %}
+              <span class="material-symbols-outlined text-[18px] text-outline-variant">remove</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

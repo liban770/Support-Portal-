@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}Director of Student Affairs Dashboard{% endblock %}
+{% block crumb %}Student Affairs{% endblock %}
+
+{% block content %}
+<div class="space-y-6 animate-in">
+  <!-- Top Greeting & Header Bar -->
+  <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 pb-2 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Executive Leadership · Student Welfare & Support</span>
+      </div>
+      <h1 class="page-title mt-1">Director of Student Affairs Overview</h1>
+      <p class="page-sub mt-1">
+        Monitor authorized student-support cases, identify recurring campus issues, track extended leave petitions, and follow up on cross-department escalations.
+      </p>
+    </div>
+    <div class="flex flex-wrap items-center gap-2.5">
+      <a href="{% url 'cases:reports' %}" class="btn-secondary btn-sm">
+        <span class="material-symbols-outlined text-[18px]">summarize</span>
+        <span>Summary Reports</span>
+      </a>
+      <a href="{% url 'cases:escalations' %}" class="btn-primary btn-sm">
+        <span class="material-symbols-outlined text-[18px]">trending_up</span>
+        <span>View Escalations</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- KPI Summary Bento -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+    {% include "partials/kpi.html" with label="Authorized Inquiries" value=stats.total icon="diversity_3" note="Cross-department" tone="maroon" href="/requests/affairs/" %}
+    {% include "partials/kpi.html" with label="Student Problems" value=problems|length icon="report_problem" note="Facility & welfare" tone="amber" href="/requests/affairs/?type=problem" %}
+    {% include "partials/kpi.html" with label="Pending Escalations" value=stats.escalated icon="trending_up" note="Requires intervention" tone="red" href="/requests/escalations/" %}
+    {% include "partials/kpi.html" with label="Leave Petitions" value=absence.total icon="event_busy" note="Under policy review" tone="blue" href="/requests/affairs/?type=absence" %}
+    {% include "partials/kpi.html" with label="Turnaround Health" value=stats.resolution_rate|stringformat:"d"|add:"%" icon="verified" note="Resolution rate" tone="green" href="/requests/reports/" %}
+  </div>
+
+  <!-- Two Column Layout: Main Escalation Worklist + Analytics -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <!-- Main Column (8 cols): Escalated & Overdue Cases -->
+    <div class="lg:col-span-8 space-y-6">
+      <div class="card overflow-hidden shadow-card">
+        <div class="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-line">
+          <div>
+            <h2 class="font-headline-md text-headline-md text-on-surface">Escalations & Overdue Follow-ups</h2>
+            <p class="font-caption text-caption text-secondary">High-priority cases escalated by deans or exceeding university turnaround SLAs</p>
+          </div>
+          <a href="{% url 'cases:escalations' %}" class="btn-ghost btn-sm">View All &rarr;</a>
+        </div>
+        {% include "partials/request_table.html" with requests=escalations empty="No active escalations requiring student affairs intervention." show_student=True show_due=True %}
+      </div>
+
+      <!-- Active Student Problems Feed -->
+      <div class="card overflow-hidden shadow-card">
+        <div class="p-5 flex items-center justify-between border-b border-line">
+          <div>
+            <h3 class="font-title-sm text-title-sm text-on-surface">Active Student Problem Reports</h3>
+            <p class="font-caption text-caption text-secondary">Campus welfare, housing, facilities and academic concerns</p>
+          </div>
+          <a href="{% url 'cases:affairs_requests' %}?type=problem" class="btn-secondary btn-sm">All Problems</a>
+        </div>
+        {% include "partials/request_table.html" with requests=problems empty="No active student problem reports." show_student=True %}
+      </div>
+    </div>
+
+    <!-- Right Column (4 cols): Recurring Problem Diagnostics & Department Breakdown -->
+    <div class="lg:col-span-4 space-y-6">
+      <!-- Recurring Student Issues Card -->
+      <div class="card card-pad shadow-card space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-line">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary-container text-[20px]">analytics</span>
+            <h3 class="font-title-sm text-title-sm text-on-surface">Recurring Issue Patterns</h3>
+          </div>
+          <span class="chip-maroon text-[10px]">Trends</span>
+        </div>
+        <div class="space-y-3 font-body-sm text-body-sm">
+          {% for r in recurring %}
+          <div class="flex items-center justify-between p-3 rounded-xl bg-surface-container-low/60 border border-line">
+            <span class="font-medium text-on-surface">{{ r.category__name|default:"General Issues" }}</span>
+            <span class="badge bg-primary-fixed text-primary-container font-bold">{{ r.n }} case{{ r.n|pluralize }}</span>
+          </div>
+          {% empty %}
+          <p class="text-secondary italic">No recurring issues flagged this term.</p>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Department Distribution Snapshot -->
+      <div class="card card-pad shadow-card space-y-4 font-body-sm text-body-sm">
+        <div class="flex items-center justify-between pb-3 border-b border-line">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary-container text-[20px]">domain</span>
+            <h3 class="font-title-sm text-title-sm text-on-surface">Department Volumes</h3>
+          </div>
+        </div>
+        <div class="space-y-2">
+          {% for dept in by_department %}
+          <div class="flex items-center justify-between py-1.5 border-b border-line/60 last:border-0">
+            <span class="text-on-surface truncate pr-2">{{ dept.department__name|default:"General" }}</span>
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="text-secondary font-caption text-caption">{{ dept.total }} total</span>
+              {% if dept.overdue %}
+              <span class="badge bg-error-container text-error text-[10px] font-bold">{{ dept.overdue }} overdue</span>
+              {% endif %}
+            </div>
+          </div>
+          {% empty %}
+          <p class="text-secondary italic">No department data recorded.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

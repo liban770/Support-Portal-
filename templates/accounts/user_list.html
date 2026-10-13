@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}User Management & Role Directory{% endblock %}
+{% block crumb %}User Management{% endblock %}
+
+{% block content %}
+<div class="space-y-6 animate-in">
+  <!-- Top Greeting & Header Bar (Stitch Design) -->
+  <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 pb-2 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">System Administration · Identity & Access Management</span>
+      </div>
+      <h1 class="page-title mt-1">User Management & Role Directory</h1>
+      <p class="page-sub mt-1">
+        Manage institutional accounts, role assignments, department scopes, account validations, and lifecycle provisioning across Abaarso Tech University.
+      </p>
+    </div>
+    <div class="flex flex-wrap items-center gap-2.5">
+      <a href="{% url 'accounts:student_import' %}" class="btn-secondary btn-sm">
+        <span class="material-symbols-outlined text-[18px]">upload_file</span>
+        <span>Import Register (CSV)</span>
+      </a>
+      <a href="{% url 'accounts:user_create' %}" class="btn-primary btn-sm" id="btn-add-new-user">
+        <span class="material-symbols-outlined text-[18px]">add</span>
+        <span>Add New User</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- KPI Summary Bento (Stitch Design) -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    {% include "partials/kpi.html" with label="Total System Users" value=stats.total icon="group" note="All registered accounts" tone="maroon" href="/admin/users/" %}
+    {% include "partials/kpi.html" with label="Active Accounts" value=stats.active icon="verified" note="Authorized logins" tone="green" href="/admin/users/?status=active" %}
+    {% include "partials/kpi.html" with label="Pending Validation" value=stats.pending icon="how_to_reg" note="Requires Superuser sign-off" tone="amber" href="/admin/pending/" %}
+    {% include "partials/kpi.html" with label="Suspended / Inactive" value=stats.inactive icon="lock_person" note="Policy hold or archived" tone="red" href="/admin/users/?status=suspended" %}
+  </div>
+
+  <!-- Institutional Governance Notice (Stitch Design) -->
+  <div class="card p-4 bg-surface-container-low/60 border border-line flex items-start gap-3">
+    <span class="material-symbols-outlined text-primary-container text-[22px] shrink-0 mt-0.5">security</span>
+    <div class="space-y-0.5">
+      <div class="flex items-center gap-2">
+        <h3 class="font-label-md text-label-md text-on-surface">Institutional Access Governance Notice</h3>
+        <span class="chip text-[10px]">Policy §4.1 Enforced</span>
+      </div>
+      <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+        Role assignments granting Dean, Academic Office, or Superuser scopes are logged to the immutable audit registry. Users cannot approve their own account changes.
+      </p>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs (Stitch Design) -->
+  <div class="flex items-center gap-1.5 p-1 bg-surface-container rounded-xl overflow-x-auto scroll-thin">
+    <a href="{% qs_replace tab='' %}" class="tab {% if not tab %}tab-active{% endif %}">
+      <span>All Accounts</span>
+      <span class="tab-count">{{ counts.all }}</span>
+    </a>
+    <a href="{% qs_replace tab='staff' %}" class="tab {% if tab == 'staff' %}tab-active{% endif %}">
+      <span>Faculty & Staff</span>
+      <span class="tab-count">{{ counts.staff }}</span>
+    </a>
+    <a href="{% qs_replace tab='students' %}" class="tab {% if tab == 'students' %}tab-active{% endif %}">
+      <span>Students</span>
+      <span class="tab-count">{{ counts.students }}</span>
+    </a>
+    <a href="{% qs_replace tab='pending' %}" class="tab {% if tab == 'pending' %}tab-active{% endif %}">
+      <span>Pending Approval</span>
+      <span class="tab-count">{{ counts.pending }}</span>
+    </a>
+  </div>
+
+  <!-- Filter Controls -->
+  <div class="card p-4">
+    <form method="get" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-center">
+      {% if tab %}<input type="hidden" name="tab" value="{{ tab }}">{% endif %}
+      <div class="lg:col-span-4 relative">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-[18px]">search</span>
+        <input type="text" name="q" value="{{ request.GET.q|default:'' }}" placeholder="Search by name, email, student ID..." class="input pl-9 h-10">
+      </div>
+      <div class="lg:col-span-2">
+        <select name="role" class="input select h-10">
+          <option value="">All Roles</option>
+          {% for rk, rv in roles %}
+          <option value="{{ rk }}" {% if request.GET.role == rk %}selected{% endif %}>{{ rv }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="lg:col-span-3">
+        <select name="department" class="input select h-10">
+          <option value="">All Departments</option>
+          {% for d in departments %}
+          <option value="{{ d.pk }}" {% if request.GET.department == d.pk|stringformat:"s" %}selected{% endif %}>{{ d.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="lg:col-span-2">
+        <select name="status" class="input select h-10">
+          <option value="">All Statuses</option>
+          {% for sk, sv in statuses %}
+          <option value="{{ sk }}" {% if request.GET.status == sk %}selected{% endif %}>{{ sv }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="lg:col-span-1 flex items-center justify-end">
+        <button type="submit" class="btn-primary h-10 w-full px-3">Filter</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- User Directory Table (Stitch Design) -->
+  <div class="card overflow-hidden shadow-card">
+    <div class="overflow-x-auto scroll-thin">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>User Name & ID</th>
+            <th>Institutional Email</th>
+            <th>Role & Scope</th>
+            <th>Department / Faculty</th>
+            <th>Account Status</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for u in page_obj %}
+          <tr class="hover:bg-canvas transition-colors">
+            <td>
+              <div class="flex items-center gap-2.5">
+                <div class="avatar w-8 h-8 text-[12px]">{{ u.initials }}</div>
+                <div>
+                  <a href="{% url 'accounts:user_edit' u.pk %}" class="font-label-md text-label-md text-on-surface font-semibold hover:text-primary-container">
+                    {{ u.display_name }}
+                  </a>
+                  <div class="text-caption text-secondary">
+                    {% if u.is_student %}
+                    ID: {{ u.student_profile.student_id|default:u.username }}
+                    {% else %}
+                    Staff ID: {{ u.staff_profile.staff_id|default:u.username }}
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td class="font-body-sm text-body-sm text-secondary">{{ u.email }}</td>
+            <td class="whitespace-nowrap font-body-sm text-body-sm">
+              <span class="chip-maroon text-[11px]">{{ u.get_role_display }}</span>
+              {% if u.subtitle and not u.is_student %}
+              <div class="text-caption text-secondary mt-0.5">{{ u.subtitle }}</div>
+              {% endif %}
+            </td>
+            <td class="font-body-sm text-body-sm text-on-surface">
+              {{ u.department.name|default:"Unassigned" }}
+            </td>
+            <td class="whitespace-nowrap">
+              {% account_badge u %}
+            </td>
+            <td class="text-right whitespace-nowrap">
+              <div class="inline-flex items-center gap-1">
+                <a href="{% url 'accounts:user_edit' u.pk %}" class="btn-ghost btn-sm px-2" title="Edit Account">
+                  <span class="material-symbols-outlined text-[17px]">edit</span>
+                </a>
+
+                {% if u.account_status == 'pending' %}
+                <form method="post" action="{% url 'accounts:user_action' u.pk 'validate' %}" class="inline">
+                  {% csrf_token %}
+                  <button type="submit" class="btn-success btn-sm px-2 text-[12px]" title="Validate and Activate">
+                    <span class="material-symbols-outlined text-[16px]">check</span> Activate
+                  </button>
+                </form>
+                {% elif u.account_status == 'active' and u.pk != user.pk %}
+                <form method="post" action="{% url 'accounts:user_action' u.pk 'suspend' %}" class="inline" data-confirm="Suspend this user account?">
+                  {% csrf_token %}
+                  <button type="submit" class="btn-danger btn-sm px-2 text-[12px]" title="Suspend Account">
+                    <span class="material-symbols-outlined text-[16px]">pause</span>
+                  </button>
+                </form>
+                {% elif u.account_status == 'suspended' %}
+                <form method="post" action="{% url 'accounts:user_action' u.pk 'activate' %}" class="inline">
+                  {% csrf_token %}
+                  <button type="submit" class="btn-secondary btn-sm px-2 text-[12px]" title="Reactivate Account">
+                    <span class="material-symbols-outlined text-[16px]">play_arrow</span>
+                  </button>
+                </form>
+                {% endif %}
+
+                <form method="post" action="{% url 'accounts:user_action' u.pk 'reset_password' %}" class="inline" data-confirm="Issue temporary password for {{ u.display_name }}?">
+                  {% csrf_token %}
+                  <button type="submit" class="btn-ghost btn-sm px-2 text-secondary" title="Reset Password">
+                    <span class="material-symbols-outlined text-[17px]">key</span>
+                  </button>
+                </form>
+
+                {% if u.pk != user.pk %}
+                <button type="button"
+                        class="btn-ghost btn-sm px-2 text-error hover:bg-red-50 hover:text-error transition-colors"
+                        title="Delete User Account"
+                        data-delete-modal-trigger
+                        data-action-url="{% url 'accounts:user_delete' u.pk %}"
+                        data-target-name="{{ u.username }}"
+                        data-target-title="{{ u.display_name }} ({{ u.username }})"
+                        data-entity-type="User Account">
+                  <span class="material-symbols-outlined text-[17px]">delete_forever</span>
+                </button>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="py-12 text-center text-secondary font-body-sm text-body-sm">
+              No matching accounts found in the directory.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    {% include "partials/pagination.html" %}
+  </div>
+</div>
+{% endblock %}

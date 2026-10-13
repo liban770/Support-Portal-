@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}Student Central Services{% endblock %}
+{% block crumb %}Overview{% endblock %}
+
+{% block content %}
+<div class="space-y-8 animate-in">
+  <!-- Top Greeting & Header Bar (Stitch Design) -->
+  <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2">
+    <div class="max-w-2xl space-y-1">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Student Central Services</span>
+      </div>
+      <h1 class="page-title">Welcome back, {{ user.first_name|default:user.username }}</h1>
+      <p class="page-sub">
+        Submit academic absence notices, report campus or student issues, and track your cases directly with faculty and student affairs.
+      </p>
+    </div>
+    <div class="flex items-center gap-3 shrink-0">
+      <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-line bg-surface-container-low font-label-sm text-label-sm text-secondary">
+        <span class="material-symbols-outlined text-[16px] text-primary-container">speed</span>
+        <span>Active Tickets: <strong class="text-on-surface">{{ stats.pending|default:0 }}/{{ site.max_active_requests_per_student }}</strong></span>
+      </span>
+      <a href="{% url 'cases:submit' %}" class="btn-primary" id="quickRequestBtn">
+        <span class="material-symbols-outlined text-[19px]">add</span>
+        <span>Submit a Request</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- KPI Summary Metric Bento (Stitch Design) -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    {% include "partials/kpi.html" with label="Total Requests" value=stats.total icon="inventory_2" note="+2 this semester" tone="maroon" href="/requests/mine/" %}
+    {% include "partials/kpi.html" with label="Pending Action" value=stats.pending icon="hourglass_top" note="Under verification" tone="amber" href="/requests/mine/?tab=active" %}
+    {% include "partials/kpi.html" with label="Action Required" value=stats.waiting icon="priority_high" note="Student input needed" tone="red" href="/requests/mine/?tab=action" %}
+    {% include "partials/kpi.html" with label="Resolved" value=stats.resolved icon="check_circle" note="Archived records" tone="green" href="/requests/mine/?tab=resolved" %}
+  </div>
+
+  <!-- Express Request Channels (Stitch Design) -->
+  <div class="space-y-3">
+    <div class="flex items-center justify-between">
+      <h2 class="font-title-sm text-title-sm text-on-surface">Express Request Channels</h2>
+      <span class="font-caption text-caption text-secondary">Pick an area to generate verified administrative tickets</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <!-- Card 1: Absence & Leave -->
+      <div class="card card-pad flex flex-col justify-between group hover:shadow-float transition-all">
+        <div class="space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary-container group-hover:bg-primary-fixed transition-colors">
+            <span class="material-symbols-outlined text-[26px]">calendar_month</span>
+          </div>
+          <div class="space-y-1">
+            <h3 class="font-title-sm text-title-sm text-on-surface group-hover:text-primary-container transition-colors">Absence & Leave Request</h3>
+            <p class="font-body-sm text-body-sm text-secondary leading-normal">
+              Submit planned leaves, medical absences, or emergency leave requests with documentation.
+            </p>
+          </div>
+        </div>
+        <div class="pt-4 mt-4 border-t border-line flex items-center justify-between">
+          <span class="font-caption text-caption text-secondary">SLA: 24 - 48 Hours</span>
+          <a href="{% url 'cases:submit' %}?type=absence" class="inline-flex items-center gap-1 font-label-md text-label-md text-primary-container hover:gap-2 transition-all">
+            <span>Start Request</span>
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 2: Student Problem -->
+      <div class="card card-pad flex flex-col justify-between group hover:shadow-float transition-all">
+        <div class="space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary-container group-hover:bg-primary-fixed transition-colors">
+            <span class="material-symbols-outlined text-[26px]">report_problem</span>
+          </div>
+          <div class="space-y-1">
+            <h3 class="font-title-sm text-title-sm text-on-surface group-hover:text-primary-container transition-colors">Report a Student Problem</h3>
+            <p class="font-body-sm text-body-sm text-secondary leading-normal">
+              Confidential reports regarding facility issues, grading inquiries, or student support needs.
+            </p>
+          </div>
+        </div>
+        <div class="pt-4 mt-4 border-t border-line flex items-center justify-between">
+          <span class="font-caption text-caption text-secondary">Dean & Affairs Dispatched</span>
+          <a href="{% url 'cases:submit' %}?type=problem" class="inline-flex items-center gap-1 font-label-md text-label-md text-primary-container hover:gap-2 transition-all">
+            <span>Report Problem</span>
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Card 3: Late Class -->
+      <div class="card card-pad flex flex-col justify-between group hover:shadow-float transition-all">
+        <div class="space-y-3">
+          <div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary-container group-hover:bg-primary-fixed transition-colors">
+            <span class="material-symbols-outlined text-[26px]">alarm</span>
+          </div>
+          <div class="space-y-1">
+            <h3 class="font-title-sm text-title-sm text-on-surface group-hover:text-primary-container transition-colors">Report a Late Class</h3>
+            <p class="font-body-sm text-body-sm text-secondary leading-normal">
+              Notify the Academic Office regarding faculty delays or unattended scheduled lecture sessions.
+            </p>
+          </div>
+        </div>
+        <div class="pt-4 mt-4 border-t border-line flex items-center justify-between">
+          <span class="font-caption text-caption text-secondary">Immediate Academic Alert</span>
+          <a href="{% url 'cases:submit' %}?type=late_class" class="inline-flex items-center gap-1 font-label-md text-label-md text-primary-container hover:gap-2 transition-all">
+            <span>Log Late Class</span>
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout (70% Table, 30% Sidebar Widget) (Stitch Design) -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <!-- Table Section (8 cols) -->
+    <div class="lg:col-span-8 card overflow-hidden shadow-card">
+      <div class="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-line">
+        <div>
+          <h2 class="font-headline-md text-headline-md text-on-surface">Recent Requests</h2>
+          <p class="font-caption text-caption text-secondary">Audit log of your submitted administrative cases and current status</p>
+        </div>
+        <a href="{% url 'cases:my_requests' %}" class="btn-secondary btn-sm">
+          <span>All Statuses</span>
+        </a>
+      </div>
+      
+      {% include "partials/request_table.html" with requests=recent empty="No requests submitted yet." show_student=False %}
+
+      <div class="p-4 bg-surface-container-low/40 flex items-center justify-between border-t border-line">
+        <span class="font-caption text-caption text-secondary">Displaying most recent submissions</span>
+        <a href="{% url 'cases:my_requests' %}" class="font-label-md text-label-md text-primary-container flex items-center gap-1 hover:underline">
+          <span>Browse Full Archive</span>
+          <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Right Column (4 cols): Notifications & Helpdesk Widgets -->
+    <div class="lg:col-span-4 space-y-5">
+      <!-- Administrative Updates / In-App Notifications Widget -->
+      <div class="card card-pad space-y-4">
+        <div class="flex items-center justify-between pb-2 border-b border-line">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary-container text-[20px]">notifications_active</span>
+            <h3 class="font-title-sm text-title-sm text-on-surface">Administrative Updates</h3>
+          </div>
+          <a href="{% url 'core:notifications' %}" class="font-caption text-caption text-primary-container hover:underline">View All</a>
+        </div>
+        <div class="space-y-3 font-body-sm text-body-sm">
+          {% for note in updates %}
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 rounded-full bg-surface-container text-primary-container flex items-center justify-center shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-[17px]">{{ note.icon }}</span>
+            </div>
+            <div class="space-y-0.5 flex-1 min-w-0">
+              <a href="{% url 'core:notification_open' note.pk %}" class="font-medium text-on-surface hover:text-primary-container block truncate">
+                {{ note.title }}
+              </a>
+              <span class="font-caption text-caption text-secondary block">{{ note.created_at|timesince }} ago</span>
+            </div>
+          </div>
+          {% empty %}
+          <p class="font-caption text-caption text-secondary italic py-2">No new notifications.</p>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Student Helpdesk Snippet (Stitch Design) -->
+      <div class="card card-pad space-y-4">
+        <div>
+          <span class="eyebrow">Institutional Inquiries</span>
+          <h3 class="font-title-sm text-title-sm text-on-surface mt-0.5">Student Helpdesk</h3>
+        </div>
+        <div class="space-y-3 font-body-sm text-body-sm text-on-surface-variant">
+          <div class="flex items-start gap-2.5">
+            <span class="material-symbols-outlined text-[18px] text-secondary shrink-0 mt-0.5">schedule</span>
+            <div>
+              <span class="font-medium text-on-surface block">Operating Hours</span>
+              <span class="text-secondary font-caption text-caption">{{ site.support_hours }}</span>
+            </div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <span class="material-symbols-outlined text-[18px] text-secondary shrink-0 mt-0.5">location_on</span>
+            <div>
+              <span class="font-medium text-on-surface block">Main Campus Office</span>
+              <span class="text-secondary font-caption text-caption">{{ site.support_location }}</span>
+            </div>
+          </div>
+          <div class="flex items-start gap-2.5">
+            <span class="material-symbols-outlined text-[18px] text-secondary shrink-0 mt-0.5">mail</span>
+            <div>
+              <span class="font-medium text-on-surface block">Support Line</span>
+              <a href="mailto:{{ site.support_email }}" class="text-primary-container font-caption text-caption hover:underline">{{ site.support_email }}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

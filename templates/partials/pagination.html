@@ -1,0 +1,30 @@
+{% load portal_tags %}
+{% if page_obj.paginator.num_pages > 1 %}
+<div class="flex flex-col sm:flex-row items-center justify-between gap-3 px-5 py-4 border-t border-line bg-surface-container-low/40">
+  <span class="font-body-sm text-body-sm text-secondary">
+    Showing <strong class="text-on-surface">{{ page_obj.start_index }}</strong> to <strong class="text-on-surface">{{ page_obj.end_index }}</strong>
+    of <strong class="text-on-surface">{{ page_obj.paginator.count }}</strong>
+  </span>
+  <nav class="flex items-center gap-1" aria-label="Pagination">
+    {% if page_obj.has_previous %}
+    <a href="{% qs_replace page=page_obj.previous_page_number %}" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface-container text-secondary" aria-label="Previous"><span class="material-symbols-outlined text-[20px]">chevron_left</span></a>
+    {% endif %}
+    {% for n in page_obj.paginator.page_range %}
+      {% if n == page_obj.number %}
+      <span class="w-9 h-9 flex items-center justify-center rounded-lg bg-primary-container text-on-primary font-label-md text-label-md">{{ n }}</span>
+      {% elif n > page_obj.number|add:-3 and n < page_obj.number|add:3 %}
+      <a href="{% qs_replace page=n %}" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface-container font-label-md text-label-md">{{ n }}</a>
+      {% elif n == 1 or n == page_obj.paginator.num_pages %}
+      <a href="{% qs_replace page=n %}" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface-container font-label-md text-label-md">{{ n }}</a>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+    <a href="{% qs_replace page=page_obj.next_page_number %}" class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-surface-container text-secondary" aria-label="Next"><span class="material-symbols-outlined text-[20px]">chevron_right</span></a>
+    {% endif %}
+  </nav>
+</div>
+{% elif page_obj.paginator.count %}
+<div class="px-5 py-3 border-t border-line bg-surface-container-low/40 font-body-sm text-body-sm text-secondary">
+  Showing {{ page_obj.paginator.count }} record{{ page_obj.paginator.count|pluralize }}
+</div>
+{% endif %}

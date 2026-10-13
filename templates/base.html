@@ -1,0 +1,124 @@
+{% extends "base_root.html" %}
+{% load static portal_tags %}
+{% block body %}
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" class="fixed inset-0 bg-inverse-surface/40 backdrop-blur-[2px] z-40 hidden lg:hidden" data-sidebar-close></div>
+
+<!-- Sidebar -->
+<aside id="sidebar" class="fixed left-0 top-0 h-full w-72 bg-white border-r border-surface-variant z-50 flex flex-col justify-between transform -translate-x-full lg:translate-x-0 transition-transform duration-200" aria-label="Main navigation">
+  <div class="flex flex-col min-h-0 flex-1">
+    <div class="px-5 h-16 lg:h-[4.5rem] flex items-center gap-3 border-b border-surface-variant shrink-0">
+      <img src="{% static 'img/favicon.svg' %}" alt="ATU logo" class="h-9 w-9 rounded-lg shadow-sm">
+      <div class="flex flex-col min-w-0">
+        <span class="font-title-sm text-title-sm text-primary tracking-tight truncate leading-tight">{{ site.portal_name }}</span>
+        <span class="font-caption text-caption text-secondary truncate">Abaarso Tech University</span>
+      </div>
+      <button class="ml-auto lg:hidden p-1.5 rounded-lg hover:bg-surface-container text-secondary" data-sidebar-close aria-label="Close menu">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <nav class="flex-1 overflow-y-auto scroll-thin py-2">
+      {% for section, items in nav %}
+      <div class="px-4 py-2">
+        <div class="px-3 pb-1.5 pt-1 font-caption text-caption uppercase text-secondary font-semibold tracking-wider">{{ section }}</div>
+        <div class="flex flex-col gap-0.5">
+          {% for label, url_name, icon, prefix in items %}
+          {% nav_active prefix as active %}
+          <a href="{% url url_name %}" class="nav-link {% if active %}nav-link-active{% endif %}" {% if active %}aria-current="page"{% endif %} id="nav-{{ url_name|slugify }}">
+            <span class="material-symbols-outlined text-[20px]">{{ icon }}</span>
+            <span class="flex-1">{{ label }}</span>
+            {% if url_name == "core:notifications" and unread_count %}
+            <span class="bg-error text-on-error font-caption text-caption px-1.5 py-0.5 rounded-full min-w-[1.25rem] text-center">{{ unread_count }}</span>
+            {% endif %}
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </nav>
+  </div>
+  <div class="p-4 border-t border-surface-variant bg-surface-container-low shrink-0">
+    <div class="flex items-center justify-between gap-2">
+      <a href="{% url 'accounts:profile' %}" class="flex items-center gap-2.5 min-w-0 group">
+        <div class="avatar w-9 h-9">{{ user.initials }}</div>
+        <div class="flex flex-col min-w-0">
+          <span class="font-label-md text-label-md text-on-surface truncate group-hover:text-primary-container">{{ user.display_name }}</span>
+          <span class="font-caption text-caption text-secondary truncate">{{ user.subtitle }}</span>
+        </div>
+      </a>
+      <form method="post" action="{% url 'accounts:logout' %}">{% csrf_token %}
+        <button type="submit" class="text-secondary hover:text-error transition-colors p-1.5 rounded-lg hover:bg-error-container" title="Sign out" id="sidebar-logout">
+          <span class="material-symbols-outlined text-[20px]">logout</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</aside>
+
+<div class="lg:pl-72 min-h-screen flex flex-col">
+  <!-- Top header -->
+  <header class="fixed top-0 left-0 lg:left-72 right-0 h-16 bg-white/90 backdrop-blur border-b border-surface-variant z-30 flex items-center gap-3 px-4 sm:px-6">
+    <button class="lg:hidden p-2 -ml-2 rounded-lg hover:bg-surface-container" data-sidebar-open aria-label="Open menu" id="menu-open">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <div class="hidden md:flex items-center gap-3 min-w-0">
+      <img src="{% static 'img/favicon.svg' %}" alt="" class="h-8 w-8 rounded-lg">
+      <nav class="flex items-center gap-1.5 font-body-sm text-body-sm text-secondary min-w-0" aria-label="Breadcrumb">
+        <a href="{% url 'core:dashboard' %}" class="hover:text-on-surface">Portal</a>
+        <span>/</span>
+        <span class="text-on-surface font-label-md text-label-md truncate">{% block crumb %}Overview{% endblock %}</span>
+      </nav>
+    </div>
+    <form action="{% if user.is_sysadmin %}{% url 'accounts:user_list' %}{% else %}{% url 'cases:search' %}{% endif %}" method="get" class="flex-1 max-w-md mx-auto" role="search">
+      <label class="relative flex items-center">
+        <span class="material-symbols-outlined absolute left-3 text-secondary text-[18px]">search</span>
+        <input type="search" name="q" id="global-search" value="{{ request.GET.q|default:'' }}" class="w-full pl-9 pr-3 h-9 bg-background border border-surface-variant rounded-lg font-body-sm text-body-sm focus:outline-none focus:border-primary-container focus:ring-[3px] focus:ring-primary-container/10 placeholder:text-secondary"
+               placeholder="{% if user.is_sysadmin %}Search users by name, email or ID…{% else %}Search requests, course codes, or reference ID…{% endif %}">
+      </label>
+    </form>
+    <div class="flex items-center gap-2 sm:gap-3">
+      <span class="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container font-caption text-caption text-primary font-semibold">
+        <span class="material-symbols-outlined text-[15px]">calendar_today</span>{{ site.current_term }}
+      </span>
+      <a href="{% url 'core:notifications' %}" class="relative p-1.5 rounded-full hover:bg-surface-container transition-colors" aria-label="Notifications" id="header-notifications">
+        <span class="material-symbols-outlined text-[22px]">notifications</span>
+        {% if unread_count %}<span class="absolute top-0.5 right-0.5 min-w-[16px] h-4 px-1 bg-error text-on-error text-[10px] font-semibold flex items-center justify-center rounded-full">{{ unread_count }}</span>{% endif %}
+      </a>
+      <span class="hidden sm:flex items-center gap-1 bg-surface-container px-2 py-1 rounded-lg">
+        <span class="font-caption text-caption text-secondary uppercase font-semibold">Role:</span>
+        <span class="font-label-sm text-label-sm text-primary font-bold">{{ user.role_short }}</span>
+      </span>
+      <div class="relative">
+        <button data-dropdown-toggle class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm" aria-label="Account menu" id="account-menu">
+          {{ user.initials }}
+        </button>
+        <div data-dropdown-menu class="hidden absolute right-0 mt-2 w-60 card shadow-float p-1.5 z-50">
+          <div class="px-3 py-2 border-b border-line mb-1">
+            <div class="font-label-md text-label-md truncate">{{ user.display_name }}</div>
+            <div class="font-caption text-caption text-secondary truncate">{{ user.email }}</div>
+          </div>
+          <a href="{% url 'accounts:profile' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-canvas font-body-sm text-body-sm"><span class="material-symbols-outlined text-[18px]">person</span>Profile</a>
+          <a href="{% url 'accounts:password_change' %}" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-canvas font-body-sm text-body-sm"><span class="material-symbols-outlined text-[18px]">key</span>Change password</a>
+          <form method="post" action="{% url 'accounts:logout' %}">{% csrf_token %}
+            <button type="submit" class="w-full flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-error-container text-error font-body-sm text-body-sm"><span class="material-symbols-outlined text-[18px]">logout</span>Sign out</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 pt-16">
+    {% include "partials/messages.html" %}
+    <div class="px-4 sm:px-6 lg:px-8 py-6 lg:py-8 max-w-[1400px] mx-auto w-full">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+  <footer class="no-print px-4 sm:px-8 py-5 border-t border-surface-variant text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-2 font-caption text-caption text-secondary">
+    <span>© {% now "Y" %} Abaarso Tech University · Student Support Portal</span>
+    <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">lock</span>Access is role-restricted and audited</span>
+  </footer>
+</div>
+{% if user.is_sysadmin or user.is_department_head %}
+  {% include "partials/delete_modal.html" %}
+{% endif %}
+{% endblock %}

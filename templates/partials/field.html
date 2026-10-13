@@ -1,0 +1,19 @@
+{# Renders one form field. Usage: {% include "partials/field.html" with field=form.name %} #}
+{% if field.is_hidden %}{{ field }}{% else %}
+<div class="{{ wrapper_class|default:'' }}">
+  {% if field.widget_type == "checkbox" %}
+  <label for="{{ field.id_for_label }}" class="flex items-start gap-2.5 cursor-pointer">
+    {{ field }}
+    <span class="font-body-sm text-body-sm text-on-surface leading-snug">{{ field.label }}</span>
+  </label>
+  {% else %}
+  <div class="flex items-baseline justify-between gap-2">
+    <label for="{{ field.id_for_label }}" class="label">{{ field.label }}{% if field.field.required %} <span class="text-error">*</span>{% endif %}</label>
+    {% if hint %}<span class="font-caption text-caption text-secondary">{{ hint }}</span>{% endif %}
+  </div>
+  {{ field }}
+  {% endif %}
+  {% if field.help_text %}<p class="help">{{ field.help_text }}</p>{% endif %}
+  {% for error in field.errors %}<p class="field-error"><span class="material-symbols-outlined text-[14px]">error</span>{{ error }}</p>{% endfor %}
+</div>
+{% endif %}

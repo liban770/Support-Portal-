@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}Department Staff Workspace{% endblock %}
+{% block crumb %}Staff Workspace{% endblock %}
+
+{% block content %}
+<div class="space-y-6 animate-in">
+  <!-- Top Greeting & Header Bar (Stitch Design) -->
+  <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 pb-2 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Department Operations · Staff Workspace</span>
+      </div>
+      <h1 class="page-title mt-1">Department Staff Workspace <span class="text-secondary font-normal">— {{ user.department.name|default:"General Operations" }}</span></h1>
+      <p class="page-sub mt-1">
+        Manage assigned student tickets, triage incoming absence leaves, post internal audit notes, and coordinate department resolutions.
+      </p>
+    </div>
+    <div class="flex flex-wrap items-center gap-2.5">
+      <a href="{% url 'cases:queue' %}?export=csv" class="btn-secondary btn-sm">
+        <span class="material-symbols-outlined text-[18px]">download</span>
+        <span>Export Queue (CSV)</span>
+      </a>
+      <a href="{% url 'cases:queue' %}?tab=unassigned" class="btn-primary btn-sm">
+        <span class="material-symbols-outlined text-[18px]">checklist</span>
+        <span>Triage Unassigned</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- KPI Summary Bento (Stitch Design) -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+    {% include "partials/kpi.html" with label="Assigned to Me" value=stats.assigned icon="assignment_ind" note="Active Queue" tone="maroon" href="/requests/queue/" %}
+    {% include "partials/kpi.html" with label="Needs Triage" value=stats.new icon="mark_email_unread" note="New Submissions" tone="amber" href="/requests/queue/?tab=unassigned" %}
+    {% include "partials/kpi.html" with label="In Progress" value=stats.in_progress icon="pending_actions" note="Faculty Review" tone="blue" href="/requests/queue/?tab=all" %}
+    {% include "partials/kpi.html" with label="Waiting Student" value=stats.waiting icon="hourglass_top" note="Docs Requested" tone="slate" href="/requests/queue/?tab=waiting" %}
+    {% include "partials/kpi.html" with label="SLA Breached" value=stats.overdue icon="crisis_alert" note="Immediate Action" tone="red" href="/requests/queue/?overdue=on" %}
+  </div>
+
+  <!-- Main Worklist + Live Department Stream Layout -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <!-- Worklist (8 cols) -->
+    <div class="lg:col-span-8 space-y-6">
+      <div class="card overflow-hidden shadow-card">
+        <div class="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-line">
+          <div>
+            <h2 class="font-headline-md text-headline-md text-on-surface">Assigned Cases Worklist</h2>
+            <p class="font-caption text-caption text-secondary">Cases currently assigned to you for review, inquiry and resolution</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <a href="{% url 'cases:queue' %}" class="btn-ghost btn-sm">Full Worklist &rarr;</a>
+          </div>
+        </div>
+
+        {% include "partials/request_table.html" with requests=my_queue empty="No active cases assigned directly to you." show_student=True show_due=True %}
+      </div>
+
+      <!-- New Unassigned Cases Needing Intake -->
+      {% if new_requests %}
+      <div class="card overflow-hidden shadow-card">
+        <div class="p-5 border-b border-line flex items-center justify-between">
+          <div>
+            <h3 class="font-title-sm text-title-sm text-on-surface">New Department Submissions (Intake Queue)</h3>
+            <p class="font-caption text-caption text-secondary">Unassigned cases in {{ user.department.name }} waiting for intake</p>
+          </div>
+          <a href="{% url 'cases:queue' %}?tab=unassigned" class="btn-secondary btn-sm">View All Unassigned</a>
+        </div>
+        {% include "partials/request_table.html" with requests=new_requests empty="No new unassigned cases." show_student=True %}
+      </div>
+      {% endif %}
+
+      <!-- Guidance / Policy Handbook Card -->
+      <div class="card card-pad bg-surface-container-low/60 border border-line">
+        <div class="flex items-start justify-between gap-4">
+          <div class="space-y-1">
+            <span class="chip-maroon text-[11px]">Staff Leave Guidance · Policy v4.2</span>
+            <h3 class="font-title-sm text-title-sm text-on-surface mt-1">Medical Absences Protocol</h3>
+            <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              Medical absences exceeding <strong>3 consecutive class days</strong> require formal stamped paperwork from an accredited hospital before coordinator sign-off. Do not mark resolved without attached documentation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column (4 cols): Stream & SLA Health -->
+    <div class="lg:col-span-4 space-y-6">
+      <!-- Activity Stream -->
+      <div class="card card-pad shadow-card space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-line">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary-container text-[20px]">notifications</span>
+            <h3 class="font-title-sm text-title-sm text-on-surface">Department Activity Stream</h3>
+          </div>
+          <span class="inline-block w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span>
+        </div>
+        {% include "partials/activity.html" with entries=activity %}
+      </div>
+
+      <!-- Shift & SLA Health Widget (Stitch Design) -->
+      <div class="card card-pad shadow-card space-y-4 font-body-sm text-body-sm">
+        <div class="flex items-center justify-between border-b border-line pb-3">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary-container text-[20px]">timer</span>
+            <h3 class="font-title-sm text-title-sm text-on-surface">Department SLA Health</h3>
+          </div>
+          <span class="badge bg-[#DCFCE7] text-[#166534] font-semibold text-[11px]">Online</span>
+        </div>
+
+        <div class="space-y-2.5 text-on-surface-variant">
+          <div class="flex items-center justify-between">
+            <span class="text-secondary">Official Operating Hours:</span>
+            <span class="font-medium text-on-surface">{{ site.support_hours }}</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-secondary">Desk Duty Staff:</span>
+            <span class="font-medium text-on-surface">{{ user.display_name }}</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-secondary">On-Time SLA Resolution:</span>
+            <span class="font-bold text-[#166534]">92.4% (Target: &gt;90%)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

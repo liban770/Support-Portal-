@@ -1,0 +1,199 @@
+<!-- Secure Typed Confirmation Delete Modal -->
+<div id="secure-delete-modal"
+     class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-200"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="delete-modal-title">
+  <div class="relative w-full max-w-lg bg-white border border-line rounded-2xl shadow-float overflow-hidden transform scale-95 transition-transform duration-200"
+       id="secure-delete-modal-card">
+    
+    <!-- Red Top Accent Bar -->
+    <div class="h-1.5 bg-gradient-to-r from-red-600 via-rose-500 to-red-700"></div>
+
+    <div class="p-6 space-y-5">
+      <!-- Modal Header -->
+      <div class="flex items-start justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-red-100 text-error flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-[24px]">delete_forever</span>
+          </div>
+          <div>
+            <h3 id="delete-modal-title" class="font-title-md text-title-md text-on-surface font-semibold">
+              Confirm Permanent Deletion
+            </h3>
+            <p id="delete-modal-entity-badge" class="font-caption text-caption text-secondary">
+              High-privilege administrative action
+            </p>
+          </div>
+        </div>
+        <button type="button"
+                id="delete-modal-close-btn"
+                class="text-secondary hover:text-on-surface p-1.5 rounded-lg hover:bg-surface-container transition-colors"
+                aria-label="Close dialog">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <!-- Warning Description Card -->
+      <div class="p-4 rounded-xl bg-red-50 border border-red-200 space-y-2">
+        <div class="flex items-center gap-2 text-error font-label-md text-label-md font-semibold">
+          <span class="material-symbols-outlined text-[18px]">warning</span>
+          <span>Irreversible Action</span>
+        </div>
+        <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          You are about to permanently delete <strong id="delete-modal-target-title" class="text-on-surface font-semibold select-all"></strong>.
+          All associated credentials, record links, and configurations will be permanently removed.
+        </p>
+      </div>
+
+      <!-- Verification Input Section -->
+      <form id="secure-delete-modal-form" method="post" action="" class="space-y-4">
+        {% csrf_token %}
+        <div class="space-y-2">
+          <label for="delete-modal-input" class="block font-label-md text-label-md text-on-surface">
+            To verify and confirm, please type <span id="delete-modal-expected-code" class="px-2 py-0.5 rounded bg-surface-container font-mono text-error font-semibold select-all text-[13px] border border-line"></span> below:
+          </label>
+          <input type="text"
+                 id="delete-modal-input"
+                 name="confirm_name"
+                 placeholder="Type exact name here..."
+                 class="input w-full font-mono text-sm tracking-wide border-line focus:border-error focus:ring-error/20 h-11"
+                 autocomplete="off"
+                 spellcheck="false"
+                 required>
+          <div id="delete-modal-hint" class="font-caption text-caption text-secondary flex items-center gap-1.5">
+            <span class="material-symbols-outlined text-[15px]">lock</span>
+            <span>Name must match exactly before the delete button unlocks.</span>
+          </div>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="pt-3 border-t border-line flex items-center justify-end gap-3">
+          <button type="button" id="delete-modal-cancel-btn" class="btn-secondary h-10 px-4">
+            Cancel
+          </button>
+          <button type="submit"
+                  id="delete-modal-submit-btn"
+                  class="btn-danger h-10 px-4 opacity-40 cursor-not-allowed flex items-center gap-2"
+                  disabled>
+            <span class="material-symbols-outlined text-[18px]">delete_forever</span>
+            <span id="delete-modal-submit-text">Delete Permanently</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const modal = document.getElementById('secure-delete-modal');
+  if (!modal) return;
+  const card = document.getElementById('secure-delete-modal-card');
+  const form = document.getElementById('secure-delete-modal-form');
+  const input = document.getElementById('delete-modal-input');
+  const submitBtn = document.getElementById('delete-modal-submit-btn');
+  const hint = document.getElementById('delete-modal-hint');
+  const targetTitle = document.getElementById('delete-modal-target-title');
+  const expectedCode = document.getElementById('delete-modal-expected-code');
+  const closeBtn = document.getElementById('delete-modal-close-btn');
+  const cancelBtn = document.getElementById('delete-modal-cancel-btn');
+  const entityBadge = document.getElementById('delete-modal-entity-badge');
+
+  let targetExpectedName = '';
+
+  function openModal(trigger) {
+    const actionUrl = trigger.dataset.actionUrl;
+    targetExpectedName = (trigger.dataset.targetName || '').trim();
+    const title = trigger.dataset.targetTitle || targetExpectedName;
+    const entityType = trigger.dataset.entityType || 'Record';
+
+    form.action = actionUrl;
+    targetTitle.textContent = title;
+    expectedCode.textContent = targetExpectedName;
+    entityBadge.textContent = entityType + ' Deletion · Policy §4.3 Safeguard';
+
+    input.value = '';
+    resetButton();
+
+    modal.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      modal.classList.remove('opacity-0');
+      card.classList.remove('scale-95');
+      card.classList.add('scale-100');
+      input.focus();
+    });
+  }
+
+  function closeModal() {
+    modal.classList.add('opacity-0');
+    card.classList.remove('scale-100');
+    card.classList.add('scale-95');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      input.value = '';
+      resetButton();
+    }, 200);
+  }
+
+  function resetButton() {
+    submitBtn.disabled = true;
+    submitBtn.classList.add('opacity-40', 'cursor-not-allowed');
+    hint.innerHTML = '<span class="material-symbols-outlined text-[15px]">lock</span><span>Name must match exactly before the delete button unlocks.</span>';
+    hint.className = 'font-caption text-caption text-secondary flex items-center gap-1.5';
+    input.classList.remove('border-emerald-500');
+  }
+
+  function checkInput() {
+    const val = input.value.trim();
+    if (val === targetExpectedName && targetExpectedName.length > 0) {
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+      hint.innerHTML = '<span class="material-symbols-outlined text-[15px] text-emerald-600">check_circle</span><span class="text-emerald-700 font-medium">Name verified. Click below to permanently delete.</span>';
+      hint.className = 'font-caption text-caption text-emerald-700 flex items-center gap-1.5';
+      input.classList.add('border-emerald-500');
+    } else {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-40', 'cursor-not-allowed');
+      input.classList.remove('border-emerald-500');
+      if (val.length > 0) {
+        hint.innerHTML = '<span class="material-symbols-outlined text-[15px] text-error">cancel</span><span class="text-error">Does not match. Please type &quot;' + targetExpectedName + '&quot; exactly.</span>';
+        hint.className = 'font-caption text-caption text-error flex items-center gap-1.5';
+      } else {
+        resetButton();
+      }
+    }
+  }
+
+  document.addEventListener('click', (e) => {
+    const trigger = e.target.closest('[data-delete-modal-trigger]');
+    if (trigger) {
+      e.preventDefault();
+      openModal(trigger);
+    }
+  });
+
+  input.addEventListener('input', checkInput);
+  input.addEventListener('paste', () => setTimeout(checkInput, 50));
+
+  closeBtn.addEventListener('click', closeModal);
+  cancelBtn.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+      closeModal();
+    }
+  });
+
+  form.addEventListener('submit', (e) => {
+    if (input.value.trim() !== targetExpectedName) {
+      e.preventDefault();
+      alert('Verification mismatch. You must type "' + targetExpectedName + '" exactly.');
+    }
+  });
+})();
+</script>

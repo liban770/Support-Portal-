@@ -1,0 +1,22 @@
+{# Activity feed. Params: entries #}
+<ol class="space-y-4">
+{% for e in entries %}
+  <li class="flex gap-3">
+    <span class="mt-1.5 w-2 h-2 rounded-full shrink-0 {% if e.is_internal %}bg-secondary{% elif e.kind == 'status' %}bg-primary-container{% else %}bg-tertiary-container{% endif %}"></span>
+    <div class="min-w-0">
+      <p class="font-body-sm text-body-sm text-on-surface leading-snug">
+        <strong class="font-semibold">{{ e.author.display_name|default:"System" }}</strong>
+        {% if e.kind == 'status' %}changed status to <strong>{{ e.get_new_status_display }}</strong>
+        {% elif e.kind == 'internal' %}added an internal note
+        {% elif e.kind == 'system' %}{{ e.body|truncatechars:70 }}
+        {% else %}responded{% endif %}
+      </p>
+      <p class="font-caption text-caption text-secondary mt-0.5">
+        <a href="{{ e.request.get_absolute_url }}" class="text-primary-container font-semibold hover:underline">{{ e.request.reference }}</a> · {{ e.created_at|timesince }} ago
+      </p>
+    </div>
+  </li>
+{% empty %}
+  <li class="font-body-sm text-body-sm text-secondary py-4 text-center">No recent activity.</li>
+{% endfor %}
+</ol>

@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}{% if is_create %}Create New User Account{% else %}Edit User: {{ target.display_name }}{% endif %}{% endblock %}
+{% block crumb %}{% if is_create %}Add User{% else %}Edit User{% endif %}{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto space-y-6 animate-in">
+  <!-- Header -->
+  <div class="flex items-center justify-between pb-3 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Identity & Access Management</span>
+      </div>
+      <h1 class="page-title mt-1">{% if is_create %}Create User Account{% else %}Edit User Dossier: {{ target.display_name }}{% endif %}</h1>
+      <p class="page-sub mt-1">Configure profile credentials, assign university role scopes, and designate department membership.</p>
+    </div>
+    <a href="{% url 'accounts:user_list' %}" class="btn-secondary btn-sm">
+      <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+      <span>Back to Directory</span>
+    </a>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+    <div class="md:col-span-8 card card-pad shadow-card space-y-6">
+      <form method="post" class="space-y-5" novalidate>
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div class="notice bg-error-container text-on-error-container">
+          {{ form.non_field_errors|join:" " }}
+        </div>
+        {% endif %}
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {% include "partials/field.html" with field=form.first_name %}
+          {% include "partials/field.html" with field=form.last_name %}
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {% include "partials/field.html" with field=form.email %}
+          {% include "partials/field.html" with field=form.username %}
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-xl bg-surface-container-low/50 border border-line">
+          {% include "partials/field.html" with field=form.role %}
+          {% include "partials/field.html" with field=form.department %}
+        </div>
+
+        <!-- Student Profile Specifics -->
+        <div class="p-4 rounded-xl bg-canvas border border-line space-y-4">
+          <span class="font-label-md text-label-md text-on-surface flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px] text-primary-container">school</span>
+            Student Profile Details (Required for Student Role)
+          </span>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {% include "partials/field.html" with field=form.student_id %}
+            {% include "partials/field.html" with field=form.program %}
+            {% include "partials/field.html" with field=form.year_of_study %}
+          </div>
+        </div>
+
+        <!-- Staff Profile Specifics -->
+        <div class="p-4 rounded-xl bg-canvas border border-line space-y-4">
+          <span class="font-label-md text-label-md text-on-surface flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px] text-primary-container">badge</span>
+            Staff / Faculty Details (For Staff / Deans)
+          </span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {% include "partials/field.html" with field=form.staff_id %}
+            {% include "partials/field.html" with field=form.position %}
+          </div>
+        </div>
+
+        {% if form.password %}
+        <div class="p-4 rounded-xl bg-surface-container-low/50 border border-line">
+          {% include "partials/field.html" with field=form.password %}
+        </div>
+        {% endif %}
+
+        <div class="pt-4 border-t border-line flex items-center justify-end gap-3">
+          <a href="{% url 'accounts:user_list' %}" class="btn-secondary">Cancel</a>
+          <button type="submit" class="btn-primary" id="btn-save-user">
+            <span>{% if is_create %}Create & Activate Account{% else %}Save Changes{% endif %}</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Right Column (4 cols): User Dossier Metadata / Audit trail -->
+    <div class="md:col-span-4 space-y-5">
+      {% if target %}
+      <div class="card card-pad shadow-card space-y-4">
+        <div class="flex items-center gap-3 pb-3 border-b border-line">
+          <div class="avatar w-12 h-12">{{ target.initials }}</div>
+          <div class="min-w-0">
+            <div class="font-title-sm text-title-sm text-on-surface truncate">{{ target.display_name }}</div>
+            <div class="font-caption text-caption text-secondary">Joined {{ target.date_joined|date:"M d, Y" }}</div>
+          </div>
+        </div>
+
+        <div class="space-y-2 text-body-sm text-body-sm text-on-surface-variant">
+          <div class="flex items-center justify-between">
+            <span class="text-secondary">Current Status:</span>
+            {% account_badge target %}
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-secondary">Validated By:</span>
+            <span class="font-medium text-on-surface">{{ target.validated_by.display_name|default:"Auto / Registrar" }}</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-secondary">Created By:</span>
+            <span class="font-medium text-on-surface">{{ target.created_by.display_name|default:"System" }}</span>
+          </div>
+        </div>
+
+        <!-- Superuser Quick State Modifiers -->
+        <div class="pt-3 border-t border-line space-y-2">
+          {% if target.account_status == 'pending' %}
+          <form method="post" action="{% url 'accounts:user_action' target.pk 'validate' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn-success w-full btn-sm">Validate & Activate</button>
+          </form>
+          {% elif target.account_status == 'active' and target.pk != user.pk %}
+          <form method="post" action="{% url 'accounts:user_action' target.pk 'suspend' %}" data-confirm="Suspend this user?">
+            {% csrf_token %}
+            <button type="submit" class="btn-danger w-full btn-sm">Suspend Account</button>
+          </form>
+          {% elif target.account_status == 'suspended' %}
+          <form method="post" action="{% url 'accounts:user_action' target.pk 'activate' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn-secondary w-full btn-sm">Reactivate Account</button>
+          </form>
+          {% endif %}
+
+          <form method="post" action="{% url 'accounts:user_action' target.pk 'reset_password' %}" data-confirm="Generate a new temporary password for {{ target.display_name }}?">
+            {% csrf_token %}
+            <button type="submit" class="btn-ghost w-full btn-sm flex items-center justify-center gap-1.5 border border-line hover:bg-surface-container text-on-surface" title="Issue temporary password">
+              <span class="material-symbols-outlined text-[16px] text-secondary">key</span>
+              <span>Issue Temporary Password</span>
+            </button>
+          </form>
+
+          {% if target.pk != user.pk %}
+          <div class="pt-2">
+            <button type="button"
+                    class="btn-danger w-full btn-sm flex items-center justify-center gap-1.5"
+                    data-delete-modal-trigger
+                    data-action-url="{% url 'accounts:user_delete' target.pk %}"
+                    data-target-name="{{ target.username }}"
+                    data-target-title="{{ target.display_name }} ({{ target.username }})"
+                    data-entity-type="User Account">
+              <span class="material-symbols-outlined text-[17px]">delete_forever</span>
+              <span>Delete User Account</span>
+            </button>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Security Guidance Card -->
+      <div class="card card-pad bg-surface-container-low/60 border border-line space-y-2">
+        <h4 class="font-label-md text-label-md text-on-surface flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-[18px] text-primary-container">info</span>
+          Role Separation Security Policy
+        </h4>
+        <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          Department heads may only request staff accounts for their designated department. Only Superusers can grant administrative or cross-department privileges.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

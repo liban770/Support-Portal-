@@ -1,0 +1,14 @@
+{# KPI card. Params: label, value, icon, note, tone (maroon|green|amber|red|blue|slate), href #}
+<{% if href %}a href="{{ href }}"{% else %}div{% endif %} class="kpi group animate-in">
+  <div class="flex items-start justify-between gap-2">
+    <span class="kpi-label">{{ label }}</span>
+    <span class="kpi-icon
+      {% if tone == 'green' %}bg-[#DCFCE7] text-[#166534]{% elif tone == 'amber' %}bg-[#FEF3C7] text-[#92400E]{% elif tone == 'red' %}bg-error-container text-error{% elif tone == 'blue' %}bg-[#DBEAFE] text-[#1E40AF]{% elif tone == 'slate' %}bg-surface-container text-secondary{% else %}bg-primary-fixed text-primary-container{% endif %}">
+      <span class="material-symbols-outlined text-[20px]">{{ icon }}</span>
+    </span>
+  </div>
+  <div class="flex items-end justify-between gap-2 mt-3">
+    <span class="kpi-value {% if tone == 'red' and value %}text-error{% endif %}">{{ value }}</span>
+    {% if note %}<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant text-right">{{ note }}</span>{% endif %}
+  </div>
+</{% if href %}a{% else %}div{% endif %}>

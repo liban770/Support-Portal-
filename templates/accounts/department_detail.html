@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}{{ dept.name }} — Department Overview{% endblock %}
+{% block crumb %}{{ dept.code }}{% endblock %}
+
+{% block content %}
+<div class="space-y-6 animate-in">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Academic Department Dossier</span>
+      </div>
+      <h1 class="page-title mt-1">{{ dept.name }} <span class="text-secondary font-normal">({{ dept.code }})</span></h1>
+      <p class="page-sub mt-1">{{ dept.description|default:"Official department workspace and case history." }}</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="{% url 'accounts:department_edit' dept.pk %}" class="btn-secondary btn-sm">
+        <span class="material-symbols-outlined text-[18px]">edit</span>
+        <span>Edit Department</span>
+      </a>
+      <button type="button"
+              class="btn-danger btn-sm flex items-center gap-1.5"
+              data-delete-modal-trigger
+              data-action-url="{% url 'accounts:department_delete' dept.pk %}"
+              data-target-name="{{ dept.name }}"
+              data-target-title="{{ dept.name }} ({{ dept.code }})"
+              data-entity-type="Department">
+        <span class="material-symbols-outlined text-[18px]">delete_forever</span>
+        <span>Delete Department</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- KPI Summary Bento -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    {% include "partials/kpi.html" with label="Total Requests" value=stats.total icon="inventory_2" note="All time" tone="maroon" %}
+    {% include "partials/kpi.html" with label="Active Cases" value=stats.open icon="pending_actions" note="Currently open" tone="blue" %}
+    {% include "partials/kpi.html" with label="Overdue Cases" value=stats.overdue icon="crisis_alert" note="SLA target passed" tone="red" %}
+    {% include "partials/kpi.html" with label="Resolved / Closed" value=stats.resolved icon="task_alt" note="Completed" tone="green" %}
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <!-- Left Column: Department Staff Members (7 cols) -->
+    <div class="lg:col-span-7 space-y-6">
+      <div class="card overflow-hidden shadow-card">
+        <div class="p-5 border-b border-line flex items-center justify-between">
+          <div>
+            <h2 class="font-headline-md text-headline-md text-on-surface">Department Staff & Faculty ({{ members|length }})</h2>
+            <p class="font-caption text-caption text-secondary">Personnel authorized to review and handle tickets for {{ dept.code }}</p>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto scroll-thin">
+          <table class="tbl">
+            <thead>
+              <tr>
+                <th>Staff Member</th>
+                <th>Role & Title</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for m in members %}
+              <tr class="hover:bg-canvas transition-colors">
+                <td>
+                  <div class="font-label-md text-label-md text-on-surface font-semibold">{{ m.display_name }}</div>
+                  <div class="text-caption text-secondary font-caption">{{ m.email }}</div>
+                </td>
+                <td class="font-body-sm text-body-sm">
+                  <span class="chip-maroon text-[11px]">{{ m.get_role_display }}</span>
+                  <div class="text-caption text-secondary mt-0.5">{{ m.staff_profile.position|default:"" }}</div>
+                </td>
+                <td>{% account_badge m %}</td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="3" class="py-8 text-center text-secondary font-body-sm text-body-sm">
+                  No staff members currently assigned to this department.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Recent Case History -->
+      <div class="card card-pad shadow-card space-y-4">
+        <div class="flex items-center justify-between border-b border-line pb-3">
+          <h3 class="font-title-sm text-title-sm text-on-surface">Recent Department Requests</h3>
+        </div>
+        <div class="space-y-2 font-body-sm text-body-sm">
+          {% for r in history %}
+          <div class="flex items-center justify-between py-2 border-b border-line/60 last:border-0">
+            <span class="font-label-md text-label-md text-primary-container font-semibold">{{ r.reference }}</span>
+            <span class="text-secondary capitalize">{{ r.request_type }}</span>
+            {% status_badge r.status %}
+            <span class="font-caption text-caption text-secondary">{{ r.created_at|date:"M d, Y" }}</span>
+          </div>
+          {% empty %}
+          <p class="text-secondary italic">No request history recorded for this department.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Metadata & Department Head Info (5 cols) -->
+    <div class="lg:col-span-5 space-y-5">
+      <div class="card card-pad shadow-card space-y-4 font-body-sm text-body-sm">
+        <div class="border-b border-line pb-3">
+          <span class="eyebrow">Department Leadership</span>
+          <h3 class="font-title-sm text-title-sm text-on-surface mt-0.5">Dean / Head of Department</h3>
+        </div>
+
+        {% if dept.head %}
+        <div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container-low/60 border border-line">
+          <div class="avatar w-11 h-11">{{ dept.head.initials }}</div>
+          <div>
+            <div class="font-semibold text-on-surface">{{ dept.head.display_name }}</div>
+            <div class="text-caption text-secondary">{{ dept.head.subtitle }} · {{ dept.head.email }}</div>
+          </div>
+        </div>
+        {% else %}
+        <p class="text-secondary italic">No department head currently appointed.</p>
+        {% endif %}
+
+        <div class="space-y-2.5 pt-2 text-on-surface-variant">
+          <div class="flex items-center justify-between">
+            <span class="text-secondary">Office Location:</span>
+            <span class="font-medium text-on-surface">{{ dept.location|default:"Main Campus" }}</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-secondary">Contact Email:</span>
+            <a href="mailto:{{ dept.contact_email }}" class="text-primary-container hover:underline">{{ dept.contact_email|default:"Not specified" }}</a>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-secondary">Active Students:</span>
+            <span class="font-medium text-on-surface">{{ student_count }} enrolled</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% load portal_tags %}
+{# Compact request table used on dashboards. Params: requests, empty, show_student (bool), show_due (bool) #}
+<div class="overflow-x-auto scroll-thin">
+<table class="tbl">
+  <thead><tr>
+    <th>Request ID</th><th>Type</th>
+    {% if show_student %}<th>Student</th>{% endif %}
+    <th class="hidden md:table-cell">{% if show_due %}Due{% else %}Submitted{% endif %}</th>
+    <th>Status</th><th class="text-right">Action</th>
+  </tr></thead>
+  <tbody>
+  {% for r in requests %}
+  <tr>
+    <td class="whitespace-nowrap">
+      <a href="{{ r.get_absolute_url }}" class="font-label-md text-label-md text-primary-container font-semibold hover:underline">{{ r.reference }}</a>
+      {% if r.is_confidential %}<span class="material-symbols-outlined text-[14px] text-secondary align-middle ml-0.5" title="Confidential">lock</span>{% endif %}
+      <div class="font-caption text-caption text-secondary truncate max-w-[14rem]">{{ r.title }}</div>
+    </td>
+    <td><div class="flex items-center gap-2"><span class="material-symbols-outlined text-[18px] text-secondary">{{ r.type_icon }}</span><span class="font-body-sm text-body-sm whitespace-nowrap">{{ r.get_request_type_display }}</span></div></td>
+    {% if show_student %}<td class="font-body-sm text-body-sm whitespace-nowrap">{{ r.student.display_name }}</td>{% endif %}
+    <td class="hidden md:table-cell font-body-sm text-body-sm whitespace-nowrap {% if show_due and r.is_overdue %}text-error font-semibold{% else %}text-secondary{% endif %}">
+      {% if show_due %}{% if r.due_at %}{{ r.due_at|date:"M d, Y" }}{% if r.is_overdue %} · overdue{% endif %}{% else %}—{% endif %}{% else %}{{ r.created_at|date:"M d, Y" }}{% endif %}
+    </td>
+    <td>{% status_badge r.status %}</td>
+    <td class="text-right"><a href="{{ r.get_absolute_url }}" class="font-label-md text-label-md text-primary-container hover:underline whitespace-nowrap">View</a></td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="6" class="py-10 text-center">
+    <span class="material-symbols-outlined text-[32px] text-outline-variant">inbox</span>
+    <p class="font-body-sm text-body-sm text-secondary mt-1">{{ empty|default:"Nothing here yet." }}</p>
+  </td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>

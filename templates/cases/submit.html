@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+{% load static portal_tags %}
+{% block title %}Submit Official Support Request{% endblock %}
+{% block crumb %}Submit Request{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+  <!-- Top Header Banner -->
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Student Services · Official Academic Ticketing</span>
+      </div>
+      <h1 class="page-title mt-1">Submit Official Support Request</h1>
+      <p class="page-sub mt-1">Direct institutional ticketing for rapid review across academic departments, student affairs, and the Academic Office.</p>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#DCFCE7] text-[#166534] font-label-sm text-label-sm">
+        <span class="material-symbols-outlined text-[16px]">verified_user</span> Session Active: {{ user.student_profile.student_id|default:user.username }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Express Channel Selector Cards (Stitch Design) -->
+  <div>
+    <div class="flex items-center justify-between mb-3">
+      <span class="font-title-sm text-title-sm text-on-surface">Select Request Channel</span>
+      <span class="font-caption text-caption text-secondary">Choose the appropriate category to route your ticket directly</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {% for card in type_cards %}
+      <a href="?type={{ card.key }}" class="card p-5 group transition-all duration-200 hover:shadow-float relative {% if rtype == card.key %}ring-2 ring-primary-container bg-surface-container-low/40{% endif %}">
+        <div class="flex items-start justify-between">
+          <div class="w-12 h-12 rounded-xl flex items-center justify-center {% if rtype == card.key %}bg-primary-container text-on-primary{% else %}bg-surface-container text-primary-container group-hover:bg-primary-fixed{% endif %} transition-colors">
+            <span class="material-symbols-outlined text-[26px]">{{ card.icon }}</span>
+          </div>
+          {% if rtype == card.key %}
+          <span class="w-6 h-6 rounded-full bg-primary-container text-on-primary flex items-center justify-center">
+            <span class="material-symbols-outlined text-[16px]">check</span>
+          </span>
+          {% endif %}
+        </div>
+        <h3 class="font-title-sm text-title-sm text-on-surface mt-4 group-hover:text-primary-container transition-colors">{{ card.title }}</h3>
+        <p class="font-body-sm text-body-sm text-secondary mt-1 leading-normal">{{ card.text }}</p>
+        <div class="pt-3 mt-4 border-t border-line flex items-center justify-between font-caption text-caption text-secondary">
+          <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">{{ card.meta_icon }}</span>{{ card.meta }}</span>
+          <span class="font-label-sm text-label-sm text-primary-container group-hover:underline">Select &rarr;</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Form Layout: Main Form (8 cols) + Policy Guidance Sidebar (4 cols) -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <div class="lg:col-span-8 card card-pad shadow-card">
+      <div class="flex items-center justify-between pb-4 border-b border-line mb-6">
+        <div>
+          <span class="eyebrow">Selected Channel</span>
+          <h2 class="font-headline-md text-headline-md text-on-surface mt-0.5">{{ type_label }} Details</h2>
+        </div>
+        <span class="chip-maroon">Active Draft</span>
+      </div>
+
+      <!-- Institutional Notice / Policy Reminder -->
+      {% if limit_reached %}
+      <div class="p-5 rounded-2xl bg-[#FEF2F2] border border-[#FCA5A5] mb-6 flex items-start gap-3.5">
+        <span class="material-symbols-outlined text-[#DC2626] text-[28px] shrink-0">block</span>
+        <div class="space-y-1.5 flex-1">
+          <h3 class="font-title-sm text-title-sm text-[#991B1B]">Active Request Limit Reached ({{ open_count }} of {{ max_active }} Active)</h3>
+          <p class="font-body-sm text-body-sm text-[#7F1D1D] leading-relaxed">
+            In accordance with university support guidelines, students may have up to <strong>{{ max_active }} active requests</strong> concurrently. You currently have {{ open_count }} requests undergoing review.
+          </p>
+          <p class="font-body-sm text-body-sm text-[#7F1D1D]">
+            To ensure timely processing and prevent backlog, you cannot submit a new ticket until at least one of your pending requests is marked <em>Resolved</em> or <em>Closed</em>.
+          </p>
+          <div class="pt-2 flex items-center gap-3">
+            <a href="{% url 'cases:my_requests' %}" class="btn btn-sm bg-[#DC2626] text-white hover:bg-[#B91C1C]">
+              <span class="material-symbols-outlined text-[16px]">assignment</span> View My Active Requests
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if rtype == "absence" %}
+      <div class="notice mb-6 bg-surface-container-low border-surface-variant">
+        <span class="material-symbols-outlined text-primary-container text-[22px] shrink-0">info</span>
+        <div class="space-y-1">
+          <p class="font-label-md text-label-md text-on-surface">Notice of Official Attendance Policy</p>
+          <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Submitting or approving an absence request does <strong>not automatically change official attendance records</strong>. Any change to the official attendance system must follow university policy and be validated by an authorized dean or registrar.
+          </p>
+        </div>
+      </div>
+      {% elif rtype == "late_class" %}
+      <div class="notice mb-6 bg-surface-container-low border-surface-variant">
+        <span class="material-symbols-outlined text-primary-container text-[22px] shrink-0">report</span>
+        <div class="space-y-1">
+          <p class="font-label-md text-label-md text-on-surface">Academic Verification Notice</p>
+          <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            A submitted report is an <strong>allegation to be reviewed against the master timetable</strong>, not automatic proof of misconduct. Reports are processed impartially by the Academic Office.
+          </p>
+        </div>
+      </div>
+      {% endif %}
+
+      <form method="post" enctype="multipart/form-data" class="space-y-5" novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="request_type" value="{{ rtype }}">
+
+        {% if form.non_field_errors %}
+        <div class="notice bg-error-container text-on-error-container">
+          {{ form.non_field_errors|join:" " }}
+        </div>
+        {% endif %}
+
+        {% if rtype == "absence" %}
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% include "partials/field.html" with field=form.leave_type %}
+            {% include "partials/field.html" with field=form.category %}
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-xl bg-surface-container-low/50 border border-line">
+            {% include "partials/field.html" with field=form.start_date %}
+            {% include "partials/field.html" with field=form.end_date %}
+            <div class="sm:col-span-2 flex items-center justify-between text-body-sm font-label-md text-secondary pt-1">
+              <span>Calculated Leave Duration:</span>
+              <span id="duration-days" class="text-primary-container font-bold">Select dates</span>
+            </div>
+          </div>
+          {% include "partials/field.html" with field=form.reason %}
+          {% include "partials/field.html" with field=form.description %}
+
+        {% elif rtype == "problem" %}
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% include "partials/field.html" with field=form.category %}
+            {% include "partials/field.html" with field=form.department %}
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% include "partials/field.html" with field=form.title %}
+            {% include "partials/field.html" with field=form.location %}
+          </div>
+          {% include "partials/field.html" with field=form.description %}
+          <div class="p-3.5 rounded-xl bg-surface-container-low/60 border border-line">
+            {% include "partials/field.html" with field=form.is_confidential %}
+          </div>
+
+        {% elif rtype == "late_class" %}
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% include "partials/field.html" with field=form.course %}
+            {% include "partials/field.html" with field=form.department %}
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {% include "partials/field.html" with field=form.instructor_name %}
+            {% include "partials/field.html" with field=form.class_date %}
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-xl bg-surface-container-low/50 border border-line">
+            {% include "partials/field.html" with field=form.scheduled_start %}
+            {% include "partials/field.html" with field=form.actual_start %}
+            <div class="sm:col-span-2">
+              {% include "partials/field.html" with field=form.class_did_not_start %}
+            </div>
+          </div>
+          {% include "partials/field.html" with field=form.description %}
+        {% endif %}
+
+        <!-- File Upload Section (Drag & Drop Styled) -->
+        <div class="space-y-2 pt-2" data-dropzone>
+          <div class="flex items-center justify-between">
+            <label class="label mb-0">Supporting Documentation {% if rtype == "absence" and site_settings.absence_requires_document %}<span class="text-error">* (Mandatory)</span>{% else %}(Optional / As Required){% endif %}</label>
+            {% if rtype == "absence" and site_settings.absence_requires_document %}
+            <span class="inline-flex items-center gap-1 font-caption text-caption text-[#991B1B] bg-[#FEE2E2] px-2 py-0.5 rounded font-semibold">
+              <span class="material-symbols-outlined text-[14px]">fact_check</span> Official Evidence Required
+            </span>
+            {% endif %}
+          </div>
+          <div class="border-2 border-dashed border-line rounded-xl p-6 text-center hover:border-primary-container transition-colors bg-white">
+            <span class="material-symbols-outlined text-[36px] text-primary-container">cloud_upload</span>
+            <p class="font-body-md text-body-md text-on-surface mt-2 font-medium">Click to upload files or drag and drop here</p>
+            <p class="font-caption text-caption text-secondary mt-1">PDF, JPG, PNG or DOCX (max {{ site.max_upload_mb }} MB per file, up to 5 files)</p>
+            <div class="mt-4 max-w-xs mx-auto">
+              {{ form.attachments }}
+            </div>
+          </div>
+          <ul id="uploaded-file-list" data-file-list="id_attachments" class="space-y-2 mt-2"></ul>
+          {% for error in form.attachments.errors %}
+          <p class="field-error">{{ error }}</p>
+          {% endfor %}
+        </div>
+
+        <!-- Academic Integrity Code of Conduct Declaration -->
+        <div class="pt-4 border-t border-line">
+          <div class="p-4 rounded-xl bg-surface-container-low/70 border border-line">
+            {% include "partials/field.html" with field=form.declaration %}
+          </div>
+        </div>
+
+        <div class="pt-4 flex flex-col-reverse sm:flex-row sm:items-center justify-end gap-3 border-t border-line">
+          <a href="{% url 'cases:my_requests' %}" class="btn-secondary">Cancel</a>
+          <button type="submit" class="btn-primary" id="submit-request-btn" {% if limit_reached %}disabled title="Active request limit reached"{% endif %}>
+            <span class="material-symbols-outlined text-[18px]">send</span>
+            <span>{% if limit_reached %}Active Limit Reached{% else %}Submit Official Request{% endif %}</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Sidebar Guidance & Workflow Pipeline (Stitch Design) -->
+    <div class="lg:col-span-4 space-y-5">
+      <!-- Policy Guidance -->
+      <div class="card card-pad space-y-4">
+        <div class="flex items-center gap-2 border-b border-line pb-3">
+          <span class="material-symbols-outlined text-primary-container text-[20px]">policy</span>
+          <h3 class="font-title-sm text-title-sm text-on-surface">Institutional Guidance</h3>
+        </div>
+        <ul class="space-y-3 font-body-sm text-body-sm text-on-surface-variant">
+          <li class="flex items-start gap-2.5">
+            <span class="material-symbols-outlined text-primary-container text-[18px] shrink-0 mt-0.5">schedule</span>
+            <span>Leave requests must be submitted within <strong>48 hours</strong> of medical discharge or absence window.</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="material-symbols-outlined text-primary-container text-[18px] shrink-0 mt-0.5">warning</span>
+            <span>Absences exceeding 5 consecutive days require direct Department Dean and Academic Affairs sign-off.</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="material-symbols-outlined text-primary-container text-[18px] shrink-0 mt-0.5">fact_check</span>
+            <span>Exam makeup petitions are separate from general attendance excuse requests.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Review Pipeline Stages -->
+      <div class="card card-pad space-y-4">
+        <div class="flex items-center gap-2 border-b border-line pb-3">
+          <span class="material-symbols-outlined text-primary-container text-[20px]">hub</span>
+          <h3 class="font-title-sm text-title-sm text-on-surface">Review Pipeline</h3>
+        </div>
+        <ol class="space-y-4 font-body-sm text-body-sm">
+          <li class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-label-sm text-label-sm shrink-0">1</span>
+            <div>
+              <strong class="font-semibold text-on-surface block">Department Intake Review</strong>
+              <span class="text-secondary text-caption font-caption">Reviewed by staff and coordinators to verify course alignment.</span>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-surface-container text-primary-container flex items-center justify-center font-label-sm text-label-sm shrink-0">2</span>
+            <div>
+              <strong class="font-semibold text-on-surface block">Dean & Academic Validation</strong>
+              <span class="text-secondary text-caption font-caption">Official cross-referencing with schedules and documentation.</span>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="w-6 h-6 rounded-full bg-surface-container text-primary-container flex items-center justify-center font-label-sm text-label-sm shrink-0">3</span>
+            <div>
+              <strong class="font-semibold text-on-surface block">Resolution & Notification</strong>
+              <span class="text-secondary text-caption font-caption">Decision stamped on case file with in-app tracking update.</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Need Help Widget -->
+      <div class="card card-pad bg-surface-container-low/70 flex items-center gap-3">
+        <div class="avatar-soft w-10 h-10 shrink-0">
+          <span class="material-symbols-outlined text-[20px]">support_agent</span>
+        </div>
+        <div class="min-w-0 flex-1">
+          <h4 class="font-label-md text-label-md text-on-surface">Need immediate help?</h4>
+          <p class="font-caption text-caption text-secondary">Registrar & Student Affairs helpdesk is open Sun–Thu.</p>
+        </div>
+        <a href="mailto:{{ site.support_email }}" class="btn-ghost btn-sm">Contact</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

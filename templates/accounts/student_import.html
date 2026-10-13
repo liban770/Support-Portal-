@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}Import Student Register (CSV){% endblock %}
+{% block crumb %}Import Students{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto space-y-6 animate-in">
+  <div class="flex items-center justify-between pb-3 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Student Register Integration · Bulk Provisioning</span>
+      </div>
+      <h1 class="page-title mt-1">Import Official Student Register</h1>
+      <p class="page-sub mt-1">Upload verified university register CSV files to automatically create activated student accounts.</p>
+    </div>
+    <a href="{% url 'accounts:user_list' %}" class="btn-secondary btn-sm">
+      <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+      <span>Back</span>
+    </a>
+  </div>
+
+  <div class="card card-pad shadow-card space-y-5">
+    <div class="notice bg-surface-container-low border-surface-variant">
+      <span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">info</span>
+      <div class="space-y-1">
+        <p class="font-label-md text-label-md text-on-surface">Required CSV Format</p>
+        <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          The CSV file must include the following headers: <code class="bg-white px-1.5 py-0.5 rounded border border-line text-primary font-mono text-[12px]">student_id, first_name, last_name, email, department_code, program, year_of_study</code>.
+        </p>
+      </div>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="space-y-4" novalidate>
+      {% csrf_token %}
+      {% if form.non_field_errors %}
+      <div class="notice bg-error-container text-on-error-container">{{ form.non_field_errors|join:" " }}</div>
+      {% endif %}
+
+      {% include "partials/field.html" with field=form.csv_file %}
+
+      <div class="pt-3 border-t border-line flex items-center justify-end gap-3">
+        <button type="submit" class="btn-primary" id="btn-upload-csv">
+          <span class="material-symbols-outlined text-[18px]">cloud_upload</span>
+          <span>Upload and Ingest Register</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  {% if results %}
+  <div class="card card-pad shadow-card space-y-4">
+    <div class="flex items-center justify-between border-b border-line pb-3">
+      <h3 class="font-title-sm text-title-sm text-on-surface">Import Execution Results</h3>
+      <div class="flex gap-2">
+        <span class="badge bg-[#DCFCE7] text-[#166534] font-semibold">{{ results.created|length }} Created</span>
+        <span class="badge bg-[#FEF3C7] text-[#92400E] font-semibold">{{ results.skipped|length }} Skipped</span>
+      </div>
+    </div>
+
+    {% if results.created %}
+    <div class="space-y-2">
+      <span class="font-label-md text-label-md text-on-surface block">Generated Temporary Passwords (One-time Display)</span>
+      <div class="overflow-x-auto max-h-60 scroll-thin">
+        <table class="tbl text-[13px]">
+          <thead>
+            <tr><th>Student ID</th><th>Name</th><th>Email</th><th>Temporary Password</th></tr>
+          </thead>
+          <tbody>
+            {% for u, pw in results.created %}
+            <tr>
+              <td class="font-mono font-semibold">{{ u.username }}</td>
+              <td>{{ u.display_name }}</td>
+              <td>{{ u.email }}</td>
+              <td class="font-mono text-primary-container font-bold select-all">{{ pw }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if results.skipped %}
+    <div class="space-y-2 pt-3 border-t border-line">
+      <span class="font-label-md text-label-md text-error block">Skipped Records</span>
+      <ul class="space-y-1 text-caption text-secondary">
+        {% for line, ident, reason in results.skipped %}
+        <li>Line {{ line }}: {{ ident }} &mdash; <span class="text-error">{{ reason }}</span></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load portal_tags %}
+{% block title %}Dean's Department Overview{% endblock %}
+{% block crumb %}Dean Overview{% endblock %}
+
+{% block content %}
+<div class="space-y-6 animate-in">
+  <!-- Top Greeting & Header Bar (Stitch Design) -->
+  <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 pb-2 border-b border-surface-variant">
+    <div>
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-primary-container"></span>
+        <span class="eyebrow">Academic Leadership · Faculty Dean Overview</span>
+      </div>
+      <h1 class="page-title mt-1">Dean's Department Overview <span class="text-secondary font-normal">— {% for d in departments %}{{ d.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</span></h1>
+      <p class="page-sub mt-1">
+        Supervise department cases, allocate staff workloads, validate escalated requests, and monitor overall turnaround performance.
+      </p>
+    </div>
+    <div class="flex flex-wrap items-center gap-2.5">
+      <a href="{% url 'accounts:dept_staff' %}" class="btn-secondary btn-sm">
+        <span class="material-symbols-outlined text-[18px]">badge</span>
+        <span>Manage Staff</span>
+      </a>
+      <a href="{% url 'cases:reports' %}" class="btn-primary btn-sm">
+        <span class="material-symbols-outlined text-[18px]">analytics</span>
+        <span>Department Reports</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Department Academic Alert Banner (Stitch Design) -->
+  <div class="card p-5 border-l-4 border-l-[#F59E0B] bg-[#FEF3C7]/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div class="flex items-start gap-3">
+      <span class="material-symbols-outlined text-[#92400E] text-[26px] shrink-0 mt-0.5">notification_important</span>
+      <div>
+        <h3 class="font-title-sm text-title-sm text-[#92400E]">Department Academic Notice — {{ site.current_term }} Examination Window</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+          Midterm examination schedules are active. Please ensure all medical absence waivers and reschedule petitions are reviewed promptly to prevent exam lockouts.
+        </p>
+      </div>
+    </div>
+    <a href="{% url 'cases:department_requests' %}?tab=review" class="btn-secondary btn-sm shrink-0 whitespace-nowrap">
+      Review Escalations
+    </a>
+  </div>
+
+  <!-- KPI Summary Bento (Stitch Design) -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+    {% include "partials/kpi.html" with label="Total Requests" value=stats.total icon="inventory_2" note="All department cases" tone="maroon" href="/requests/department/" %}
+    {% include "partials/kpi.html" with label="Dean Review" value=stats.escalated icon="priority_high" note="Requires sign-off" tone="red" href="/requests/department/?tab=review" %}
+    {% include "partials/kpi.html" with label="Active Queue" value=stats.pending icon="pending_actions" note="In progress" tone="blue" href="/requests/department/" %}
+    {% include "partials/kpi.html" with label="Overdue Cases" value=stats.overdue icon="crisis_alert" note="Target breached" tone="amber" href="/requests/department/?tab=overdue" %}
+    {% include "partials/kpi.html" with label="Resolution Rate" value=stats.resolution_rate|stringformat:"d"|add:"%" icon="verified" note="Turnaround health" tone="green" href="/requests/reports/" %}
+  </div>
+
+  <!-- Middle Grid: Workload Distribution & Categorical Split (Stitch Design) -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <!-- Staff Workload Distribution (7 cols) -->
+    <div class="lg:col-span-7 card card-pad shadow-card space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-line">
+        <div>
+          <h3 class="font-title-sm text-title-sm text-on-surface">Staff Workload Distribution</h3>
+          <p class="font-caption text-caption text-secondary">Active cases assigned across department coordinators</p>
+        </div>
+        <a href="{% url 'accounts:dept_staff' %}" class="btn-ghost btn-sm">Staff Directory &rarr;</a>
+      </div>
+
+      <div class="space-y-4 pt-1">
+        {% for st in workload %}
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between font-body-sm text-body-sm">
+            <div class="flex items-center gap-2">
+              <div class="avatar w-7 h-7 text-[11px]">{{ st.initials }}</div>
+              <span class="font-medium text-on-surface">{{ st.display_name }}</span>
+              <span class="text-caption text-secondary">({{ st.subtitle }})</span>
+            </div>
+            <div class="font-semibold text-primary-container">
+              {{ st.open_cases }} active cases
+            </div>
+          </div>
+          <!-- Progress bar -->
+          <div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+            <div class="h-full bg-primary-container rounded-full transition-all duration-300" style="width: {% widthratio st.open_cases max_load 100 %}%;"></div>
+          </div>
+        </div>
+        {% empty %}
+        <p class="font-body-sm text-body-sm text-secondary italic py-2">No active staff workload records found.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Department Case Categorical Breakdown (5 cols) -->
+    <div class="lg:col-span-5 card card-pad shadow-card space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-line">
+        <div>
+          <h3 class="font-title-sm text-title-sm text-on-surface">Department Inquiries by Type</h3>
+          <p class="font-caption text-caption text-secondary">Current semester distribution</p>
+        </div>
+      </div>
+
+      <div class="space-y-3 pt-2">
+        {% for type_label, count in stats.by_type.items %}
+        <div class="p-3 rounded-xl bg-surface-container-low/60 border border-line flex items-center justify-between">
+          <span class="font-body-sm text-body-sm text-on-surface font-medium capitalize">{{ type_label }}</span>
+          <span class="font-label-md text-label-md text-primary-container font-bold">{{ count }} cases</span>
+        </div>
+        {% empty %}
+        <p class="font-body-sm text-body-sm text-secondary italic">No department data recorded yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Table: Cases Requiring Dean Review & Escalations (Stitch Design) -->
+  <div class="card overflow-hidden shadow-card">
+    <div class="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-line">
+      <div>
+        <h2 class="font-headline-md text-headline-md text-on-surface">Requests Requiring Dean Review & Escalations</h2>
+        <p class="font-caption text-caption text-secondary">Cases surpassing coordinator authority or returned for dean policy decisions</p>
+      </div>
+      <a href="{% url 'cases:department_requests' %}?tab=review" class="btn-secondary btn-sm">View All Department Requests</a>
+    </div>
+
+    {% include "partials/request_table.html" with requests=review empty="No pending escalations requiring dean action at this time." show_student=True show_due=True %}
+  </div>
+</div>
+{% endblock %}

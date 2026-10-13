@@ -1,0 +1,18 @@
+{% extends "base_public.html" %}
+{% block title %}Access denied{% endblock %}
+{% block content %}
+<div class="card shadow-float overflow-hidden text-center">
+  <div class="h-1.5 bg-error"></div>
+  <div class="p-8 sm:p-10">
+    <span class="mx-auto w-16 h-16 rounded-2xl bg-error-container text-error flex items-center justify-center">
+      <span class="material-symbols-outlined text-[32px]">block</span>
+    </span>
+    <h1 class="mt-5 font-headline-lg text-headline-lg">Access denied</h1>
+    <p class="mt-2 font-body-md text-body-md text-secondary">
+      {% if blocked_user %}This account is currently <strong class="text-on-surface">{{ blocked_user.get_account_status_display|lower }}</strong>.{% endif %}
+      Please contact the system administrator at <a class="link" href="mailto:{{ site.support_email }}">{{ site.support_email }}</a> if you believe this is a mistake.
+    </p>
+    <a href="{% url 'accounts:login' %}" class="btn-secondary mt-6 w-full"><span class="material-symbols-outlined text-[18px]">arrow_back</span>Back to sign in</a>
+  </div>
+</div>
+{% endblock %}
